@@ -1,5 +1,7 @@
-# 智能交通大数据分析系统
+# 交通大数据系统设计与实现
 
+> 贵州省六盘水师范学院 20 届毕业生徐浪毕业设计成果
+>
 > 从数据模拟、离线分析、实时计算到可视化大屏的完整交通大数据教学项目。基于 Apache Storm + Kafka + Spark + 百度地图，本地即可一键运行。
 
 ![Storm](https://img.shields.io/badge/Storm-1.x-orange) ![Spark](https://img.shields.io/badge/Spark-2.x-red) ![Kafka](https://img.shields.io/badge/Kafka-0.10-blue) ![JDK](https://img.shields.io/badge/JDK-8-green) ![Tomcat](https://img.shields.io/badge/Tomcat-9-yellow)
