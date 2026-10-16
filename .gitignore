@@ -24,3 +24,5 @@ hccDemo/lib/baidu/*.bak
 # 敏感配置
 hccDemo/WEB-INF/classes/app.conf.local
 mvn-settings.xml
+.history/
+**/.history/

@@ -1,17 +1,20 @@
 # 智能交通大数据分析系统（贵阳本地学习版）
 
-> 基于 Apache Storm + Kafka + 百度地图的实时交通大数据分析演示系统，已改造为本地一键运行，演示数据从上海迁移到贵阳。
+> 从数据采集、离线分析、实时计算到可视化大屏的完整交通大数据教学项目。基于 Apache Storm + Kafka + Spark + 百度地图，已改造为本地一键运行，演示数据迁移到贵阳。
 
-![Storm](https://img.shields.io/badge/Storm-1.x-orange) ![Kafka](https://img.shields.io/badge/Kafka-0.10-blue) ![JDK](https://img.shields.io/badge/JDK-8-red) ![Tomcat](https://img.shields.io/badge/Tomcat-9-green) ![AngularJS](https://img.shields.io/badge/AngularJS-1.x-yellow)
+![Storm](https://img.shields.io/badge/Storm-1.x-orange) ![Spark](https://img.shields.io/badge/Spark-2.x-red) ![Kafka](https://img.shields.io/badge/Kafka-0.10-blue) ![JDK](https://img.shields.io/badge/JDK-8-green) ![Tomcat](https://img.shields.io/badge/Tomcat-9-yellow)
 
-原工程为华为云 MRS 官方示例 `storm-car-analysis-example`，本仓库在其基础上做了完整改造，使其能在个人电脑上直接跑起来，适合学习大数据实时处理全链路。
+原工程为华为云 MRS 示例 `storm-car-analysis-example`，本仓库在其基础上做了完整改造，整合了离线分析、实时计算和可视化大屏，适合学习大数据全链路。
 
 ---
 
 ## 效果展示
 
-### 实时流量监控（TOP10 卡口）
+### 实时流量监控（百度地图）
 ![实时流量监控](docs/screenshots/high-traffic.png)
+
+### 交通数据分析 BI 大屏
+![BI大屏](docs/screenshots/bi-dashboard.png)
 
 ### 套牌车实时告警
 ![套牌车告警](docs/screenshots/fake-car.png)
@@ -19,209 +22,196 @@
 ### 车辆出行路径分析
 ![车辆路径分析](docs/screenshots/car-movement.png)
 
-### 卡口流量统计
-![卡口流量统计](docs/screenshots/traffic-stat.png)
-
 ---
 
-## 一、系统在做什么
-
-模拟城市道路上的车辆经过卡口（摄像头）的数据采集，然后实时分析：
-
-1. **数据产生**：模拟每个卡口的摄像头持续拍过车，每辆车经过时上报：车牌号、经过时间、经纬度、车速、方向
-2. **数据传输**：这些上报数据通过 Kafka 消息队列缓冲，供下游消费
-3. **实时分析**：Storm 流式计算做三件事：
-   - 统计每个卡口每分钟过车量 → 实时流量排行
-   - 检测同一车牌短时间出现在两个远距离卡口 → 套牌车告警
-   - 统计高频 OD（起点→终点）出行路径 → 路径分析大屏
-4. **数据展示**：Web 前端用百度地图把卡口点位、告警车辆、路径连线画出来，左侧列表显示 TOP 排行
-
----
-
-## 二、数据从哪来
-
-### 2.1 原始数据文件（离线数据）
-
-`detail-records/` 目录下是 9 天的车辆过车明细（CSV 格式），每行一条记录：
+## 项目整体架构
 
 ```
-卡口ID,车牌号,纬度,经度,车速,方向,?,时间,?,?,...
-xiezhi1000006,贵A6CU11,30.581955,114.315308,65,315,,2024-01-01 08:00:07,1
-```
-
-这些数据是离线分析页面的数据源——路径分析（`#/carMovement/map`）和套牌车分析（`#/fakeCar/map`）读取这些文件，做历史数据回放展示。
-
-### 2.2 实时数据（本地假数据模式）
-
-原版工程通过 Kafka + Storm 集群实时消费，但本地没有集群。我们在后端配置了 `use.dummy.data=true`，后端直接按贵阳 62 个真实路口坐标生成模拟过车数据，无需搭建集群即可看到实时大屏效果。
-
-> 真实部署时：卡口摄像头 → Kafka（Topic: car_topic）→ Storm Topology（Spout 消费 → Bolt 聚合/检测）→ 写入 Redis/HBase → Web 后端查询返回。
-
----
-
-## 三、系统架构
-
-```
-┌─────────────────────────────────────────────────────────┐
-│                    数据采集层                             │
-│  卡口摄像头 / 模拟生产者                                   │
-│  每条记录: 车牌 + 经纬度 + 时间 + 车速                     │
-└──────────────────────┬──────────────────────────────────┘
-                       │
-                       ▼
-┌─────────────────────────────────────────────────────────┐
-│                    消息队列层                             │
-│  Kafka (Topic: car_topic)                               │
-│  高吞吐缓冲，解耦生产与消费                                │
-└──────────────────────┬──────────────────────────────────┘
-                       │
-                       ▼
-┌─────────────────────────────────────────────────────────┐
-│                    实时计算层                             │
-│  Apache Storm Topology                                  │
-│  ┌─────────────┐  ┌──────────────┐  ┌────────────────┐ │
-│  │ SearchXCar  │  │ CarSumPerMin │  │ CarSumTopology  │ │
-│  │ 套牌车检测   │  │ 分钟级流量统计 │  │ 路径聚合        │ │
-│  └─────────────┘  └──────────────┘  └────────────────┘ │
-└──────────────────────┬──────────────────────────────────┘
-                       │
-                       ▼
-┌─────────────────────────────────────────────────────────┐
-│                    存储/服务层                            │
-│  Redis (实时结果缓存) / HBase (明细)                      │
-│  本项目本地模式: 直接返回模拟数据                          │
-└──────────────────────┬──────────────────────────────────┘
-                       │
-                       ▼
-┌─────────────────────────────────────────────────────────┐
-│                    展示层                                │
-│  Tomcat 9 + AngularJS 1.x + 百度地图 JS API              │
-│  - 实时流量大屏 (TOP10 卡口)                              │
-│  - 套牌车告警列表 + 地图标注                              │
-│  - 高频路径连线图                                         │
-│  - 卡口流量趋势图                                        │
-└─────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────┐
+│                        数据源                                 │
+│  卡口摄像头过车记录 (车牌/时间/经纬度/车速)                     │
+│  monitor_camera_info (卡口信息表)                             │
+│  monitor_flow_action (过车明细表)                             │
+└──────────────────────────┬───────────────────────────────────┘
+                           │
+              ┌────────────┴────────────┐
+              ▼                        ▼
+┌──────────────────────────┐  ┌──────────────────────────────┐
+│     离线分析层 (Spark)     │  │     实时计算层 (Storm)        │
+│  traffic-spark/           │  │  carAnalysis/src/            │
+│  - 车辆轨迹分析            │  │  - 套牌车实时检测             │
+│  - 拥堵分析               │  │  - 实时流量统计               │
+│  - 陌生车辆分析            │  │  - Kafka → Storm → Redis     │
+│  - Hive 数仓               │  │                              │
+│  offline-spark/ (Spark学习)│  │                              │
+│  offline-pyspark/ (PySpark)│  │                              │
+└──────────────┬───────────┘  └──────────────┬───────────────┘
+               │                             │
+               └──────────────┬──────────────┘
+                              ▼
+┌──────────────────────────────────────────────────────────────┐
+│                      可视化展示层                              │
+│                                                              │
+│  carAnalysis/hccDemo/  → 百度地图 Web 大屏 (Tomcat+AngularJS) │
+│  bi-dashboard/         → 交通数据 BI 可视化大屏 (纯 HTML)      │
+│  vehicle-platform/     → 车辆综合管控平台 (纯 HTML)            │
+└──────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 四、四大功能模块
-
-| 模块 | 路由 | 说明 |
-|------|------|------|
-| 🚨 套牌车实时告警 | `#/fakeCar/map` | 同一车牌短时间内出现在距离过远的两个卡口，判定为套牌车。左侧列表展示嫌疑车牌和两个出现位置 |
-| 📊 观测点实时流量监控 | `#/highTraffic/map` | TOP10 卡口实时车流量排行，红/橙/绿三色热度条，地图上绿色点 = 卡口位置 |
-| 🛣️ 卡口流量分析 | `#/trafficStat/map` | 按时间统计各卡口流量趋势 |
-| 🗺️ 车辆出行路径分析 | `#/carMovement/map` | 高频 OD（起点-终点）路径连线，线条粗细代表车次多少 |
-
----
-
-## 五、本地快速启动（5 分钟）
-
-### 环境要求
-- macOS / Linux
-- JDK 8（Corretto / OpenJDK 均可，**不要用 JDK 11+**，Storm 1.x 不兼容）
-- Tomcat 9（**不要用 Tomcat 10+**，本项目用 `javax.servlet` 老 API）
-
-### 步骤
-
-```bash
-# 1. 克隆
-git clone https://gitee.com/xuchenjoin/car-analysis-guiyang.git
-cd car-analysis-guiyang/hccDemo
-
-# 2. 软链到 Tomcat webapps（按你本机路径改）
-ln -s $(pwd) /opt/homebrew/opt/tomcat@9/libexec/webapps/hccDemo
-
-# 3. 确认假数据模式已开启
-cat WEB-INF/classes/app.conf | grep use.dummy.data
-# 应显示 use.dummy.data=true
-
-# 4. 启动 Tomcat
-export JAVA_HOME=/path/to/jdk8
-/opt/homebrew/opt/tomcat@9/libexec/bin/catalina.sh run
-```
-
-浏览器打开：
-
-| 页面 | URL |
-|------|-----|
-| 首页 | http://localhost:8080/hccDemo/ |
-| 套牌车告警 | http://localhost:8080/hccDemo/#/fakeCar/map |
-| 实时流量监控 | http://localhost:8080/hccDemo/#/highTraffic/map |
-| 卡口流量分析 | http://localhost:8080/hccDemo/#/trafficStat/map |
-| 车辆路径分析 | http://localhost:8080/hccDemo/#/carMovement/map |
-
----
-
-## 六、目录结构
+## 目录结构（每个模块干什么）
 
 ```
 car-analysis-guiyang/
-├── pom.xml                          # Maven 构建（Storm Topology）
-├── src/main/java/com/lpssy/storm/  # Storm 实时计算代码
-│   ├── SearchXCarTopology.java     # 套牌车检测拓扑
-│   ├── SearchXCarBolt.java         # 套牌车判定 Bolt
-│   ├── SearchXCarAggrBolt.java     # 聚合 Bolt
-│   ├── SearchCarSumTopology.java    # 流量统计拓扑
-│   ├── SearchCarSumPerMinuteBolt.java # 分钟级统计
-│   ├── KafkaUtils.java             # Kafka 工具类
-│   └── TopicsTupleBuilder.java     # 数据序列化
-├── hccDemo/                         # Web UI（可部署到 Tomcat）
-│   ├── index.html                  # 入口页
-│   ├── main.js                     # RequireJS 配置
-│   ├── lib/baidu/map.js            # 百度地图封装（含贵阳 62 个路口坐标）
-│   ├── src/app/
-│   │   ├── framework/views/menus.html       # 顶部导航
-│   │   └── dataAccess/controllers/          # 各页面控制器
-│   │       ├── fakeCarCtrl.js             # 套牌车告警逻辑
-│   │       ├── highTrafficCtr.js          # 实时流量排行
-│   │       ├── carMovementCtrl.js         # 路径分析
-│   │       └── trafficStaticsCtrl.js      # 卡口统计
-│   └── WEB-INF/classes/app.conf           # 配置（use.dummy.data=true）
-├── detail-records/                  # 离线过车明细数据（9 天 CSV）
-│   ├── detail_record_2024_01_03_08_00_00
-│   ├── detail_record_2024_01_04_08_00_00
-│   └── ...（共 9 个文件，约 28MB）
-└── docs/screenshots/               # 本文档使用的截图
+│
+├── 📡 carAnalysis/  (本目录) — 实时分析 Web 大屏
+│   ├── hccDemo/                 # Tomcat 部署的 Web 应用
+│   │   ├── index.html           # 入口
+│   │   ├── lib/baidu/map.js    # 百度地图封装（含贵阳62个路口坐标）
+│   │   └── src/app/dataAccess/controllers/
+│   │       ├── fakeCarCtrl.js        # 套牌车告警页面
+│   │       ├── highTrafficCtr.js     # 实时流量 TOP10
+│   │       ├── carMovementCtrl.js    # 车辆路径分析
+│   │       └── trafficStaticsCtrl.js # 卡口流量统计
+│   ├── src/main/java/          # Storm Topology 实时计算代码
+│   │   ├── SearchXCarTopology.java   # 套牌车检测拓扑
+│   │   ├── SearchCarSumTopology.java # 流量统计拓扑
+│   │   └── KafkaUtils.java           # Kafka 连接
+│   └── detail-records/         # 离线过车明细数据 (9天CSV, ~28MB)
+│
+├── ⚙️ traffic-spark/ — Spark 离线分析主项目
+│   ├── src/main/java/com/lpssy/spark/
+│   │   ├── dao/               # 数据访问层 (卡口/车辆/轨迹 DAO)
+│   │   ├── util/              # Spark/日期/参数工具类
+│   │   └── producedate2hive/  # 数据导入 Hive
+│   ├── monitor_camera_info    # 卡口信息数据 (卡口ID, 编号)
+│   ├── monitor_flow_action    # 过车明细 (日期,卡口ID,车道,车牌,时间,速度...)
+│   └── pom.xml                # Maven 构建
+│
+├── 📚 offline-spark/ — Spark 学习示例 (Java + Scala)
+│   └── src/main/
+│       ├── java/com/lpssy/javaspark/
+│       │   ├── core/examples/    # WordCount, TopN 等基础示例
+│       │   ├── actions/          # RDD action 算子
+│       │   ├── sql/              # Spark SQL + Hive
+│       │   └── streaming/        # Spark Streaming + Kafka → Redis
+│       └── Scala/com/lpssy/scalaspark/
+│           └── core/transformations/  # map/flatMap/reduceByKey 等算子
+│
+├── 🐍 offline-pyspark/ — PySpark 脚本
+│   ├── mockData.py            # 模拟交通数据生成
+│   ├── basePython.py          # Python 基础练习
+│   ├── pvuvTest.py            # PV/UV 统计
+│   ├── trafficdata/           # 交通测试数据
+│   └── car_types/             # 车型分类数据
+│
+├── 📊 bi-dashboard/ — 交通数据 BI 可视化大屏 (纯 HTML)
+│   ├── index.html             # BI 大屏首页 (车辆统计/类型/收费/抓拍)
+│   ├── realtime.html          # 实时数据大屏
+│   ├── login.html             # 登录页
+│   ├── css/ js/ images/      # ECharts 图表 + 暗黑主题
+│   └── picture/               # 背景图素材
+│
+└── 🚗 vehicle-platform/ — 车辆综合管控平台 (纯 HTML)
+    ├── index.html             # 管控平台主界面
+    ├── css/ js/ images/      # 地图 + 车辆列表 + 管控操作
+    └── picture/               # 素材图片
 ```
 
 ---
 
-## 七、关键改造点（相对于原版华为云示例）
+## 四大可视化页面
 
-原版依赖内网 Kafka/Storm 集群（192.168.133.131），本地完全跑不起来。本仓库改造：
+### 1. 实时流量监控（百度地图）
+- 路径：`hccDemo/` → Tomcat 部署
+- 功能：TOP10 卡口实时车流量排行，地图上绿色点 = 卡口位置
+- 技术：AngularJS 1.x + 百度地图 JS API
 
-1. **启用假数据模式**：`WEB-INF/classes/app.conf` 设 `use.dummy.data=true`，跳过 Kafka 直接返回测试数据
-2. **地图容器修复**：原版 Angular UI Router + tiny-layout 把地图容器裁剪成约 260×260，改为 body 下全屏 `#fullscreen-map` div
-3. **数据迁移到贵阳**：
-   - 62 个贵阳真实路口坐标（云岩/南明/观山湖/花溪/白云/乌当）
-   - 路径起点终点映射到贵阳真实地标（喷水池、大十字、甲秀楼、花果园、贵阳北站、观山湖公园、花溪公园、青岩古镇等）
-   - 左上角城市标签从"上海"改为"贵阳"
-4. **去除华为云标识**：删除"华为云首页"链接、"购买 MRS"红色按钮、华为版权信息
-5. **修复选中 tab 双层边框**（蓝色 outline + 红色下边框）
+### 2. 套牌车实时告警
+- 路径：`hccDemo/#/fakeCar/map`
+- 功能：同一车牌短时间出现在远距离两个卡口 → 套牌车告警
+- 左侧列表显示嫌疑车牌和两个出现位置
 
----
+### 3. 车辆出行路径分析
+- 路径：`hccDemo/#/carMovement/map`
+- 功能：高频 OD（起点→终点）路径连线，线条粗细代表车次
 
-## 八、学习要点
-
-| 技术点 | 在本项目中的体现 |
-|--------|-----------------|
-| **Storm 实时计算** | Spout 消费 Kafka → Bolt 链式处理 → 时间窗口聚合 |
-| **Kafka 消息队列** | 高吞吐车辆轨迹数据接入，解耦采集与计算 |
-| **AngularJS 1.x** | UI Router 路由、ng-include、双向绑定、RequireJS 模块化 |
-| **百度地图 JS API** | Marker 标注、CurveLine 路径连线、InfoWindow 信息窗、热力图 |
-| **Tomcat WAR 部署** | 老版 `javax.servlet` 与 Tomcat 9 的兼容性 |
-| **套牌车算法** | 同一车牌在 N 分钟内出现在距离 > M 公里的两个卡口 → 疑似套牌 |
+### 4. BI 数据大屏
+- 路径：直接打开 `bi-dashboard/index.html`
+- 功能：车辆总数柱状图、车型饼图、收费站统计、抓拍趋势线
+- 技术：ECharts + 暗黑科技风，无需后端
 
 ---
 
-## 九、免责声明
+## 数据说明
+
+### 过车明细数据 (monitor_flow_action)
+```
+日期      卡口ID  车道  车牌       时间              速度  方向  颜色
+2024-05-28  0003  36200  粤B38678  2024-05-28 12:46:50  98   43   04
+```
+
+### 卡口信息数据 (monitor_camera_info)
+```
+卡口ID   卡口编号
+0006    66210
+0006    93833
+```
+
+### 离线测试数据 (detail-records/)
+9 天的完整过车轨迹 CSV，每行一条记录：
+```
+卡口ID,车牌,纬度,经度,车速,方向,?,时间
+xiezhi1000006,贵A6CU11,30.581955,114.315308,65,315,,2024-01-01 08:00:07
+```
+
+---
+
+## 本地运行
+
+### 1. 实时 Web 大屏（hccDemo）
+```bash
+# 需要 JDK 8 + Tomcat 9
+ln -s $(pwd)/hccDemo /opt/homebrew/opt/tomcat@9/libexec/webapps/hccDemo
+/opt/homebrew/opt/tomcat@9/libexec/bin/catalina.sh run
+# 打开 http://localhost:8080/hccDemo/
+```
+
+### 2. BI 大屏 / 车辆管控平台
+直接用浏览器打开 HTML 文件即可，无需后端：
+```bash
+open bi-dashboard/index.html
+open vehicle-platform/index.html
+```
+
+### 3. Spark 离线分析
+```bash
+cd traffic-spark
+mvn package
+# 将 monitor_flow_action 和 monitor_camera_info 放到 HDFS
+# 运行 DAO 层各 Spark 任务
+```
+
+---
+
+## 学习要点
+
+| 技术 | 在项目中的位置 |
+|------|---------------|
+| **Storm 实时计算** | `carAnalysis/src/` — Spout/Bolt 拓扑，套牌车检测 |
+| **Kafka 消息队列** | `carAnalysis/src/` — 高吞吐过车数据接入 |
+| **Spark 离线分析** | `traffic-spark/` — DAO 层 + Spark SQL 轨迹分析 |
+| **Spark 算子学习** | `offline-spark/` — Java/Scala 版 RDD 算子示例 |
+| **PySpark** | `offline-pyspark/` — Python 版数据处理脚本 |
+| **ECharts 可视化** | `bi-dashboard/` — 暗黑科技风数据大屏 |
+| **百度地图 API** | `hccDemo/lib/baidu/` — Marker/CurveLine/信息窗 |
+| **AngularJS 1.x** | `hccDemo/` — UI Router + RequireJS |
+
+---
+
+## 免责声明
 
 - 本项目仅供学习参考，地图数据 © 百度智图
 - 原工程版权归华为技术有限公司，基于 Apache 2.0 协议
-- 改造部分（贵阳数据、本地启动、文档）以 MIT 协议发布
-
-## License
-
-Apache-2.0
+- 改造部分（贵阳数据、整合、文档）以 MIT 协议发布

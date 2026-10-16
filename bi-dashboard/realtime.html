@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>交通大数据分析系统 · 实时联动大屏</title>
+<script src="js/echarts.min.js"></script>
+<script src="js/guiyang.js"></script>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background:
+      radial-gradient(ellipse at 18% -5%, #0e2a4d 0%, transparent 55%),
+      radial-gradient(ellipse at 85% 110%, #0b2c46 0%, transparent 55%),
+      #0a1628;
+    color: #e8f1ff;
+    position:relative;
+    display:flex; flex-direction:column; min-height:100vh;
+  }
+  /* 科技网格底纹 */
+  body::before {
+    content:""; position:fixed; inset:0; pointer-events:none; opacity:.4;
+    background-image:
+      linear-gradient(rgba(47,111,159,.14) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(47,111,159,.14) 1px, transparent 1px);
+    background-size: 46px 46px;
+  }
+  .header {
+    display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center;
+    padding:14px 22px; border-bottom:1px solid #1f4a75; position:relative; z-index:1;
+    background: linear-gradient(180deg,#0d2440,#0b1c33);
+  }
+  .header .logo { display:flex; align-items:center; gap:12px; }
+  .header .logo svg { width:38px; height:38px; filter: drop-shadow(0 0 8px rgba(34,211,238,.6)); }
+  .header h1 {
+    font-size:20px; font-weight:800; letter-spacing:2px;
+    background: linear-gradient(90deg,#67e8f9,#38bdf8,#22d3ee);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    filter: drop-shadow(0 0 10px rgba(34,211,238,.35));
+  }
+  .header .sub { font-size:12px; color:#7d94b8; margin-top:3px; letter-spacing:.5px; }
+  .header .ctrl { display:flex; align-items:center; gap:14px; font-size:13px; color:#c3d5ef; }
+  #updatedAt { color:#34d399; font-weight:600; }
+  #refreshBtn {
+    background:#123a5e; color:#8fd3ff; border:1px solid #2f6f9f; border-radius:6px;
+    padding:6px 16px; cursor:pointer; font-size:13px;
+  }
+  #refreshBtn:hover { background:#1a4a78; }
+  #refreshBtn:disabled { opacity:.5; cursor:wait; }
+  .status { font-size:12px; color:#7d94b8; }
+  .status.ok { color:#34d399; } .status.err { color:#f87171; }
+
+  .cards {
+    display:flex; flex-wrap:wrap; gap:12px; padding:14px 22px 4px;
+  }
+  .card {
+    flex:1 1 172px; min-width:150px; position:relative; overflow:hidden;
+    background: linear-gradient(165deg, rgba(20,44,76,.92), rgba(11,28,51,.88));
+    border:1px solid rgba(47,111,159,.55); border-radius:12px; padding:12px 14px;
+    display:flex; align-items:center; gap:12px; text-align:left;
+    box-shadow: 0 8px 20px rgba(0,0,0,.4), inset 0 1px 0 rgba(103,232,249,.08);
+  }
+  .card::after {
+    content:""; position:absolute; top:0; left:8%; right:8%; height:1px;
+    background: linear-gradient(90deg, transparent, #22d3ee, transparent);
+  }
+  .card .ic-wrap {
+    flex:0 0 46px; width:46px; height:46px; border-radius:12px;
+    background: linear-gradient(135deg, rgba(34,211,238,.25), rgba(59,130,246,.10));
+    border:1px solid rgba(34,211,238,.35);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow: inset 0 0 12px rgba(34,211,238,.12);
+  }
+  .card .ic-wrap svg { width:24px; height:24px; }
+  .card .ic-wrap.warn { background: linear-gradient(135deg, rgba(251,191,36,.22), rgba(245,158,11,.08)); border-color:rgba(251,191,36,.35); }
+  .card .ic-wrap.err { background: linear-gradient(135deg, rgba(248,113,113,.22), rgba(239,68,68,.08)); border-color:rgba(248,113,113,.35); }
+  .card .num {
+    font-size:27px; font-weight:800; line-height:1.1; letter-spacing:.5px;
+    background: linear-gradient(180deg,#a5f3fc,#22d3ee);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .card .num.warn {
+    background: linear-gradient(180deg,#fde68a,#fbbf24);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .card .num.err {
+    background: linear-gradient(180deg,#fecaca,#f87171);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .card .lbl { font-size:12px; color:#93aed6; margin-top:4px; }
+  .card .src { font-size:10px; color:#4a6a92; margin-top:2px; }
+
+  /* ===== 三栏布局（参照"贵掌经济"大屏：左右 3 图 + 中间大地图/数字看板） ===== */
+  .mainbox {
+    display:flex; gap:14px; padding:14px 22px 12px; position:relative; z-index:1;
+    align-items:stretch; flex:1; min-height:0;
+  }
+  .mainbox .col { flex:3; display:flex; flex-direction:column; gap:14px; min-width:0; }
+  .mainbox .col-mid { flex:5; }
+  .panel {
+    background: linear-gradient(180deg, rgba(13,31,56,.9), rgba(9,23,44,.92));
+    border:1px solid rgba(47,111,159,.45); border-radius:12px; padding:12px 14px;
+    display:flex; flex-direction:column; flex:1; position:relative;
+    box-shadow: 0 8px 20px rgba(0,0,0,.35);
+  }
+  /* 四角科技边框（复刻贵掌经济 panel 角标） */
+  .panel::before, .panel::after {
+    content:""; position:absolute; width:12px; height:12px; pointer-events:none;
+  }
+  .panel::before { top:-1px; left:-1px; border-top:2px solid #22d3ee; border-left:2px solid #22d3ee; border-top-left-radius:12px; }
+  .panel::after { top:-1px; right:-1px; border-top:2px solid #22d3ee; border-right:2px solid #22d3ee; border-top-right-radius:12px; }
+  .panel .pf { position:absolute; bottom:0; left:0; right:0; height:0; pointer-events:none; }
+  .panel .pf::before, .panel .pf::after {
+    content:""; position:absolute; width:12px; height:12px;
+  }
+  .panel .pf::before { bottom:-1px; left:-1px; border-bottom:2px solid #22d3ee; border-left:2px solid #22d3ee; border-bottom-left-radius:12px; }
+  .panel .pf::after { bottom:-1px; right:-1px; border-bottom:2px solid #22d3ee; border-right:2px solid #22d3ee; border-bottom-right-radius:12px; }
+  .panel .pt { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
+  .panel .pt h3 { font-size:14px; color:#a5e3ff; font-weight:700; display:flex; align-items:center; gap:8px; letter-spacing:.5px; }
+    width:22px; height:22px; border-radius:6px; font-size:11px; font-weight:800;
+    display:inline-flex; align-items:center; justify-content:center;
+    background: linear-gradient(135deg, #0ea5e9, #2563eb);
+    color:#e8f6ff; box-shadow: 0 0 8px rgba(14,165,233,.5);
+  }
+  .panel .pt .src { font-size:10px; color:#4a6a92; }
+  .chart { width:100%; flex:1; min-height:140px; }
+  /* ===== 模拟地图模块（中栏） ===== */
+  .map-panel { flex:5; }
+  .map-bar {
+    display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center;
+    gap:8px; margin-bottom:6px; font-size:12px; color:#7d94b8;
+  }
+  .map-bar .map-info { color:#ffe08a; font-weight:600; }
+  .map-wrap {
+    position:relative; flex:1; min-height:280px; background:#0a1c33;
+    border-radius:8px; overflow:hidden; border:1px solid #16345c;
+  }
+  /* 旋转装饰圈（复刻贵掌经济 map2/map3 的旋转环） */
+  .ring {
+    position:absolute; top:50%; left:50%; border-radius:50%;
+    pointer-events:none; z-index:1;
+  }
+  .ring.r1 { width:88%; height:88%; border:1px dashed rgba(34,211,238,.32); animation:rot1 32s linear infinite; }
+  .ring.r2 { width:70%; height:70%; border:1px solid rgba(251,191,36,.26); animation:rot2 22s linear infinite; }
+  .ring.r3 { width:50%; height:50%; border:1px dashed rgba(167,139,250,.30); animation:rot1 15s linear infinite; }
+  @keyframes rot1 { from { transform:translate(-50%,-50%) rotate(0deg); } to { transform:translate(-50%,-50%) rotate(360deg); } }
+  @keyframes rot2 { from { transform:translate(-50%,-50%) rotate(0deg); } to { transform:translate(-50%,-50%) rotate(-360deg); } }
+  .map-legend { display:flex; flex-wrap:wrap; gap:14px; margin-top:8px; font-size:12px; color:#a9c2e8; }
+  .map-legend .lg { display:flex; align-items:center; gap:5px; cursor:pointer; padding:2px 6px; border-radius:4px; }
+  .map-legend .lg.active { background:#123a5e; outline:1px solid #2f6f9f; }
+  .map-legend .dot { width:10px; height:4px; border-radius:2px; display:inline-block; }
+  .map-tip { font-size:11px; color:#4a6a92; }
+  /* ===== 套牌车预警（紧凑单行 + 垂直轮动） ===== */
+  .plate-alert {
+    margin-top:8px; padding:6px 10px; border-radius:8px;
+    background:rgba(248,113,113,.1); border:1px solid rgba(248,113,113,.35);
+    font-size:11px; line-height:1.5;
+  }
+  .plate-title { color:#fca5a5; font-weight:700; margin-bottom:3px; letter-spacing:.3px; }
+  .plate-scroll { height:20px; overflow:hidden; position:relative; }
+  .plate-track { position:absolute; left:0; right:0; color:#fecaca; animation:plateScroll 6s linear infinite; }
+  .plate-track > div { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; padding-right:24px; height:20px; }
+  @keyframes plateScroll { 0% { transform:translateY(0); } 100% { transform:translateY(-50%); } }
+  /* ===== 速度 Top10（轮动列表，占满面板） ===== */
+  .speed-scroll { flex:1; overflow:hidden; position:relative; min-height:120px; }
+  .speed-track { position:absolute; left:0; right:0; color:#c3d5ef; font-size:11px; animation:plateScroll 8s linear infinite; }
+  .speed-track > div { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; padding-right:24px; height:22px; line-height:22px; }
+  /* ===== 数字看板（复刻贵掌经济 no 区：金黄色大数字 + 标签） ===== */
+  .no {
+    flex:0 0 auto; position:relative; margin-top:14px; padding:10px 14px 12px;
+    background: rgba(101,132,226,.12);
+    border:1px solid rgba(25,186,139,.22); border-radius:10px;
+    box-shadow: inset 0 0 32px rgba(14,165,233,.08);
+  }
+  .no::before, .no::after {
+    content:""; position:absolute; width:14px; height:14px; pointer-events:none;
+  }
+  .no::before { top:-1px; left:-1px; border-top:2px solid #02a6b5; border-left:2px solid #02a6b5; border-top-left-radius:10px; }
+  .no::after { bottom:-1px; right:-1px; border-bottom:2px solid #02a6b5; border-right:2px solid #02a6b5; border-bottom-right-radius:10px; }
+  .no .no-hd { display:flex; }
+  .no .nitem { flex:1; text-align:center; padding:6px 0 4px; position:relative; }
+  .no .nitem + .nitem::before {
+    content:""; position:absolute; left:0; top:22%; height:56%; width:1px;
+    background:rgba(255,255,255,.18);
+  }
+  .no .nnum {
+    font-family:"SF Mono", Menlo, Consolas, monospace; font-weight:700;
+    font-size:30px; letter-spacing:1px; line-height:1.2;
+    background: linear-gradient(180deg,#fff3c4,#ffeb7b);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    filter: drop-shadow(0 0 14px rgba(255,235,123,.35));
+  }
+  .no .no-bd { display:flex; }
+  .no .nlabel { flex:1; text-align:center; font-size:12px; color:rgba(255,255,255,.72); padding-top:4px; }
+  .no .nlabel:nth-child(1) { color:#34d399; }
+  .no .nlabel:nth-child(2) { color:#f87171; }
+
+  .tracks { flex:1; overflow-y:auto; font-size:12px; line-height:1.8; min-height:120px; }
+  .tracks .trow { border-bottom:1px dashed #16345c; padding:5px 2px; }
+  .tracks .tcar { color:#ffe08a; font-weight:600; }
+  .tracks .tinfo { color:#a9c2e8; font-size:11px; margin-top:2px; word-break:break-all; }
+  .tracks::-webkit-scrollbar { width:6px; }
+  .tracks::-webkit-scrollbar-thumb { background:#1f4a75; border-radius:3px; }
+
+  .footer {
+    padding:10px 22px 24px; font-size:12px; color:#7d94b8; line-height:1.9;
+    border-top:1px solid #16345c; position:relative; z-index:1;
+  }
+  .footer b { color:#8fd3ff; }
+  code {
+    background:#0d2440; color:#ffe08a; padding:1px 6px; border-radius:4px;
+    font-size:11px; font-family:Menlo, Consolas, monospace;
+  }
+</style>
+</head>
+<body>
+
+<!-- 全局 SVG 渐变定义（卡片图标/地图元素使用） -->
+<svg width="0" height="0" style="position:absolute"><defs>
+  <linearGradient id="gCyan" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#67e8f9"/><stop offset="1" stop-color="#0ea5e9"/></linearGradient>
+  <linearGradient id="gGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fde68a"/><stop offset="1" stop-color="#f59e0b"/></linearGradient>
+  <linearGradient id="gRed" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fecaca"/><stop offset="1" stop-color="#ef4444"/></linearGradient>
+</defs></svg>
+
+<div class="header">
+  <div class="logo">
+    <svg viewBox="0 0 48 48" fill="none">
+      <path d="M8 30 L20 12 L32 30 Z" fill="rgba(34,211,238,.18)" stroke="#22d3ee" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M14 22 H34" stroke="#22d3ee" stroke-width="2.5"/>
+      <circle cx="16" cy="36" r="3" fill="#22d3ee"/>
+      <circle cx="32" cy="36" r="3" fill="#22d3ee"/>
+      <path d="M20 30 H28 V36 H20 Z" fill="none" stroke="#22d3ee" stroke-width="1.5"/>
+    </svg>
+    <div>
+      <h1>交通大数据分析系统 · 实时联动大屏</h1>
+      <div class="sub">数据来自 Spark 分析结果（MySQL traffic 库）· 每 30 秒自动刷新</div>
+    </div>
+  </div>
+  <div class="ctrl">
+    <span>更新时间：<span id="updatedAt">--</span></span>
+    <span class="status" id="connStatus">连接中…</span>
+    <button id="refreshBtn" onclick="loadData()">立即刷新</button>
+  </div>
+</div>
+
+<div class="cards" id="cards">
+  <div class="card">
+    <div class="ic-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="url(#gCyan)" stroke-width="1.7"><path d="M4 15 L6 9 H18 L20 15 M6 9 L8 5 H16 L18 9"/><rect x="3.5" y="15" width="17" height="4.5" rx="1.5"/><circle cx="7.5" cy="19.5" r="1.6"/><circle cx="16.5" cy="19.5" r="1.6"/></svg></div>
+    <div><div class="num" id="c_detail">--</div><div class="lbl">过车明细总数(条)</div><div class="src">topn_monitor_detail_info</div></div>
+  </div>
+  <div class="card">
+    <div class="ic-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="url(#gCyan)" stroke-width="1.7"><circle cx="5" cy="12" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="19" cy="18" r="2"/><path d="M6.8 11 L17.2 7 M6.8 13 L17.2 17" stroke-dasharray="2.5 2"/></svg></div>
+    <div><div class="num" id="c_track">--</div><div class="lbl">车辆轨迹数(辆)</div><div class="src">car_track</div></div>
+  </div>
+  <div class="card">
+    <div class="ic-wrap warn"><svg viewBox="0 0 24 24" fill="none" stroke="url(#gGold)" stroke-width="1.7"><circle cx="12" cy="13" r="8"/><path d="M12 9 V13 M12 16.5 V17"/><path d="M12 5 L12 8"/></svg></div>
+    <div><div class="num warn" id="c_speed">--</div><div class="lbl">高速记录数(条)</div><div class="src">top10_speed_detail</div></div>
+  </div>
+  <div class="card">
+    <div class="ic-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="url(#gCyan)" stroke-width="1.7"><rect x="4" y="10" width="3.5" height="8" rx="0.8"/><rect x="10.2" y="6" width="3.5" height="12" rx="0.8"/><rect x="16.4" y="13" width="3.5" height="5" rx="0.8"/></svg></div>
+    <div><div class="num" id="c_flow">--</div><div class="lbl">车流量TopN卡口</div><div class="src">topn_monitor_car_count</div></div>
+  </div>
+  <div class="card">
+    <div class="ic-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="url(#gCyan)" stroke-width="1.7"><circle cx="12" cy="12" r="8.5"/><path d="M8 12.5 L11 15.5 L16.5 9.5"/></svg></div>
+    <div><div class="num" id="c_norm">--</div><div class="lbl">正常卡口(个)</div><div class="src">monitor_state</div></div>
+  </div>
+  <div class="card">
+    <div class="ic-wrap err"><svg viewBox="0 0 24 24" fill="none" stroke="url(#gRed)" stroke-width="1.7"><path d="M12 3.5 L22 20 H2 Z" stroke-linejoin="round"/><path d="M12 9.5 V14.5 M12 17.2 V17.8"/></svg></div>
+    <div><div class="num err" id="c_abnorm">--</div><div class="lbl">异常卡口(个)</div><div class="src">monitor_state</div></div>
+  </div>
+</div>
+
+<div class="mainbox">
+  <!-- 左栏：3 个图表面板 -->
+  <div class="col">
+    <div class="panel">
+      <div class="pt"><h3>卡口车流量 TopN</h3></div>
+      <div class="chart" id="chart_flow"></div><i class="pf"></i>
+    </div>
+    <div class="panel">
+      <div class="pt"><h3>卡口状态分布（正常/异常）</h3><span class="src">monitor_state</span></div>
+      <div class="chart" id="chart_state"></div><i class="pf"></i>
+    </div>
+    <div class="panel">
+      <div class="pt"><h3>每日过车趋势</h3><span class="src">topn_monitor_detail_info</span></div>
+      <div class="chart" id="chart_day"></div><i class="pf"></i>
+    </div>
+  </div>
+
+  <!-- 中栏：车辆轨迹模拟地图（复刻贵掌经济：数字看板 + 大地图 + 旋转圈） -->
+  <div class="col col-mid">
+    <div class="no">
+      <div class="no-hd">
+        <div class="nitem"><div class="nnum" id="no1">--</div></div>
+        <div class="nitem"><div class="nnum" id="no2">--</div></div>
+      </div>
+      <div class="no-bd">
+        <div class="nlabel">正常摄像头（个）</div>
+        <div class="nlabel">异常摄像头（个）</div>
+      </div>
+    </div>
+    <div class="panel map-panel">
+      <div class="pt"><h3>车辆轨迹模拟地图</h3><span class="src">car_track · 模拟地图示意</span></div>
+      <div class="map-bar">
+        <span id="mapCarInfo" class="map-info">加载中…</span>
+        <span class="map-tip">自动轮播 · 点击下方图例可切换车辆</span>
+      </div>
+      <div class="map-wrap">
+        <div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div>
+        <div id="mapEchart" style="position:absolute;inset:0;z-index:2;"></div>
+      </div>
+      <div class="map-legend" id="mapLegend"></div>
+      <i class="pf"></i>
+    </div>
+    <div id="plateAlert" class="plate-alert">
+      <div class="plate-title">🚨 套牌车预警（最近10分钟）</div>
+      <div class="plate-scroll"><div class="plate-track" id="plateAlertBody">检测中…</div></div>
+    </div>
+  </div>
+
+  <!-- 右栏：3 个图表面板 -->
+  <div class="col">
+    <div class="panel">
+      <div class="pt"><h3>高速通过卡口 速度 Top10</h3><span class="src">top10_speed_detail</span></div>
+      <div class="speed-scroll"><div class="speed-track" id="speedList"></div></div><i class="pf"></i>
+    </div>
+    <div class="panel">
+      <div class="pt"><h3>24 小时过车分布</h3><span class="src">topn_monitor_detail_info</span></div>
+      <div class="chart" id="chart_hour"></div><i class="pf"></i>
+    </div>
+    <div class="panel">
+      <div class="pt"><h3>实时轨迹样例</h3><span class="src">car_track</span></div>
+      <div class="tracks" id="trackList"></div><i class="pf"></i>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <b>数据可核对性：</b>本屏所有数字均实时查询自 MySQL <code>traffic</code> 库的结果表，可与数据库直接对账，例如：<br>
+  · 卡口车流量 → <code>SELECT monitor_id, carCount FROM topn_monitor_car_count ORDER BY carCount DESC;</code><br>
+  · 卡口状态 → <code>SELECT * FROM monitor_state;</code> &nbsp;· 车辆轨迹 → <code>SELECT car, car_track FROM car_track;</code><br>
+  数据由 Spark 分析任务（MockData 模拟数据 2024-01-03 ~ 01-07）写入，重跑分析任务后大屏自动更新。
+</div>
+
+<script>
+var charts = {};
+function getChart(id) {
+  if (!charts[id]) charts[id] = echarts.init(document.getElementById(id));
+  return charts[id];
+}
+
+function render(d) {
+  document.getElementById('updatedAt').textContent = d.updated_at;
+  document.getElementById('connStatus').textContent = '已连接 API';
+  document.getElementById('connStatus').className = 'status ok';
+
+  // 统计卡片
+  var o = d.overview || {};
+  document.getElementById('c_detail').textContent = fmt(o.detail_count);
+  document.getElementById('c_track').textContent = fmt(o.track_count);
+  document.getElementById('c_speed').textContent = fmt(o.speed_records);
+  document.getElementById('c_flow').textContent = fmt(o.flow_monitors);
+  var ms = d.monitor_state || {};
+  document.getElementById('c_norm').textContent = ms.noraml_monitor_count || 0;
+  document.getElementById('c_abnorm').textContent = ms.abnormal_monitor_count || 0;
+
+  // 中栏数字看板（复刻贵掌经济 no 区）：正常/异常摄像头数
+  document.getElementById('no1').textContent = fmt(ms.normal_camera_count||0);
+  document.getElementById('no2').textContent = fmt(ms.abnormal_camera_count||0);
+
+  // 右栏：实时轨迹样例列表（与中栏地图同源 car_track）
+  var tl = document.getElementById('trackList');
+  var tracks = (d.tracks_sample||[]).slice(0,6);
+  tl.innerHTML = tracks.map(function(x){
+    var segs = parseTrack(x.car_track).slice(0,5);
+    var info = segs.map(function(p){ return p.m; }).join(' → ');
+    var total = (x.car_track||'').split('|').length;
+    return '<div class="trow"><div class="tcar">'+x.car+'</div><div class="tinfo">'+info+' … · 共 '+total+' 个卡口</div></div>';
+  }).join('') || '<div class="trow">暂无轨迹数据</div>';
+
+  // ⑧ 套牌车预警（紧凑 + 垂直轮动）
+  var alerts = d.plate_alerts || [];
+  var ab = document.getElementById('plateAlertBody');
+  if(!alerts.length){
+    ab.innerHTML = '<div><span style="color:#86efac;">✓ 最近 10 分钟未发现疑似套牌车辆</span></div>';
+    ab.style.animation = 'none';
+  } else {
+    var one = alerts.map(function(a){
+      return '<div>⚠ <b style="color:#fca5a5;">'+a.car+'</b>：'+a.monitor_a+' '+a.name_a+
+             ' → '+a.monitor_b+' '+a.name_b+
+             '（相距 '+a.distance_km+' km，仅隔 '+a.gap_sec+' 秒）</div>';
+    }).join('');
+    // 复制两遍 → CSS translateY(-50%) 无缝循环
+    ab.innerHTML = one + one;
+    var dur = Math.max(6, alerts.length * 2.8);
+    ab.style.animationDuration = dur + 's';
+  }
+
+  // ① 卡口车流量 TopN（纵轴显示卡口名称+编号）
+  var flow = (d.car_flow_top5 || []).map(function(x){ return x; });
+  getChart('chart_flow').setOption({
+    backgroundColor:'transparent',
+    grid:{left:60,right:24,top:20,bottom:30},
+    tooltip:{trigger:'axis',backgroundColor:'rgba(10,26,44,.92)',borderColor:'#2f6f9f',textStyle:{color:'#e8f1ff'},
+      formatter:function(ps){ var p=ps[0]; return p.name+'：'+p.value+' 次过车'; }},
+    xAxis:{type:'value',axisLine:{lineStyle:{color:'#2f6f9f'}},axisLabel:{color:'#93aed6'},splitLine:{lineStyle:{color:'rgba(22,52,92,.6)'}}},
+    yAxis:{type:'category',data:flow.map(function(x){
+             var xy = MAP_NODES[x.monitor_id];
+             return xy ? xy[2] : ('卡口 '+x.monitor_id);
+           }).reverse(),
+           axisLine:{lineStyle:{color:'#2f6f9f'}},axisLabel:{color:'#c3d5ef',fontSize:11}},
+    series:[{type:'bar',data:flow.map(function(x){return x.carCount;}).reverse(),barWidth:16,
+             itemStyle:{
+               color:new echarts.graphic.LinearGradient(0,0,1,0,[{offset:0,color:'rgba(14,165,233,.35)'},{offset:1,color:'#22d3ee'}]),
+               borderRadius:[0,6,6,0],shadowColor:'rgba(34,211,238,.45)',shadowBlur:8
+             },
+             label:{show:true,position:'right',color:'#a5f3fc',fontSize:11}}]
+  }, true);
+
+  // ② 卡口状态
+  getChart('chart_state').setOption({
+    backgroundColor:'transparent',
+    tooltip:{trigger:'item',backgroundColor:'rgba(10,26,44,.92)',borderColor:'#2f6f9f',textStyle:{color:'#e8f1ff'}},
+    legend:{bottom:0,textStyle:{color:'#c3d5ef'}},
+    graphic:[{type:'text',left:'center',top:'37%',style:{text:'卡口\n状态',fill:'#5a7fae',fontSize:13,textAlign:'center',lineHeight:18}}],
+    series:[{type:'pie',radius:['42%','70%'],center:['50%','44%'],
+      itemStyle:{borderColor:'#0a1c33',borderWidth:2,shadowColor:'rgba(34,211,238,.25)',shadowBlur:10},
+      data:[
+        {name:'正常卡口',value:ms.noraml_monitor_count||0,itemStyle:{color:'#34d399'}},
+        {name:'异常卡口',value:ms.abnormal_monitor_count||0,itemStyle:{color:'#f87171'}}
+      ],label:{color:'#c3d5ef',fontSize:12}}]
+  }, true);
+
+  // ③ 速度 Top10（轮动列表：按速度降序排名，金/银/铜前三）
+  var sp = (d.speed_top10||[]).slice();
+  sp.sort(function(a,b){ return Number(b.speed) - Number(a.speed); });
+  var spEl = document.getElementById('speedList');
+  if(!sp.length){
+    spEl.innerHTML = '<div style="color:#4a6a92">暂无数据</div>';
+    spEl.style.animation = 'none';
+  } else {
+    var spc = ['#ffd700','#c0c0c0','#cd7f32'];
+    var one = sp.slice(0,10).map(function(x,i){
+      var nm = MAP_NODES[x.monitor_id] ? (MAP_NODES[x.monitor_id][2]+' '+x.monitor_id) : x.monitor_id;
+      var t = (x.action_time||'').slice(5,16);
+      return '<div><b style="color:'+(spc[i]||'#22d3ee')+'">'+(i+1)+'</b> <b style="color:#ffe08a">'+x.car+'</b> '+nm+
+             ' · <span style="color:#fca5a5">'+x.speed+' km/h</span> · '+t+'</div>';
+    }).join('');
+    spEl.innerHTML = one + one;
+    spEl.style.animationDuration = Math.max(8, sp.length*3) + 's';
+  }
+
+  // ④ 每日过车趋势
+  var day = d.trend_by_day||[];
+  getChart('chart_day').setOption({
+    backgroundColor:'transparent',
+    grid:{left:60,right:20,top:25,bottom:30},
+    tooltip:{trigger:'axis',backgroundColor:'rgba(10,26,44,.92)',borderColor:'#2f6f9f',textStyle:{color:'#e8f1ff'}},
+    xAxis:{type:'category',data:day.map(function(x){return x.date;}),axisLabel:{color:'#c3d5ef'},axisLine:{lineStyle:{color:'#2f6f9f'}}},
+    yAxis:{type:'value',axisLabel:{color:'#93aed6'},splitLine:{lineStyle:{color:'rgba(22,52,92,.6)'}}},
+    series:[{type:'bar',data:day.map(function(x){return x.cnt;}),barWidth:24,
+             itemStyle:{
+               color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'#38bdf8'},{offset:1,color:'rgba(56,189,248,.15)'}]),
+               borderRadius:[6,6,0,0],shadowColor:'rgba(56,189,248,.4)',shadowBlur:8
+             },
+             label:{show:true,position:'top',color:'#a5f3fc',fontSize:10}}]
+  }, true);
+
+  // ⑤ 24小时分布
+  var hr = d.trend_by_hour||[];
+  getChart('chart_hour').setOption({
+    backgroundColor:'transparent',
+    grid:{left:60,right:20,top:25,bottom:30},
+    tooltip:{trigger:'axis',backgroundColor:'rgba(10,26,44,.92)',borderColor:'#2f6f9f',textStyle:{color:'#e8f1ff'}},
+    xAxis:{type:'category',data:hr.map(function(x){return x.h+'时';}),axisLabel:{color:'#c3d5ef',interval:1},axisLine:{lineStyle:{color:'#2f6f9f'}}},
+    yAxis:{type:'value',axisLabel:{color:'#93aed6'},splitLine:{lineStyle:{color:'rgba(22,52,92,.6)'}}},
+    series:[{type:'line',smooth:true,data:hr.map(function(x){return x.cnt;}),
+             symbol:'circle',symbolSize:5,showSymbol:false,
+             itemStyle:{color:'#a78bfa'},
+             lineStyle:{color:'#a78bfa',width:2.5,shadowColor:'rgba(167,139,250,.55)',shadowBlur:8},
+             areaStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'rgba(167,139,250,.35)'},{offset:1,color:'rgba(167,139,250,.02)'}])}}]
+  }, true);
+
+  // ⑥ 车辆轨迹 → 模拟地图展示（传各卡口流量用于节点大小）
+  renderMap((d.tracks_sample||[]).slice(0,3).map(function(x,i){
+    return { car:x.car, cidx:i, pts:parseTrack(x.car_track) };
+  }).filter(function(c){ return c.pts.length>=2; }), d.monitor_flow);
+}
+
+/* ============ 中栏地图：ECharts 真实贵阳地图（registerMap GeoJSON + 经纬度卡口 + 轨迹飞线） ============ */
+// 9 个卡口 → 贵阳 OSM 真实红绿灯路口经纬度 [经度, 纬度, 地段名]（OpenStreetMap highway=traffic_signals 路口数据）
+var MAP_NODES = {
+  '0000':[106.62025,26.65722,'金融城'],   // 观山湖区·长岭北路路口
+  '0001':[106.62109,26.66394,'会展城'],   // 观山湖区·会展城路口
+  '0007':[106.64627,26.65509,'绿地联盛'], // 白云区南·路口
+  '0002':[106.71347,26.58153,'喷水池'],   // 云岩区·喷水池路口
+  '0003':[106.70176,26.58062,'大十字'],   // 云岩区·大十字路口
+  '0004':[106.70174,26.56438,'火车站'],   // 南明区·火车站路口
+  '0005':[106.69717,26.52804,'花果园'],   // 南明区·花果园路口
+  '0006':[106.77303,26.64719,'新添寨'],   // 乌当区·新添寨路口
+  '0008':[106.67747,26.35742,'大学城'],   // 花溪区·大学城路口
+  // ===== 新增：贵阳主要城区路口红绿灯（基于已有锚点相对定位）=====
+  '0009':[106.66620,26.65210,'贵阳北站'],  // 观山湖·北站立交
+  '0010':[106.63450,26.61530,'世纪城'],    // 观山湖·世纪城龙泉苑街
+  '0011':[106.65830,26.59020,'金阳客站'],  // 观山湖·金阳南路
+  '0012':[106.70310,26.58610,'紫林庵'],    // 云岩·延安中路
+  '0013':[106.69020,26.58340,'头桥'],      // 云岩·延安西路
+  '0014':[106.72430,26.60620,'大营坡'],    // 云岩·新添大道
+  '0015':[106.67210,26.59230,'三桥'],      // 云岩·三桥南路
+  '0016':[106.72240,26.56520,'油榨街'],    // 南明·宝山路
+  '0017':[106.69320,26.55010,'沙冲路'],    // 南明·沙冲中路
+  '0018':[106.71230,26.57020,'观水路'],    // 南明·观水路口
+  '0019':[106.67120,26.43210,'花溪公园'],  // 花溪·贵大道
+  '0020':[106.67530,26.43820,'贵州大学'],  // 花溪·溪北路口
+  '0021':[106.75520,26.63030,'振华广场']   // 乌当·新添大道
+};
+var MAP_DISTRICTS = {
+  '0000':'观山湖','0001':'观山湖','0007':'白云','0002':'云岩','0003':'云岩','0004':'南明','0005':'南明','0006':'乌当','0008':'花溪',
+  '0009':'观山湖','0010':'观山湖','0011':'观山湖','0012':'云岩','0013':'云岩','0014':'云岩','0015':'云岩',
+  '0016':'南明','0017':'南明','0018':'南明','0019':'花溪','0020':'花溪','0021':'乌当'
+};
+// 核心卡口（数据库有真实过车数据）：亮青色发光；其余为补充监测点：暗蓝色
+var CORE_MONITORS = {'0000':1,'0001':1,'0002':1,'0003':1,'0004':1,'0005':1,'0006':1,'0007':1,'0008':1};
+var MAP_COLORS = ['#22d3ee','#fbbf24','#a78bfa'];
+var MAP_STATE = { cars:[], idx:0, step:0, timer:null, flow:{} };
+
+function placeName(m){ var xy=MAP_NODES[m]; return xy ? (MAP_DISTRICTS[m]+'·'+xy[2]) : m; }
+
+function parseTrack(s){
+  if(!s) return [];
+  return s.split('|').map(function(x){
+    var i=x.indexOf('=');
+    return { m:x.slice(0,i), t:x.slice(i+1) };
+  }).filter(function(p){ return MAP_NODES[p.m]; });
+}
+
+function drawMapE(cars, flow){
+  var el = document.getElementById('mapEchart');
+  if(!el) return;
+  if(!MAP_STATE.echart) MAP_STATE.echart = echarts.init(el);
+  // 注册真实贵阳地图（js/guiyang.js 提供 GUIYANG_GEO：6 个主城区 GeoJSON 边界）
+  if(!echarts.getMap('guiyang')) echarts.registerMap('guiyang', GUIYANG_GEO);
+  var maxCnt = 1;
+  for(var fk in flow){ if(flow[fk] > maxCnt) maxCnt = flow[fk]; }
+  // 卡口数据：真实经纬度 + 该卡口实际流量（流量大的地段节点大）
+  var scData = Object.keys(MAP_NODES).map(function(k){
+    var xy = MAP_NODES[k], cnt = flow[k]||0;
+    var isCore = !!CORE_MONITORS[k];
+    return { name:k, value:[xy[0], xy[1], cnt], isCore:isCore };
+  });
+  var option = {
+    backgroundColor:'transparent',
+    animationDurationUpdate:600,
+    tooltip:{trigger:'item',backgroundColor:'rgba(10,26,44,.92)',borderColor:'#2f6f9f',textStyle:{color:'#e8f1ff'},
+      formatter:function(p){
+        if(p.seriesType==='effectScatter'||p.seriesType==='scatter'){
+          var xy=MAP_NODES[p.data.name]||[];
+          var tag = p.data.isCore ? '核心卡口' : '补充监测点';
+          var flow = p.data.isCore ? '<br/>过车 '+p.data.value[2]+' 次' : '<br/>（该时段无过车记录）';
+          return '<b>['+tag+'] 卡口 '+p.data.name+' · '+(xy[2]||'')+'</b><br/>位置 '+(MAP_DISTRICTS[p.data.name]||'')+'区 · '+(xy[2]||'')+'<br/>坐标 '+p.data.value[0].toFixed(4)+', '+p.data.value[1].toFixed(4)+flow;
+        }
+        if(p.seriesType==='lines') return p.data.car||'车辆轨迹';
+        if(p.componentType==='geo') return p.name;
+        return '';
+      }},
+    geo:{ // 真实贵阳地图底：区县边界 + 可拖拽缩放
+      map:'guiyang', roam:true,
+      aspectScale: Math.cos(26.57*Math.PI/180),
+      zoom:1.42, center:[106.70,26.56],
+      label:{show:true,color:'#6f93c0',fontSize:10,
+        formatter:function(p){ return (p.name||'').replace(/区|县|市$/,''); }},
+      itemStyle:{areaColor:'rgba(13,43,77,.6)',borderColor:'#1b4a78',borderWidth:1},
+      emphasis:{itemStyle:{areaColor:'rgba(22,78,140,.7)'},label:{color:'#a5f3fc'}}
+    },
+    series:[
+      { // ① 卡口实心点（半径随流量，发光；标签 = 卡口号 + 经纬度坐标）
+        type:'scatter', coordinateSystem:'geo', z:3,
+        data: scData,
+        symbolSize:function(val, params){
+          if(params.data.isCore) return 7 + Math.round(13*val[2]/maxCnt);
+          return 6; // 补充监测点固定小尺寸
+        },
+        itemStyle:{
+          color:function(p){
+            return p.data.isCore
+              ? new echarts.graphic.RadialGradient(0.4,0.3,1,[{offset:0,color:'#67e8f9'},{offset:1,color:'rgba(14,165,233,.45)'}])
+              : new echarts.graphic.RadialGradient(0.4,0.3,1,[{offset:0,color:'#7ea8d8'},{offset:1,color:'rgba(80,120,180,.4)'}]);
+          },
+          borderColor:'#0a1c33',borderWidth:1.5,
+          shadowColor:function(p){ return p.data.isCore ? 'rgba(34,211,238,.55)' : 'rgba(120,160,210,.3)'; },
+          shadowBlur:14
+        },
+        label:{show:true,position:'right',color:'#ffe08a',fontSize:9,lineHeight:12,fontWeight:'bold',
+          backgroundColor:'rgba(8,24,46,.72)',borderColor:'rgba(34,211,238,.45)',borderWidth:0.6,borderRadius:3,padding:[3,5],
+          formatter:function(p){
+            var xy=MAP_NODES[p.data.name]||[];
+            var v=p.data.value;
+            return p.data.name+' '+xy[2]+'\n坐标 '+v[0].toFixed(3)+','+v[1].toFixed(3);
+          }},
+        labelLayout:{moveOverlap:'shiftY',hideOverlap:false}
+      },
+      { // ② 卡口涟漪脉冲（仅核心点）
+        type:'effectScatter', coordinateSystem:'geo', z:2,
+        data: scData.filter(function(d){return d.isCore;}),
+        rippleEffect:{brushType:'stroke',scale:3.4,period:3.6},
+        symbolSize:function(val){ return 5 + Math.round(11*val[2]/maxCnt); },
+        itemStyle:{color:'#22d3ee',shadowColor:'rgba(34,211,238,.65)',shadowBlur:10}
+      },
+      { // ③ 车辆轨迹飞线（光点沿真实路径流动）
+        type:'lines', id:'trajLines', coordinateSystem:'geo', z:4,
+        data: [],
+        effect:{show:true,period:5.5,trailLength:0.5,symbol:'circle',symbolSize:4.5,color:'#fff'},
+        lineStyle:{width:2,opacity:.55,curveness:0}
+      }
+    ]
+  };
+  MAP_STATE.echart.setOption(option, true);
+}
+
+// 生成全部车辆的轨迹线数据：不同颜色，当前车高亮（线更亮更粗），其余车淡显
+function buildTrajData(){
+  return MAP_STATE.cars.map(function(c,i){
+    var coords = c.pts.map(function(p){ var xy=MAP_NODES[p.m]; return [xy[0], xy[1]]; });
+    var active = (i===MAP_STATE.idx);
+    return {
+      coords: coords, car: c.car,
+      lineStyle:{ color: MAP_COLORS[i], width: active?2.6:1.3, opacity: active?0.9:0.25, curveness:0 },
+      effect:{ show: active, color: MAP_COLORS[i], period:5.5, trailLength:0.5, symbol:'circle', symbolSize: active?5:3 }
+    };
+  }).filter(function(d){ return d.coords.length>=2; });
+}
+
+function switchCarE(car){
+  if(!car || !MAP_STATE.echart || !MAP_STATE.cars.length) return;
+  MAP_STATE.echart.setOption({
+    series: [{ id:'trajLines', data: buildTrajData() }]
+  });
+  for(var i=0;i<MAP_STATE.cars.length;i++){
+    var lg=document.getElementById('lg'+i);
+    if(lg) lg.className='lg'+(i===MAP_STATE.idx?' active':'');
+  }
+  document.getElementById('mapCarInfo').textContent='\u25b6 '+car.car+' · '+placeName(car.pts[0].m)+' · '+(car.pts[0].t||'')+' · 途经 '+car.pts.length+' 个卡口';
+}
+
+function pickCar(i){
+  if(!MAP_STATE.cars.length) return;
+  MAP_STATE.idx=i;
+  switchCarE(MAP_STATE.cars[i]);
+}
+
+function renderMap(cars, flow){
+  if(MAP_STATE.timer){ clearInterval(MAP_STATE.timer); MAP_STATE.timer=null; }
+  MAP_STATE.cars=cars; MAP_STATE.idx=0; MAP_STATE.flow=flow||{};
+  drawMapE(cars, flow);
+  var lgEl=document.getElementById('mapLegend');
+  if(cars.length){
+    lgEl.innerHTML=cars.map(function(c,i){
+      return '<span class="lg'+(i===0?' active':'')+'" id="lg'+i+'" onclick="pickCar('+i+')">'+
+             '<span class="dot" style="background:'+MAP_COLORS[i]+'"></span>'+esc(c.car)+'</span>';
+    }).join('');
+    switchCarE(cars[0]);
+    MAP_STATE.timer=setInterval(function(){
+      if(!MAP_STATE.cars.length) return;
+      MAP_STATE.idx=(MAP_STATE.idx+1)%MAP_STATE.cars.length;
+      switchCarE(MAP_STATE.cars[MAP_STATE.idx]);
+    }, 6000);
+  } else {
+    lgEl.innerHTML='<span style="color:#4a6a92">暂无轨迹数据</span>';
+    document.getElementById('mapCarInfo').textContent='暂无轨迹数据';
+  }
+  if(MAP_STATE.echart) MAP_STATE.echart.resize();
+}
+
+window.addEventListener('resize', function(){ if(MAP_STATE.echart) MAP_STATE.echart.resize(); });
+
+function fmt(n){ if(n===undefined||n===null) return '--'; return Number(n).toLocaleString('zh-CN'); }
+function esc(s){ var d=document.createElement('div'); d.textContent=s||''; return d.innerHTML; }
+
+function loadData(){
+  var btn = document.getElementById('refreshBtn');
+  btn.disabled = true;
+  fetch('http://localhost:5001/api/summary', {cache:'no-store'})
+    .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+    .then(function(d){
+      render(d);
+      var st=document.getElementById('connStatus');
+      st.textContent='数据实时 · '+d.updated_at; st.className='status ok';
+    })
+    .catch(function(e){
+      var st=document.getElementById('connStatus');
+      st.textContent='API 连接失败（请启动 api/traffic_api.py）'; st.className='status err';
+    })
+    .finally(function(){ btn.disabled=false; });
+}
+
+loadData();
+setInterval(loadData, 30000);
+</script>
+</body>
+</html>
