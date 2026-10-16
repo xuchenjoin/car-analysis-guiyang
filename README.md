@@ -12,6 +12,9 @@
 
 ## 效果展示
 
+### 实时联动大屏（总览）
+![实时联动大屏](docs/screenshots/realtime-dashboard.png)
+
 ### 实时流量监控（百度地图）
 ![实时流量监控](docs/screenshots/high-traffic.png)
 
