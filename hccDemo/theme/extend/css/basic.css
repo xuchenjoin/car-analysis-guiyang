@@ -1,0 +1,139 @@
+/* margin 样式 */
+.m10 {
+    margin: 10px;
+}
+
+/* margin top 样式 */
+.mt0 {
+    margin-top: 0 !important;
+}
+
+.mt3 {
+    margin-top: 3px;
+}
+
+.mt5 {
+    margin-top: 5px;
+}
+
+.mt10 {
+    margin-top: 10px;
+}
+
+.mt15 {
+    margin-top: 15px;
+}
+
+.mt20 {
+    margin-top: 20px;
+}
+
+.mt25 {
+    margin-top: 25px;
+}
+
+.mt30 {
+    margin-top: 30px;
+}
+
+.mt40 {
+    margin-top: 40px;
+}
+
+/* margin bottom 样式 */
+.mb10 {
+    margin-bottom: 10px;
+}
+
+.mb20 {
+    margin-bottom: 20px;
+}
+
+.mb40 {
+    margin-bottom: 40px;
+}
+
+.mb50 {
+    margin-bottom: 50px;
+}
+
+/* margin left 样式 */
+.ml10 {
+    margin-left: 10px;
+}
+
+.ml5 {
+    margin-left: 5px;
+}
+
+.ml15 {
+    margin-left: 15px;
+}
+
+.ml20 {
+    margin-left: 20px;
+}
+
+.ml30{
+    margin-left: 30px;
+}
+/* margin right 样式 */
+.mr0 {
+    margin-right: 0;
+}
+
+.mr5 {
+    margin-right: 5px;
+}
+
+.mr10 {
+    margin-right: 10px;
+}
+
+.mr15 {
+    margin-right: 15px;
+}
+
+.mr20 {
+    margin-right: 20px;
+}
+
+/* padding bottom 样式 */
+.pb10 {
+    padding-bottom: 10px;
+}
+
+/* padding left 样式 */
+.pl15 {
+    padding-left: 15px;
+}
+
+.pl80 {
+    padding-left: 80px;
+}
+/*padding right 样式  */
+.pr10{
+	padding-right: 10px;
+}
+.pr30{
+	padding-right: 30px;
+}
+/* #START: fixed tinyUI issue - edit page, top message box always covers left buttons */
+.frame-cloud-messages-out {
+    left: 250px;
+    right: 0;
+    min-width: 990px !important;
+    max-width: 1630px !important;
+    width: inherit !important;
+}
+
+.frame-cloud-messages-in {
+    min-width: inherit !important;
+    max-width: inherit !important;
+}
+
+#frame-cloud-messages-tips {
+    padding-left: 0 !important;
+}
+
+/* fixed tinyUI issue #END */

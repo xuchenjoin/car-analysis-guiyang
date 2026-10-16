@@ -1,0 +1,148 @@
+
+    
+	
+    <script type="text/javascript">
+
+	
+function changeLinkColor(col)
+{
+	var ele = "demo"+col;
+	var ele1 = "block"+col;
+	var col=document.getElementById(ele);
+	var ele2 = document.getElementById(ele1);
+	
+	col.style.color="#FFFFFF";
+	ele2.style.opacity="0.8";
+	col.style.height="6"
+	
+	
+	
+}
+
+function changeLinkColor1(col)
+{
+	var ele = "demo"+col;
+	var ele1 = "block"+col;
+	var col=document.getElementById(ele);
+	var ele2 = document.getElementById(ele1);
+	col.style.color="#808080";
+	ele2.style.opacity="0.3";
+	col.style.height="4";
+	
+}
+
+	
+    </script>
+
+
+
+<body>
+    <!--  header starts -->
+    <div id="service-menus" class="container-fluid">
+        <div id="console-top-menu" class="console-top-menu common-page-header common-font-size-big1">
+            <div id="menu" class="menu console-content-padding common-content-screen" style="background-color:#000">
+                <div class="frame-menu-left common-link-inherit-color">
+                    <span style="font-size:16px;color:#ffffff;padding-left:10px;">智能交通大数据分析系统</span>
+                </div>
+                <div class="dropdowm pull-right">
+                    <a class="console-footer-btn dropdown-toggle console-footer-btn-dropdown" data-toggle="dropdown" style="height: 60px;padding-top: 20px;color:#fff">
+                        <span class="padding-left-25" ng-bind="languageName"></span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-language common-dropdown-menu common-font-size-common" style="width:110px;min-width:auto;right:auto;cursor: pointer;">
+                        <li ng-repeat="languageArr in supportLanguage" ng-if="languageArr[0] !== language">
+                        <a target="_self" ng-click="changeLanguage(languageArr[0])">
+                            <span ng-bind="languageArr[1]"></span>
+                        </a>
+                        </li>
+                    </ul>
+                 </div>
+
+            </div>
+        </div>
+    </div>
+    <!--  header ends -->
+    <!-- content starts-->
+    <div class="body-content" style="background-image:url(images/main.png);">
+        <div style="padding: 180px 100px;position: relative;width: 100%;min-height:650px;margin:0;" class="row">
+            <div class="col-md-6 col-sm-6 col-xs-6" style="padding:0px 150px;color:white;">
+                <h2 class="content-title" style="font-size: 30px;">{{i18n.home_title}}</h2>
+                <p class="content-body" style="padding: 30px 0px 20px 0px;font-size: 18px;width:746px;">{{i18n.home_desc}}</p>
+                <button type="button" class="ti-btn-default ti-btn-large homebtn" style="border:none;" ng-click="openApp()" onmouseover="" mate_data_ts="www_china_zh-cn_v3_hccDemo.click.hccDemo_homePage_content-btn_try-now_20180705">
+                    <span style="font-size:18px;" class="btn-label">{{i18n.home_button}}</span>
+                </button>              
+            </div>
+            <!-- div class="col-md-6 col-sm-6 col-xs-6" style="padding:0px 150px">
+                <img src="images/main.png" class="banner img-responsive">
+            </div -->
+        </div>
+        <div style="min-height:300px;width: 100%;">
+            <div class="row" style="margin:0;">
+                <div class="col-md-1 col-sm-1 col-xs-1"></div>
+                <div class="col-md-2 col-sm-2 col-xs-2" style="height:200px;text-align:center;color:white;margin-top:  -12px;">
+                    <h3 style="font-size:20px;padding:10px 0px;color:#CCCCCC;text-align:center;">{{i18n.fakecar_header}}</h3>
+                    <div id="set1">
+                    <a  href="index.html?locale={{language}}#fakeCar/map" style="font-size:14px;color:grey;text-align:left;display:block;" onmouseover="changeLinkColor(1)" onmouseout="changeLinkColor1(1)" id="demo1" mate_data_ts="www_china_zh-cn_v3_hccDemo.click.hccDemo_homePage_content-desc_fakecar-desc_0_20180705">{{i18n.fakecar_desc}}</a>
+                    <a class="hover" href="index.html?locale={{language}}#fakeCar/map" style="opacity:0.3;background:#16c8e1;width:300px;height:4px;position:absolute;top:238px; display: inline-block;left:0px;" id="block1" ></a>
+               		</div>
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-2" style="height:200px;text-align:center;color:white;margin-top: -12px;">
+                    
+                    <h3 style="font-size:20px;padding:10px 0px;color:#CCCCCC;text-align:center;">{{i18n.hightraffic_header}}</h3>
+                    <a href="index.html?locale={{language}}#highTraffic/map" style="font-size:14px;color:grey;text-align:left;display:block;" onmouseover="changeLinkColor(2)" onmouseout="changeLinkColor1(2)" id="demo2" mate_data_ts="www_china_zh-cn_v3_hccDemo.click.hccDemo_homePage_content-desc_hightraffic-desc_1_20180705">{{i18n.hightraffic_desc}}</a>
+					<a href="index.html?locale={{language}}#highTraffic/map" style="opacity:0.3;background:#16c8e1;width:300px;height:4px; position:absolute;display: inline-block;top:238px;left:0px;" id="block2"></a>
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-2" style="height:200px;text-align:center;color:white;margin-top:  -12px;">
+                    
+                    <h3 style="font-size:20px;padding:10px 0px;color:#CCCCCC;text-align:center;">{{i18n.trafficstatistics_header}}</h3>
+                    <a href="index.html?locale={{language}}#trafficStat/map" style="font-size:14px;color:grey;text-align:left;display:block;" onmouseover="changeLinkColor(3)" onmouseout="changeLinkColor1(3)" id="demo3" mate_data_ts="www_china_zh-cn_v3_hccDemo.click.hccDemo_homePage_content-desc_trafficstatistics-desc_2_20180705">{{i18n.trafficstatistics_desc}}</a>
+					<a href="index.html?locale={{language}}#trafficStat/map" style="opacity:0.3;background:#16c8e1;width:300px;height:4px; position:absolute;display: inline-block;top:238px;left:0px;" id="block3"></a>
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-2" style="height:200px;text-align:center;color:white;margin-top:  -12px;">
+                    
+                    <h3 style="font-size:20px;padding:10px 0px;color:#CCCCCC;text-align:center;">{{i18n.carmovement_header}}</h3>
+                    <a href="index.html?locale={{language}}#carMovement/map" style="font-size:14px;color:grey;text-align:left;display:block;" onmouseover="changeLinkColor(4)" onmouseout="changeLinkColor1(4)" id="demo4" mate_data_ts="www_china_zh-cn_v3_hccDemo.click.hccDemo_homePage_content-desc_carmovement-desc_3_20180705">{{i18n.carmovement_desc}}</a><br>
+					<a href="index.html?locale={{language}}#carMovement/map" style="opacity:0.3;background:#16c8e1;width:300px;height:4px;position:absolute; display: inline-block;top:238px;left:0px;" id="block4"></a>
+                </div>
+                <div class="col-md-1 col-sm-1 col-xs-1"></div>
+
+            </div>
+        </div>
+    </div>
+    <!-- content ends-->
+    <!-- footer starts-->
+    <!-- <div id="service-footer" class="container-fluid">
+        <div id="console-top-footer" class="console-top-footer common-page-footer frame-small-font-size">
+            <div id="footer" class="footer-copyright-content common-link-inherit-color console-content-padding common-content-screen">
+                <div class="pull-left">
+                    <a class="console-footer-btn dropdown-toggle console-footer-btn-dropdown" data-toggle="dropdown">
+                        <span class="hwsicon-frame-image-footer-earth"></span>
+                        <span class="padding-left-25" ng-bind="languageName">中文(简体)</span>
+                    </a>
+                </div>
+                <div class="pull-left">
+                    <a class="console-footer-btn dropdown-toggle console-footer-btn-dropdown" data-toggle="dropdown">
+                        <span class="hwsicon-frame-image-email"></span>
+                        <span class="padding-left-5" ng-bind="languageName">中文</span>
+                    </a>
+                </div>
+
+                <div class="pull-right">
+                    <span class="margin-left-3 margin-right4 pull-left">Copyright © 2017 Huawei Technologies Co., Ltd. All rights reserved 苏ICP09062682- 13 苏B2-20130048</span>
+                    <div class="pull-left console-footer-vertical-line"></div>
+                    <a href="http://www.hwclouds.com/en-us/declaration/statement.html" class="console-footer-btn pull-left" target="_blank">Legal Statement</a>
+
+                    <div class="pull-left console-footer-vertical-line"></div>
+                    <a href="http://www.hwclouds.com/en-us/declaration/sa_prp.html" class="console-footer-btn pull-left" target="_blank">Privacy Protection</a>
+
+                    <div class="pull-left console-footer-vertical-line"></div>
+                    <a href="http://www.hwclouds.com/en-us/declaration/sa_cua.html" class="console-footer-btn pull-left" target="_blank">Legal Agreement</a>
+
+                    <div class="pull-left console-footer-vertical-line"></div>
+                    <a href="http://www.hwclouds.com/en-us/declaration/sa_nisr.html" class="console-footer-btn pull-left" target="_blank">Network Access Security Responsibility</a>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    
+ </body>
+    <!-- footer ends-->

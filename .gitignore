@@ -1,0 +1,26 @@
+# macOS
+.DS_Store
+
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+
+# Maven
+target/
+*.jar
+!.mvn/wrapper/maven-wrapper.jar
+
+# Tomcat / build
+*.war
+*.log
+
+# 本地临时文件
+hccDemo/test-map.html
+hccDemo/lib/baidu/*.bak
+
+# 敏感配置
+hccDemo/WEB-INF/classes/app.conf.local
+mvn-settings.xml

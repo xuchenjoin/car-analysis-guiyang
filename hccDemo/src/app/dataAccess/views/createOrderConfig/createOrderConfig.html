@@ -1,0 +1,132 @@
+<div class="row">
+    <div id="createOrderConfig" class="pull-left col-xs-10 pl80">
+        <div class="timeLine">
+            <div class="container-fluid">
+                <div class="category_title">
+                    <div class="circle">
+                        <span class="out_circle"></span>
+                        <span class="inner_circle"></span>
+                    </div>
+                    <span ng-bind="i18n.dps_create_order_basicinfo_title" class="ng-binding"></span>
+                </div>
+                <div id="CreatePipelineName">
+                    <dl class="row">
+                        <dt class="col-xs-2 required" ng-bind="i18n.dps_pipeline_name_tab"></dt>
+                        <dd class="col-xs-10">
+                            <div class="pull-left mr10">
+                                <tiny-textbox id="newStepNameTextBox2.id" value="newStepNameTextBox2.value"
+                                              width="newStepNameTextBox2.width" validate="newStepNameTextBox2.validate"
+                                              placeholder="newStepNameTextBox2.placeholder" tipPosition="right"
+                                              keydown="newStepNameTextBox2.keydown()" focused="newStepNameTextBox2.focused"
+                                        ></tiny-textbox>
+                            </div>
+                            <span class="mt5 common-color-prompt pull-left col1" ng-bind="i18n.dps_createPipeline_default_name_description"></span>
+                        </dd>
+                        <dt class="col-xs-2 blank" ng-bind="i18n.dps_pipelinelist_table_description">
+                        </dt>
+                        <dd class="col-xs-10">
+                            <div class="pull-left mr10 mt5">
+                                <tiny-textbox id="newStepDescriptionTextBox2.id" value="newStepDescriptionTextBox2.value" max-length="newStepDescriptionTextBox2.maxLength"
+                                              type="newStepDescriptionTextBox2.type" width="newStepDescriptionTextBox2.width" height="newStepDescriptionTextBox2.height" placeholder="newStepDescriptionTextBox2.placeholder" tipPosition="right" validate="newStepDescriptionTextBox2.pipelineDescriptionCheck" resize="newStepDescriptionTextBox2.resize">
+                                </tiny-textbox>
+                            </div>
+                        </dd>
+                    </dl>
+                </div>
+               <!-- <dl class="row">
+                    <dt class="col-xs-2 required">Region:</dt>
+                    <dd class="col-xs-10">
+                        <tiny-select class="pull-left"
+                                     id="regionsSelect.id"
+                                     values="regionsSelect.options"
+                                     width="regionsSelect.width"
+                                     option-width="regionsSelect.optionWidth"
+                                     change="regionsSelect.change()"
+                                     validate="regionsSelect.validate"> </tiny-select>
+                    </dd>
+                </dl>-->
+
+               <!-- <dl class="row">
+                    <dt class="col-xs-2 required">AZ:</dt>
+                    <dd class="col-xs-10">
+                        az1.dc1
+                        &lt;!&ndash;<tiny-select class="pull-left"
+                                     id="AZsSelect.id"
+                                     values="AZsSelect.options"
+                                     width="AZsSelect.width"
+                                     option-width="AZsSelect.optionWidth"
+                                     change="AZsSelect.change()"
+                                     validate="AZsSelect.validate"> </tiny-select>&ndash;&gt;
+                    </dd>
+                </dl>-->
+
+                <!--<div class="category_title">
+                    <div class="circle">
+                        <span class="out_circle"></span>
+                        <span class="inner_circle"></span>
+                    </div>
+                    <span ng-bind="i18n.dps_create_order_pick_service" class="ng-binding"></span>
+                </div>
+
+                <dl class="row">
+                    <dt class="col-xs-2 required">Service:</dt>
+                    <dd class="col-xs-10">
+                        <tiny-select class="pull-left"
+                                     id="servicesSelect.id"
+                                     values="servicesSelect.options"
+                                     width="servicesSelect.width"
+                                     option-width="AZsSelect.optionWidth"
+                                     change="servicesSelect.change()"
+                                     validate="servicesSelect.validate"> </tiny-select>
+                    </dd>
+                </dl>-->
+
+                <div class="category_title">
+                    <div class="circle">
+                        <span class="out_circle"></span>
+                        <span class="inner_circle"></span>
+                    </div>
+                    <span ng-bind="i18n.dps_create_order_purchase_amount" class="ng-binding"></span>
+                </div>
+                <dl class="row">
+                    <dt class="col-xs-2 required" ng-bind="i18n.dps_create_order_buy_duration"></dt>
+                    <dd class="col-xs-10">
+                        <tiny-slider id="buyDurationSlider.id" width="buyDurationSlider.width" scale="buyDurationSlider.scale" value="buyDurationSlider.value"
+                                     from="buyDurationSlider.from" to="buyDurationSlider.to"
+                                     step="buyDurationSlider.step" change = "buyDurationSlider.change()" calculate = "buyDurationSlider.calculate"></tiny-slider>
+                    </dd>
+                </dl>
+
+            </div>
+
+        </div>
+        <hr>
+        <!--<div  style="padding: 5px 20px;">
+            <div id="isConfigOBS"></div>
+        </div>
+        <div  id="OBSPath" ng-hide="isHide"></div>-->
+        <div class="mt20 cost_info">
+            <h5 ng-bind="i18n.dps_create_order_fee" class="ng-binding"></h5><!-- 配置费用： -->
+            <div class="fee_money">
+                <span ng-bind="i18n.dps_create_order_fee_unit" class="ng-binding"></span>
+                <span ng-bind="Fee" class="fee ng-binding"></span>
+                <span ng-bind="FeeUnit" class="feeUnit ng-binding"></span>
+            </div>
+
+            <div class="fl">
+                <span ng-bind="i18n.dps_general_term_helpPrice_description" class="ng-binding"></span>
+                <a ng-href={{commonInfo.dps_price}} target="_blank"><span ng-bind="i18n.dps_general_term_helpPrice_value" class="ng-binding"></span></a>
+            </div>
+            <div class="floatCon">
+                <div class="pull-left">
+                    <tiny-button class="tiny-red-btn height-30 ng-isolate-scope" id="confirmConf.id" disable="confirmConf.disable" text="confirmConf.text" click ="confirmConf.click()"></tiny-button>
+                </div>
+            </div>
+            <div ng-show="isCertificate" class="fl">
+                <span ng-bind="i18n.dps_general_term_statusCertification_description" class="ng-binding" style="color: red"></span>
+                <a ng-click="goCustomerVerified()" target="_blank" href=""><span ng-bind="i18n.dps_general_term_goStatusCertification" class="ng-binding"></span></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-3"></div>
+</div>

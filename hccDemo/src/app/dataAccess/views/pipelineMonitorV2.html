@@ -1,0 +1,67 @@
+<div id="pipelineMonitorV2">
+	<div id="pipelineMonitorBreadcrumbs">
+		<a href="{{backLink}}" ng-bind="i18n.dps_pipeline_monitor_list"></a>
+		<span class="breadcrumbs-separator">&gt;</span>
+		<span ng-bind="currentPipelineName">{{currentPipelineName}}</span>
+	</div>
+
+    <div id="pipelineMonitorTableTopBar">
+        <div class="fr">
+            <div id="refreshList" title="{{i18n.dpsMonitorRefreshList}}" class="pull-left common-icon-refresh common-icon-refresh-button ml10" ng-click="refreshHistoryList()"></div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+    <div id="monitorTablesPanel">
+        <div id="historyListBlock">
+            <div class="block-title">
+                <span ng-class="panels.showHistoryListContent?'ti-angle-circle-o-down':'ti-angle-circle-o-right'" class="ti icon-title" ng-click="panels.showHistoryListContent=!panels.showHistoryListContent"></span><span class="title" ng-bind="i18n.dps_pipeline_monitor_history">History</span>
+            </div>
+            <div ng-show="panels.showHistoryListContent" class="block-content">
+                <tiny-table id="historyList.id" data="historyList.data" columns="historyList.columns"
+                            enable-pagination="historyList.enablePagination"
+                            cur-page="historyList.currentPage"
+                            checkbox="historyList.checkbox"
+                            callback="historyList.callback"
+                            length-change="historyList.lengthChange"
+                            display-length="historyList.displayLength"
+                            render-row="historyList.renderRow"
+                            columns-draggable="historyList.draggable"
+                            cell-click-active="historyList.cellClickActive"
+                            t-head-checkbox-fn="historyList.tHeadCheckboxFn"
+                            pagination-style="historyList.paginationStyle"
+                            change-select="historyList.changeSelect"
+                            total-records="historyList.totalRecords"
+                            length-menu="historyList.lengthMenu"
+                            table-language="historyList.tableLanguage">
+                </tiny-table>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div id="activitiesListBlock" ng-show="historyList.data && historyList.data.length>0">
+            <div class="block-title">
+                <span ng-class="panels.showActivitiesListContent?'ti-angle-circle-o-down':'ti-angle-circle-o-right'" class="ti icon-title" ng-click="panels.toggleDisplay('showActivitiesListContent')"></span><span class="title" ng-bind="i18n.dps_pipeline_monitor_activity_view">View Activities</span>
+            </div>
+            <div ng-show="panels.showActivitiesListContent" class="block-content">
+                <tiny-table id="viewActivitiesList.id" data="viewActivitiesList.data" columns="viewActivitiesList.columns"
+                            enable-pagination="viewActivitiesList.enablePagination"
+                            cur-page="viewActivitiesList.currentPage"
+                            checkbox="viewActivitiesList.checkbox"
+                            callback="viewActivitiesList.callback"
+                            length-change="viewActivitiesList.lengthChange"
+                            length-menu="viewActivitiesList.lengthMenu"
+                            display-length="viewActivitiesList.displayLength"
+                            render-row="viewActivitiesList.renderRow"
+                            columns-draggable="viewActivitiesList.draggable"
+                            cell-click-active="viewActivitiesList.cellClickActive"
+                            t-head-checkbox-fn="viewActivitiesList.tHeadCheckboxFn"
+                            pagination-style="viewActivitiesList.paginationStyle"
+                            change-select="viewActivitiesList.changeSelect"
+                            total-records="viewActivitiesList.totalRecords"
+                            table-language="viewActivitiesList.tableLanguage"></tiny-table>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+</div>

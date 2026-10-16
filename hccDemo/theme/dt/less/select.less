@@ -1,0 +1,97 @@
+@import "variables.less";
+@import "mixins.less";
+
+.tiny-select-input-field {
+  height: @input-height-base - 4;
+  border: 1px solid @input-border;
+  border-radius: @input-border-radius;
+  background-image: url("../images/tiny_icon_common.png");
+  background-position:100% -286px;
+  background-repeat: no-repeat;
+  padding: 1px 35px 1px 5px;
+}
+
+.tiny-select {
+    position: relative;
+    display: inline-block;
+    background-color: @input-bg;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.tiny-select-text {
+    outline: none;
+    box-shadow: none;
+    border: 0;
+    background-color: transparent;
+    height : @input-height-base - 3;
+    color: @input-color;
+    overflow: hidden;
+    text-overflow: ellipsis;
+     white-space: nowrap;
+  -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    padding-left: 3px;
+}
+
+.tiny-select-input-field-selected-down {
+    border-color: @input-focus-border @input-focus-border transparent @input-focus-border;
+    border-bottom-left-radius: 0!important;
+    border-bottom-right-radius: 0!important;
+}
+.tiny-select-input-field-selected-up {
+    border-color: transparent @input-focus-border @input-focus-border @input-focus-border;
+    border-top-left-radius: 0!important;
+    border-top-right-radius: 0!important;
+}
+
+.tiny-select-input-field-disable {
+    background-color: @input-bg-disabled;
+    color: @input-color-disabled;
+}
+.tiny-select-popup-container {
+    display: none;
+    position: absolute;
+    border: 1px solid @input-focus-border;
+    border-bottom-left-radius: @input-border-radius;
+    border-bottom-right-radius: @input-border-radius;
+    overflow-y: auto;
+    overflow-x:hidden;
+    background-color: #FFF;
+    z-index: 10002;
+}
+
+/**
+ * 针对下拉选项样式规则的修改，必须要测试在火狐31版本（或较早）中下拉框的滚轮操作是否正常
+ */
+.tiny-select-option {
+    list-style: none;
+    padding-left: 8px;
+    cursor: default;
+    height: 26px;
+    line-height: 26px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.tiny-select-popup-container-up {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-top-left-radius: @input-border-radius;
+    border-top-right-radius: @input-border-radius;
+}
+
+.tiny-select-option-selected {
+  color: @select-item-selected-color;
+  background: @select-item-selected-bg;
+}
+
+.tiny-select-option-default-selected {
+  color: @select-item-hover-color;
+  background: @select-item-hover-bg;
+}

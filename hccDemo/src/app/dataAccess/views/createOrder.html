@@ -1,0 +1,44 @@
+
+<div id="examineOrderOrder" class="container-fluid" ng-controller="createOrder.ctrl">
+    <div class="row">
+        <div class="stepHeadContBj common-creation-top-area">
+            <header class="stepHeader stepContainer" id="">
+                <h2 class="module_header pl15">
+                    <span ng-bind="i18n.dps_general_purchase_dps_service_label"></span>
+                    <span class="sub_title"><span ng-bind="i18n.dps_create_new_order_description"></span>
+                        <a class="txt_blue" ng-bind="i18n.dps_create_new_order_click" target="_blank"
+                           ng-href="{{LearnMoreLink}}">
+                        </a>
+                    </span>
+                </h2>
+
+                <ul class="tinyplus-wizard-steps">
+
+                    <li ng-class="{active:step.curStep >= 1,complete:step.curStep >1}">
+
+                        <span class="tinyplus-step-title ng-binding" ng-bind="i18n.dps_create_new_order_service_config"></span>
+                        <div class="tinyplus-step-icon"></div>
+
+                    </li>
+
+                    <li ng-class="{active:step.curStep >= 2, undo:step.curStep < 2,complete:step.curStep === 3}">
+
+                        <span class="tinyplus-step-title ng-binding" ng-bind="i18n.dps_create_new_order_confirm"></span>
+                        <div class="tinyplus-step-icon"></div>
+
+                    </li>
+
+                    <li ng-class="{active:step.curStep >= 3, undo:step.curStep <3,complete:step.curStep >3}">
+
+                        <span class="tinyplus-step-title ng-binding" ng-bind="i18n.dps_order_service_complete"></span>
+                        <div class="tinyplus-step-icon"></div>
+
+                    </li>
+                </ul>
+            </header>
+        </div>
+        <div class="applyWrap console-content-padding ng-scope" >
+            <div ui-view class="stepContainer"></div>
+        </div>
+    </div>
+</div>

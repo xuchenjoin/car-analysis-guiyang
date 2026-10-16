@@ -1,0 +1,63 @@
+
+<html ng-controller="menusCtrl">
+<style>
+  /* 去掉选中tab的蓝色outline，只保留红色下边框 */
+  .console-topbar-btn:focus, .console-topbar-btn:active, .console-topbar-btn:hover {
+    outline: none !important;
+    border: none !important;
+  }
+  .topMenu.active > a {
+    outline: none !important;
+  }
+</style>
+<div id="console-top-menu" class="console-top-menu common-page-header common-font-size-big1 common-link-inherit-color">
+    <div id="menu" class="menu console-content-padding common-content-screen" style="background-color:black">
+        <div class="frame-menu-left" style="width:100%">
+
+        	<ul style="list-style-type: none;" class="list-inline">
+        		<li class="topMenu topMenuFirst list-inline-item" style="margin-bottom:-13px;">
+        			<a ui-sref="homePage" class="console-topbar-btn console-menu-home-link">
+                    	<span class="menu-hwsicon-frame-index">{{i18n.homepage_header}}</span>
+                	</a>
+        		</li>
+        		<li class="topMenu list-inline-item" ng-class="{active: $state.includes('fakeCar')}">
+        			<a ui-sref="fakeCar.map" class="console-topbar-btn console-menu-home-link">
+                    <span class="menu-hwsicon-frame-home">{{i18n.fakecar_header}}</span>
+                </a>
+        		</li>
+        		<li class="topMenu list-inline-item" ng-class="{active: $state.includes('highTraffic')}">
+        		     <a ui-sref="highTraffic.map" class="console-topbar-btn console-menu-home-link">
+                    <span class="menu-hwsicon-frame-home">{{i18n.hightraffic_header}}</span>
+                </a>
+        		</li>
+        		<li class="topMenu list-inline-item" ng-class="{active: $state.includes('trafficStat')}">
+        			<a ui-sref="trafficStat.map" class="console-topbar-btn console-menu-home-link">
+        			<span class="menu-hwsicon-frame-home">{{i18n.trafficstatistics_header}}</span>
+				</a>
+                </li>
+        		<li class="topMenu list-inline-item" ng-class="{active: $state.includes('carMovement')}">
+        			<a ui-sref="carMovement.map" class="console-topbar-btn console-menu-home-link">
+                    <span class="menu-hwsicon-frame-home">{{i18n.carmovement_header}}</span>
+                </a>
+        		</li>
+        		<li class="topMenu list-inline-item pull-right pr30" style="padding-right:0;">
+	        		 <div class="dropdowm pull-right">
+                        <a class="console-footer-btn dropdown-toggle console-footer-btn-dropdown" data-toggle="dropdown" style="height: 60px;padding-top: 20px;color:#fff">
+                            <span class="hwsicon-frame-image-footer-earth"></span>
+                            <span class="padding-left-25" ng-bind="languageName"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-language common-dropdown-menu common-font-size-common" style="width:110px;min-width:auto;right:auto;cursor: pointer;">
+                            <li ng-repeat="languageArr in supportLanguage" ng-if="languageArr[0] !== language">
+                            <a target="_self" ng-click="changeLanguage(languageArr[0])">
+                                <span ng-bind="languageArr[1]"></span>
+                            </a>
+                            </li>
+                        </ul>
+                    </div>
+        		</li>
+        	</ul>
+
+        </div>
+    </div>
+</div>
+</html>

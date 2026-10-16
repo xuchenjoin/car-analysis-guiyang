@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" type="text/css" href="css/pageframework.css"/>
+    <link rel="stylesheet" type="text/css" href="css/browsersupport.css"/>
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+</head>
+<body>
+    <div id="template"></div>
+    <script type="text/javascript" src="lib/ejs_production.js"></script>
+    <script type="text/javascript" src="lib/require.js"></script>
+    <script>
+        window.onload = function () {
+            function trimEmpty(value) {
+                if (!value) {
+                    return '';
+                }
+                return value.replace(/(^\s*)|(\s*$)/g, '');
+            }
+
+            var result;
+            if (document.cookie) {
+                var consoleCookies = document.cookie.split(';');
+                var cookie;
+                for (var i = 0; i < consoleCookies.length; i++) {
+                    cookie = consoleCookies[i].split('=');
+                    if (cookie && cookie.length >= 2 && 'locale' === trimEmpty(cookie[0])) {
+                        result = trimEmpty(cookie[1]);
+                    }
+                }
+            }
+
+            var lang = 'zh';
+            if ('en-us' === result) {
+                lang = 'en';
+            }
+            require.config({
+                "baseUrl": "./",
+                "paths": {
+                    "language": "i18n/" + lang
+                }
+            });
+            require(["language/framework"], function (i18n) {
+                var result = new EJS({url: 'templates/supportBrowsers.ejs'}).render({"i18n": i18n});
+                document.getElementById('template').innerHTML = result;
+            });
+        };
+    </script>
+</body>
+</html>

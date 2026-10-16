@@ -1,0 +1,39 @@
+.hwsicon-frame-service-ctc-cdn:before {
+    content: "\e100";
+}
+.hwsicon-frame-service-ctc-cloudcall:before {
+    content: "\e101";
+}
+.hwsicon-frame-service-ctc-cloudsb:before {
+    content: "\e102";
+}
+.hwsicon-frame-service-ctc-csgateway:before {
+    content: "\e103";
+}
+
+
+.hwsicon-frame-service-ctc-desktop:before {
+    content: "\e104";
+}
+.hwsicon-frame-service-ctc-domainname:before {
+    content: "\e105";
+}
+.hwsicon-frame-service-ctc-email:before {
+    content: "\e106";
+}
+.hwsicon-frame-service-ctc-mixedcloud:before {
+    content: "\e107";
+}
+
+.hwsicon-frame-service-ctc-vpacess:before {
+    content: "\e108";
+}
+.hwsicon-frame-service-ctc-ypt:before {
+    content: "\e109";
+}
+.hwsicon-frame-service-ctc-ysb:before {
+    content: "\e10a";
+}
+.hwsicon-frame-service-ctc-tecservice:before {
+    content: "\e10b";
+}

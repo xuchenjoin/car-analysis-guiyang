@@ -1,0 +1,13 @@
+.hws-hide {
+    display: none !important;
+}
+
+.hws-show {
+    display: block !important;
+}
+
+.default-style .common-help {
+    display: none;
+}
+
+

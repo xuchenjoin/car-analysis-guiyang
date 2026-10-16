@@ -1,0 +1,87 @@
+@import "variables.less";
+@import "mixins.less";
+
+.ui-dialog-titlebar {
+  border: none;
+  border-bottom: 1px solid #f7f5f5;
+  height: @window-titleBar-height;
+  line-height: @window-titleBar-height;
+  background: -webkit-linear-gradient(top, #fafafa, #ececec);
+  background: -moz-linear-gradient(top, #fafafa, #ececec);
+  background: -o-linear-gradient(top, #fafafa, #ececec);
+  background: linear-gradient(top, #fafafa, #ececec);
+  box-shadow: 0 0 2px #ABA8A8;
+}
+
+.ui-widget-overlay {
+  opacity: 0.2;
+  background-color: #000;
+  filter: Alpha(Opacity=30);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.ui-dialog.ui-widget-content {
+  background: @window-content-background-color;
+  color: @window-content-text-color;
+  position: absolute;
+  width : 330px;
+  box-shadow: 1px 7px 15px #b3b3b3;
+}
+
+.ui-dialog.ui-corner-all, .ui-dialog .ui-corner-bottom, .ui-dialog .ui-corner-right, .ui-dialog .ui-corner-br {
+  -moz-border-radius-bottomright: @window-border-radious;
+  -webkit-border-bottom-right-radius: @window-border-radious;
+  -khtml-border-bottom-right-radius: @window-border-radious;
+  border-bottom-right-radius: @window-border-radious;
+}
+.ui-dialog.ui-corner-all, .ui-dialog .ui-corner-bottom, .ui-dialog .ui-corner-left, .ui-dialog .ui-corner-bl {
+  -moz-border-radius-bottomleft: @window-border-radious;
+  -webkit-border-bottom-left-radius: @window-border-radious;
+  -khtml-border-bottom-left-radius: @window-border-radious;
+  border-bottom-left-radius: @window-border-radious;
+}
+.ui-dialog.ui-corner-all, .ui-dialog .ui-corner-top, .ui-dialog .ui-corner-right, .ui-dialog .ui-corner-tr {
+  -moz-border-radius-topright: @window-border-radious;
+  -webkit-border-top-right-radius: @window-border-radious;
+  -khtml-border-top-right-radius: @window-border-radious;
+  border-top-right-radius: @window-border-radious;
+}
+.ui-dialog.ui-corner-all, .ui-dialog .ui-corner-top, .ui-dialog .ui-corner-left, .ui-dialog .ui-corner-tl {
+  -moz-border-radius-topleft: @window-border-radious;
+  -webkit-border-top-left-radius: @window-border-radious;
+  -khtml-border-top-left-radius: @window-border-radious;
+  border-top-left-radius: @window-border-radious;
+}
+
+.tiny-img-prompt {
+  width: 41px;
+  height: 41px;
+  font-size: 40px;
+  margin-top: 15px;
+  color: #5ECC49; // prompt型消息框的图标颜色
+}
+.tiny-img-confirm {
+  width: 40px;
+  height: 40px;
+  font-size: 40px;
+  margin-top: 15px;
+  color: #1DCFEF; // confirm型消息框的图标颜色
+}
+.tiny-img-error {
+  width: 40px;
+  height: 40px;
+  font-size: 40px;
+  margin-top: 15px;
+  color:#FC5043; // error型消息框的图标颜色
+}
+.tiny-img-warn {
+  width: 40px;
+  height: 40px;
+  font-size: 40px;
+  margin-top: 15px;
+  color: #EFE034; // warn型消息框的图标颜色
+}

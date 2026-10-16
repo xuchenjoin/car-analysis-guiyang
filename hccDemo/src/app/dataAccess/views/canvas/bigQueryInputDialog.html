@@ -1,0 +1,15 @@
+<div id="bigQueryInputDialog" class="bigQueryPanel" ng-controller="bigQueryInputDialog.ctrl">
+    <div style="font-weight: bolder">[ <span ng-bind="currentEditingPropertyName"></span> ]</div>
+	<textarea id="sparkSQLInputBox" name="sparkSQLInputBox" ng-model="sparkSQLInputBoxValue"></textarea>
+</div>
+<script>
+    require(
+            [ "app/dataAccess/controllers/canvas/bigQueryInputDialog"],
+            function() {
+                angular.element(document).injector().invoke(function($compile) {
+                    var scope = $("#bigQueryInputDialog").scope();
+                    $compile($("#bigQueryInputDialog"))(scope);
+                    scope.$digest();
+                })
+            });
+</script>

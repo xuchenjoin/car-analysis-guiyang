@@ -1,0 +1,12 @@
+<div class="canvasHintContainer" style="width: 100%;position: absolute;background-color: red;z-index: 9999;"
+     ng-include="'src/app/dataAccess/views/canvas/hint.html'" ng-controller="hint.ctrl"></div>
+<div class="toolbarContainer" ng-include="'src/app/dataAccess/views/canvasView/toolbarView.html'"
+     ng-controller="toolbar.ctrl"></div>
+<div class="editorContainer">
+    <div class="right-container">
+        <div class="canvasContainer" ng-include="'src/app/dataAccess/views/canvasView/canvasView.html'"
+             ng-controller="canvas.ctrl" ng-style="{'margin-left':compsLayout.ifShow?'0px':'-257px'}"></div>
+        <div class="configureContainer" ng-include="'src/app/dataAccess/views/canvasView/configurationViewPanel.html'"
+             ng-controller="configurationPanel.ctrl" ng-style="{display:layout.ifShow?'':'none'}"></div>
+    </div>
+</div>

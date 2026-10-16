@@ -1,0 +1,83 @@
+@import "variables.less";
+@import "mixins.less";
+
+.jslider {
+  display: block;
+  width: 100%;
+  position: relative;
+  top: 0.6em;
+  font-size: 12px;//字体大小  可变
+  color: #999;//字体颜色 可变
+  height: 5px;
+}
+
+.jslider .jslider-bg i {
+  position: absolute;
+  font-size: 0;
+  top: 0;
+  background: @slider-bg;
+  height:5px;
+}
+
+.jslider .jslider-bg .l {
+  width: 10%;
+  left: 0;
+  border-radius: @slider-border-radius 0 0 @slider-border-radius;
+}
+
+.jslider .jslider-bg .r {
+  border-radius: 0 @slider-border-radius @slider-border-radius 0;
+  width: 10%;
+  left: 90%;
+}
+.jslider .jslider-bg .v {
+  position: absolute;
+  width: 60%;
+  left: 20%;
+  top: 0;
+  border-radius: @slider-border-radius;
+  height: 5px;
+}
+.jslider .jslider-bg i.v {
+  background: @slider-bg;
+}
+.jslider .jslider-bg i.tiny-jslider-from {
+  background: @slider-from-bg;
+  border-radius: @slider-border-radius 0 0 @slider-border-radius;
+  z-index: 1;
+}
+.jslider.jslider-single .jslider-bg i.tiny-jslider-from {
+  background: @slider-value-bg;
+}
+.jslider .jslider-bg i.tiny-jslider-to {
+  background: @slider-value-bg;
+  border-radius: @slider-border-radius 0 0 @slider-border-radius;
+}
+.tiny-jslider-value-tip {
+  z-index: 999999;
+  position: absolute;
+  border:1px solid @slider-tip-border;
+  border-radius: 5px;
+  background-color: @slider-tip-bg;
+  padding: 4px 8px;
+  word-wrap: break-word;
+  white-space: pre;
+}
+.tiny-jslider-value-tip:after, .tiny-jslider-value-tip:before {
+  top: 100%;
+  left: 50%;
+  content: " ";
+  position: absolute;
+  pointer-events: none;
+}
+.tiny-jslider-value-tip:after {
+  .triangle-down(12px;5px;@slider-tip-border);
+  margin-left: -6px;
+  z-index: 1000000;
+}
+
+.tiny-jslider-value-tip:before {
+  .triangle-down(10px;4px;@slider-tip-bg);
+  margin-left: -5px;
+  z-index: 1000001;
+}

@@ -1,0 +1,18 @@
+<div class="ctrl-container">
+    <div id="editorPipelineName">
+        <a href="{{backLink}}" ng-bind="i18n.dps_pipeline_monitor_list"></a>
+        <span class="breadcrumbs-separator">&gt;</span>
+        <span title="{{editorPipelineName}}" ng-bind="editorPipelineName"></span>
+    </div>
+	<div id="console-toolbar" class="toolbar-frame-small-font-size">
+    	<div class="toolbar-content-left">
+            <tiny-button  id="submitBtn.id" class="tiny-red-btn canvas-toolbar-btn"  text="submitBtn.text"  ng-click="toolbar_button.submit()"></tiny-button>
+            <tiny-button  id="scheduleBtn.id" class="tiny-red-btn canvas-toolbar-btn"  text="scheduleBtn.text"  ng-click="toolbar_button.timer()"></tiny-button>
+            <!--<tiny-button  id="monitorBtn.id" class="tiny-red-btn canvas-toolbar-btn"  text="monitorBtn.text"  ng-click="toolbar_button.view()"></tiny-button>-->
+    	</div>
+    	<div class="toolbar-content-right">
+    		<div class="toolbar-content-right-inner-left">
+    		</div>
+    	</div>
+	</div>
+</div>

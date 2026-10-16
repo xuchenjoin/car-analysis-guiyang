@@ -1,0 +1,40 @@
+@import "variables.less";
+@import "mixins.less";
+
+.tiny_input_ip_container {
+  border: 1px solid @input-border;
+  border-radius: @input-border-radius;
+  .box-shadow(@input-box-shadow);
+  background-color: @input-bg;
+  padding: @input-padding-vertical 5px; 
+  display: inline-block;
+}
+
+.tiny_input_ip_container_focus{
+  border: 1px solid @input-focus-border;
+}
+
+.tiny_input_ip_octet, .tiny_input_ip_octet_v6 {
+  width: 35px;
+  text-align: center;
+  outline: none;
+  border: 0;
+  background-color: transparent;
+  color: @input-color;
+  height: @input-height-base - 2 - @input-padding-vertical*2;
+  line-height: @input-height-base - 2 - @input-padding-vertical*2;
+}
+.tiny_input_ip_octet {
+  width: 30px;
+}
+.tiny_ip_container_disable{
+  background-color: @input-bg-disabled;
+  color: @input-color-disabled;
+}
+.tiny_input_ip_division{
+  color: @input-color;
+  font-weight:bold;
+  display: inline-block;
+  width: 3px;
+  font-family: "Helvetica","Myriad",Arial,"Microsoft Yahei","??им?", "SimSun", Tahoma;
+}

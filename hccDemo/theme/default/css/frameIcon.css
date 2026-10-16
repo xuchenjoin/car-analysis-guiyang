@@ -1,0 +1,492 @@
+@font-face {
+    font-family: 'icomoon';
+    src:url('../fonts/frameIcomoon.eot');
+    src:url('../fonts/frameIcomoon.eot') format('embedded-opentype'),
+    url('../fonts/frameIcomoon.woff') format('woff'),
+    url('../fonts/frameIcomoon.ttf') format('truetype'),
+    url('../fonts/frameIcomoon.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="hwsicon-frame-service"], [class*=" hwsicon-frame-service"] {
+    font-family: 'icomoon';
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+[class^="hwsicon-frame-image"], [class*=" hwsicon-frame-image"] {
+    font-family: 'icomoon';
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.hwsicon-frame-service-ecm:before {
+    content: "\e62a";
+}
+.hwsicon-frame-service-dcc:before {
+    content: "\e643";
+}
+.hwsicon-frame-service-ess:before {
+    content: "\e61b";
+}
+.hwsicon-frame-service-ims:before {
+    content: "\e622";
+}
+
+.hwsicon-frame-service-dcs:before {
+    content: "\e61d";
+}
+
+.hwsicon-frame-service-dbs:before {
+    content: "\e61e";
+}
+.hwsicon-frame-service-vbs:before {
+    content: "\e623";
+}
+.hwsicon-frame-service-obs:before {
+    content: "\e61c";
+}
+
+.hwsicon-frame-service-vpc:before {
+    content: "\e626";
+}
+.hwsicon-frame-service-elb:before {
+    content: "\e61f";
+}
+
+.hwsicon-frame-service-webscan:before {
+    content: "\e618";
+}
+.hwsicon-frame-service-waf:before {
+    content: "\e619";
+}
+.hwsicon-frame-service-antiddos:before {
+    content: "\e624";
+}
+
+.hwsicon-frame-service-ces:before {
+    content: "\e629";
+}
+.hwsicon-frame-service-iam:before {
+    content: "\e615";
+}
+
+.hwsicon-frame-service-rds:before {
+    content: "\e621";
+}
+
+.hwsicon-frame-service-bigdata:before {
+    content: "\e61a";
+}
+
+.hwsicon-frame-service-eae:before {
+    content: "\e628";
+}
+.hwsicon-frame-service-devcloud:before {
+    content: "\e627";
+}
+
+.hwsicon-frame-service-dec:before {
+    content: "\e625";
+}
+.hwsicon-frame-service-cloudformation:before {
+    content: "\e641";
+}
+.hwsicon-frame-service-cms:before {
+    content: "\e642";
+}
+.hwsicon-frame-service-workspace:before {
+    content: "\e648";
+}
+.hwsicon-frame-service-si:before {
+    content: "\e649";
+}
+.hwsicon-frame-service-bms:before {
+    content: "\e64a";
+}
+.hwsicon-frame-service-hid:before {
+    content: "\e64e";
+}
+.hwsicon-frame-service-cloudtrace:before {
+    content: "\e64f";
+}
+.hwsicon-frame-service-smn:before {
+    content: "\e650";
+}
+.hwsicon-frame-service-des:before {
+    content: "\e652";
+}
+.hwsicon-frame-service-directconnect:before {
+    content: "\e651";
+}
+.hwsicon-frame-service-hbase:before {
+    content: "\e653";
+}
+
+.hwsicon-frame-service-codeci:before {
+    content: "\e654";
+}
+
+.hwsicon-frame-service-testman:before {
+    content: "\e655";
+}
+
+.hwsicon-frame-service-tas:before {
+    content: "\e656";
+}
+
+.hwsicon-frame-service-codecheck:before {
+    content: "\e657";
+}
+
+.hwsicon-frame-service-sfs:before {
+    content: "\e658";
+}
+
+.hwsicon-frame-service-releaseman:before {
+    content: "\e659";
+}
+
+.hwsicon-frame-service-codeci2:before {
+    content: "\e65a";
+}
+
+.hwsicon-frame-service-hml:before {
+    content: "\e65b";
+}
+
+.hwsicon-frame-service-codehub:before {
+    content: "\e65c";
+}
+
+.hwsicon-frame-service-projectman:before {
+    content: "\e65d";
+}
+
+.hwsicon-frame-service-molap:before {
+    content: "\e65e";
+}
+
+.hwsicon-frame-service-stream:before {
+    content: "\e65f";
+}
+
+.hwsicon-frame-service-kms:before {
+    content: "\e660";
+}
+
+.hwsicon-frame-service-maas:before {
+    content: "\e661";
+}
+
+.hwsicon-frame-service-das:before {
+    content: "\e662";
+}
+
+.hwsicon-frame-service-dis:before {
+    content: "\e663";
+}
+
+.hwsicon-frame-service-datacraft:before {
+    content: "\e664";
+}
+
+.hwsicon-frame-service-dms:before {
+    content: "\e665";
+}
+
+
+.hwsicon-frame-service-vpn:before {
+    content: "\e666";
+}
+
+
+.hwsicon-frame-service-dns:before {
+    content: "\e667";
+}
+
+.hwsicon-frame-service-crs:before {
+    content: "\e66f";
+}
+
+.hwsicon-frame-service-eab:before {
+    content: "\e670";
+}
+
+.hwsicon-frame-service-cpl:before {
+    content: "\e671";
+}
+
+.hwsicon-frame-service-ars:before {
+    content: "\e672";
+}
+
+.hwsicon-frame-service-ssa:before {
+    content: "\e673";
+}
+
+.hwsicon-frame-service-pcop:before {
+    content: "\e674";
+}
+
+.hwsicon-frame-service-scs:before {
+    content: "\e675";
+}
+
+.hwsicon-frame-service-dem:before {
+    content: "\e676";
+}
+
+.hwsicon-frame-service-cvc:before {
+    content: "\e678";
+}
+
+.hwsicon-frame-service-ccs:before {
+    content: "\e67c";
+}
+
+.hwsicon-frame-service-deh:before {
+    content: "\e67d";
+}
+
+.hwsicon-frame-service-css:before {
+    content: "\e67e";
+}
+
+.hwsicon-frame-service-dds:before {
+    content: "\e67f";
+}
+
+.hwsicon-frame-service-cdn:before {
+    content: "\e680";
+}
+
+.hwsicon-frame-service-dws:before {
+    content: "\e681";
+}
+
+.hwsicon-frame-service-csbs:before {
+    content: "\e682";
+}
+
+.hwsicon-frame-service-csdr:before {
+    content: "\e683";
+}
+
+.hwsicon-frame-service-csha:before {
+    content: "\e684";
+}
+
+.hwsicon-frame-service-tms:before {
+    content: "\e685";
+}
+
+.hwsicon-frame-service-servicestage:before {
+    content: "\e686";
+}
+
+.hwsicon-frame-service-MobileTest:before {
+    content: "\e689";
+}
+
+.hwsicon-frame-service-drds:before {
+    content: "\e68b";
+}
+
+
+
+.hwsicon-frame-image-home:before {
+    content: "\e62b";
+}
+.hwsicon-frame-image-service:before {
+    content: "\e62c";
+}
+.hwsicon-frame-image-email:before {
+    content: "\e62d";
+}
+.hwsicon-frame-image-position:before {
+    content: "\e68a";
+}
+.hwsicon-frame-image-user-head:before {
+    content: "\e62e";
+}
+.hwsicon-frame-image-userCenter:before {
+    content: "\e62f";
+}
+.hwsicon-frame-image-order:before {
+    content: "\e630";
+}
+.hwsicon-frame-image-application:before {
+    content: "\e631";
+}
+.hwsicon-frame-image-iam:before {
+    content: "\e632";
+}
+.hwsicon-frame-image-marketplace:before {
+    content: "\e62c";
+}
+
+.hwsicon-frame-image-menu-authCenter:before {
+    content: "\e632";
+}
+.hwsicon-frame-image-menu-marketplace:before {
+    content: "\e62c";
+}
+.hwsicon-frame-image-menu-userCenter:before {
+    content: "\e615";
+}
+
+.hwsicon-frame-image-dashboard:before {
+     content: "\e614";
+ }
+
+
+.hwsicon-frame-image-changeRole:before {
+    content: "\e633";
+}
+.hwsicon-frame-image-logout:before {
+    content: "\e634";
+}
+.hwsicon-frame-image-favorite-true:before {
+    content: "\e63a";
+}
+.hwsicon-frame-image-favorite-false:before {
+    content: "\e639";
+}
+.hwsicon-frame-image-caret:before {
+    content: "\e63d";
+}
+.hwsicon-frame-image-caret-up:before {
+    content: "\e63c";
+}
+
+.hwsicon-frame-image-detail:before {
+    content: "\e635";
+}
+.hwsicon-frame-image-home-order:before {
+    content: "\e636";
+}
+.hwsicon-frame-image-businessOrder:before {
+    content: "\e637";
+}
+
+.hwsicon-frame-image-active:before {
+    content: "\e63b";
+}
+
+.hwsicon-frame-image-help:before {
+    content: "\e640";
+}
+.hwsicon-frame-image-icpLicence:before {
+    content: "\e63f";
+}
+
+.hwsicon-frame-image-robot:before {
+    content: "\e645";
+}
+
+.hwsicon-frame-image-help-drop:before {
+    content: "\e646";
+}
+
+.hwsicon-frame-image-quota:before {
+    content: "\e64b";
+}
+
+.hwsicon-frame-image-shopping-cart:before {
+    content: "\e64c";
+}
+
+.hwsicon-frame-image-footer-earth:before {
+    content: "\e64d";
+}
+
+.hwsicon-frame-image-hotlinecenter:before {
+    content: "\e66b";
+}
+
+.hwsicon-frame-image-pre-page:before {
+    content: "\e668";
+}
+
+.hwsicon-frame-image-next-page:before {
+    content: "\e669";
+}
+
+.hwsicon-frame-image-msg-delete:before {
+    content: "\e66a";
+}
+
+.hwsicon-frame-image-buy:before {
+    content: "\e638";
+}
+
+.hwsicon-frame-image-buy-other:before {
+    content: "\e66c";
+}
+
+.hwsicon-frame-image-tip:before {
+    content: "\e66d";
+}
+
+.hwsicon-frame-image-close:before {
+    content: "\e66e";
+}
+
+.hwsicon-frame-image-quota-ocb:before {
+    content: "\e677";
+}
+
+.hwsicon-frame-image-tick:before {
+    content: "\e679";
+}
+.hwsicon-frame-image-feedback:before {
+    content: "\e67a";
+}
+.hwsicon-frame-image-history:before {
+    content: "\e67b";
+}
+
+.hwsicon-frame-image-marketplace_isv:before {
+    content: "\e687";
+}
+
+.hwsicon-frame-image-marketplace_tenant:before {
+    content: "\e688";
+}
+
+.common-icon-refresh:before {
+    content: "\e644";
+    font-family: 'icomoon';
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.common-icon-help:before {
+    content: "\e647";
+    font-family: 'icomoon';
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}

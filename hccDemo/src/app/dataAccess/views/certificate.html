@@ -1,0 +1,27 @@
+<div id="publlicContent" class="dps-container">
+	<div class="row-fluid">
+        <div class="apply-info common-bgcolor-common common-color-prompt common-font-size-common mb20">
+            <span ng-bind="i18n.CertificateDescription"></span><a
+                class="a-cursor" target="_blank" ng-bind="i18n.datacraft_click_here"
+                ng-href="{{commonInfo.dpsApplyCertificateUrl}}"></a>
+        </div>
+		<div class="mt20">
+			<span class="pull-left mr20" ng-bind="i18n.dps_certificate_des_path"
+				style="line-height: 32px;"></span>
+			<tiny-textbox id="OBSPath.id" disable=false width="250"
+				value="OBSPath.value" tipPosition="right"
+				placeholder="OBSPath.placeholder" validate="OBSPath.validate"
+				style="display: inline" focused="false" readonly="true"
+				show-clear="true"></tiny-textbox>
+			<tiny-button id="OBSButton.id" class="ml10" text="OBSButton.text"
+				disable="OBSButton.disable" click="certifica(key)"></tiny-button>
+			<div id='OBSDescription' class='common-icon-help ml5'
+				style="display: inline; vertical-align: middle"></div>
+		</div>
+		<div class="applyBtn mt25">
+			<tiny-button disable="OBSButton.disable"
+				text="i18n.dps_certificate_title" ng-click="submitOBSPath()"
+				class="tiny-red-btn height-30"></tiny-button>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,55 @@
+@import "variables.less";
+@import "mixins.less";
+
+/*激活状态时的样式设置*/
+.tinyTabActive {
+  padding: 0 4px !important;
+  background: @tabs-active-background-color !important;
+  border-top: 3px solid @tabs-active-border-color !important;
+  border-right: 1px solid #dcdcdc;
+  border-left: 1px solid #dcdcdc;
+}
+.tinyTabActive a.tinyTab-a {
+  color:@tabs-active-text-color; // 激活状态下文本颜色
+}
+.tinyTabActive a.tinyTab-a:hover{
+  color: @tabs-active-text-color-hover; // 激活状态下鼠标hover时的文本颜色
+}
+
+.tinyTabActive .ui-icon-close {
+  color: #FC5043; // 关闭按钮在激活状态下的默认颜色
+}
+
+.ui-icon-close {
+  width: 8px;
+  height: 7px;
+  display: inline-block;
+  margin-top: 10px;
+  margin-left: 6px;
+  font-size: 12px;
+  line-height: 0.5em;
+  color: #928e8e; // 关闭按钮的默认颜色
+}
+
+.tiny-tabs-bottom .tinyTabActive {
+  border-bottom: 3px solid @tabs-active-border-color !important;
+  border-top: 0;
+  border-right: 1px solid #dcdcdc;
+  border-left: 1px solid #dcdcdc;
+}
+
+.tiny-tabs-left .tinyTabActive {
+  border-top: 1px solid #dcdcdc !important;
+  border-right: 0;
+  border-left: 3px solid @tabs-active-border-color !important;
+  border-bottom: 1px solid #dcdcdc!important;
+  margin-right: -1px;
+}
+
+.tiny-tabs-right .tinyTabActive {
+  padding: 0 5px !important;
+  border-top: 1px solid #dcdcdc !important;
+  border-right: 3px solid @tabs-active-border-color !important;
+  border-bottom: 1px solid #dcdcdc !important;
+  margin-left: -1px;
+}

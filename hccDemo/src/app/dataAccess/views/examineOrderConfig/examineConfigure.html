@@ -1,0 +1,19 @@
+<div>
+    <div>
+        <tiny-table id="configInfo.id" data='configInfo.data' columns='configInfo.columns'render-row="configInfo.renderRow" enable-pagination = "configInfo.enablePagination" table-language="configInfo.tableLanguage"></tiny-table>
+    </div>
+    <div class="mt20 cost_info">
+        <h5 ng-bind="i18n.dps_create_order_fee" class="ng-binding"></h5><!-- 配置费用： -->
+        <div class="fee_money">
+            <span ng-bind="i18n.dps_create_order_fee_unit" class="ng-binding">￥</span>
+            <span ng-bind="Fee" class="fee ng-binding"></span>
+            <span ng-bind="FeeUnit" class="feeUnit ng-binding"></span>
+        </div>
+    </div>
+
+    <div style="display: inline-block;width: 100%;"><div style="width:auto; display:inline-block !important; display:inline; " id="isKownRule"></div><a id="showAgreement" style="position: absolute;margin-left: 3px;margin-top: -1.5px;cursor: pointer" ng-click="serviceAgreement()">{{i18n.dps_examineOrder_service_protocol}}</a></div>
+    <div>
+        <tiny-button  id="preStep.id"  text='preStep.text'  click="preStep.click()"></tiny-button>
+        <tiny-button class="tiny-red-btn" id="confirmBuy.id" text='confirmBuy.text' disable="confirmBuy.disable" click="confirmBuy.click()"></tiny-button>
+    </div>
+</div>

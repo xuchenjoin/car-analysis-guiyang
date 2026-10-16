@@ -1,0 +1,57 @@
+@import "variables.less";
+@import "mixins.less";
+
+.tiny-spinner-container {
+	border: 1px solid @input-border;
+	border-radius: @input-border-radius;
+	.box-shadow(@input-box-shadow);
+	background-color: rgb(255, 255, 255);
+	height: @input-height-base - 2;
+	width: 134px;
+}
+.tiny-spinner-container-focus {
+	border: 1px solid @input-focus-border;
+}
+.tiny-spinner-editor {
+  float: left;
+  padding: @input-padding-vertical 0 @input-padding-vertical @input-padding-horizontal;
+  width: 110px;
+}
+
+.tiny-spinner-input {
+  width: 115px;
+  border: 0;
+  outline: none;
+  height: @input-height-base - 2 - @input-padding-vertical*2;
+  line-height:@input-height-base - 2 - @input-padding-vertical*2;
+  color: @input-color;
+  background-color: @input-bg;
+  ime-mode: disabled;
+}
+.tiny-spinner-upbtn {
+  float: right;
+  .triangle-up(8px;5px;@theme-color);
+  margin-top: 4px;
+  margin-right: 5px;
+}
+
+.tiny-spinner-downbtn {
+  float: right;
+  .triangle-down(8px;5px;@theme-color);
+  margin-top: 4px;
+  margin-right: 5px;
+}
+
+.tiny-spinner-container-disabled{
+	background-color: @input-bg-disabled;
+}
+.tiny-spinner-container-disabled .tiny-spinner-upbtn{
+  .triangle-up(8px;5px;#BCBCBC);
+}
+.tiny-spinner-container-disabled .tiny-spinner-downbtn {
+  .triangle-down(8px;5px;#BCBCBC);
+}
+.tiny-spinner-input-disabled {
+	background-color: @input-bg-disabled;
+	color: @input-color-disabled;
+}

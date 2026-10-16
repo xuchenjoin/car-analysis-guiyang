@@ -1,0 +1,94 @@
+<div id="scheduleInfoWindow" class="schedule-container" ng-controller="scheduleInfo.ctrl">
+    <div class="nav-container">
+        <div class="schedule-title"><span class="scheduletext"
+                                          ng-bind="i18n.dps_canvas_toolbar_pipelineRunninginterval"></span></div>
+        <div class="schedule-value">
+            <span class="scheduledatatime"><tiny-select id="selectTime.id" values="selectTime.values"
+                                                        select="selectTime.select(selectId, label)"
+                                                        width="selectTime.width"
+                                                        height="selectTime.height"></tiny-select></span>
+        <span class="scheduledatatime"><tiny-select id="selectType.id" values="selectType.values"
+                                                    select="selectType.select(selectId, label)"
+                                                    width="selectType.width"></tiny-select></span>
+        </div>
+
+    </div>
+    <div class="nav-container">
+        <div class="schedule-title"><span class="scheduletext"
+                                          ng-bind="i18n.dps_canvas_toolbar_pipelineStarttimeInside"></span></div>
+        <div class="schedule-value">
+           <span class="scheduledatatime">
+            <tiny-datetime id="timeRange.startTime.id"
+                           type="timeRange.startTime.type" width="timeRange.startTime.width"
+                           time-format="timeRange.startTime.timeFormat"
+                           date-format="timeRange.startTime.dateFormat"
+                           min-date="timeRange.startTime.minDate"
+                           max-date="timeRange.startTime.maxDate"
+                           ampm="timeRange.startTime.ampm"
+                           first-day="timeRange.startTime.firstDay"
+                           on-close="timeRange.startTime.close"
+                           default-date="timeRange.startTime.defaultDate"
+                           default-time="timeRange.startTime.defaultTime"></tiny-datetime>
+        </span>
+        </div>
+    </div>
+
+    <!--<div class="nav-container">
+        <div class="schedule-title"><span class="scheduletext" ng-bind="i18n.dps_canvas_toolbar_pipelineEndtimeInside"></span></div>
+        <div class="schedule-value">
+            <span class="scheduledatatime">
+                <tiny-datetime id="timeRange.endTime.id"
+                               type="timeRange.endTime.type" width="timeRange.endTime.width"
+                               time-format="timeRange.endTime.timeFormat"
+                               date-format="timeRange.endTime.dateFormat"
+                               min-date="timeRange.endTime.minDate"
+                               max-date="timeRange.endTime.maxDate"
+                               ampm="timeRange.endTime.ampm"
+                               first-day="timeRange.endTime.firstDay"
+                               on-close="timeRange.endTime.close"
+                               default-date="timeRange.endTime.defaultDate"
+                               default-time="timeRange.endTime.defaultTime"></tiny-datetime>
+            </span>
+        </div>
+
+
+    </div>-->
+    <div class="nav-container">
+        <div class="schedule-title"><span class="scheduletext"
+                                          ng-bind="i18n.dps_canvas_toolbar_pipelineEndtimeInside"></span></div>
+        <div class="schedule-value" style="margin: -10px 0 0 10px">
+            <tiny-radiogroup id="endRadioGroup.id" values="endRadioGroup.values"
+                             layout="endRadioGroup.layout" change="endRadioGroup.change()">
+            </tiny-radiogroup>
+        </div>
+    </div>
+
+    <div class="nav-container" style="margin-left: 100px;" ng-show="endDateTime">
+            <span class="scheduledatatime">
+                <tiny-datetime id="timeRange.endTime.id"
+                               type="timeRange.endTime.type" width="timeRange.endTime.width"
+                               time-format="timeRange.endTime.timeFormat"
+                               date-format="timeRange.endTime.dateFormat"
+                               min-date="timeRange.endTime.minDate"
+                               max-date="timeRange.endTime.maxDate"
+                               ampm="timeRange.endTime.ampm"
+                               first-day="timeRange.endTime.firstDay"
+                               on-close="timeRange.endTime.close"
+                               default-date="timeRange.endTime.defaultDate"
+                               default-time="timeRange.endTime.defaultTime"></tiny-datetime>
+            </span>
+    </div>
+
+
+</div>
+<script>
+    require(
+            ["app/dataAccess/controllers/scheduleInfoCtrl"],
+            function (scheduleInfoCtrl) {
+                angular.element(document).injector().invoke(function ($compile) {
+                    var scope = $("#scheduleInfoWindow").scope();
+                    $compile($("#scheduleInfoWindow"))(scope);
+                    scope.$digest();
+                })
+            });
+</script>

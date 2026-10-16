@@ -1,0 +1,38 @@
+<div id="connectionConfig" class="container-fluid" ng-controller="connectionConfig.ctrl">
+    <ul class="">
+        <li class="col-xs-12 text-left  margin-bottom3">Name</li>
+        <li  class="col-xs-12">
+            <tiny-textbox class="col-xs-9" value="formData.name"></tiny-textbox>
+        </li>
+        <li class="col-xs-12 text-left mt10 margin-bottom3">For relationships</li>
+        <li  class="col-xs-12" style="display: inline-block" ng-repeat="relation in formData.relationships">
+            <tiny-checkbox text="relation.name" checked="relation.checked" ></tiny-checkbox>
+        </li>
+        <li class="col-xs-12 text-left mt10  margin-bottom3">FlowFile expiration</li>
+        <li class="col-xs-12 text-left">
+            <tiny-textbox class="col-xs-9" value="formData.flowFileExpiration"></tiny-textbox>
+            <span ng-bind="formData.flowFileExpirationUnit" class="unit"></span>
+        </li>
+        <li class="col-xs-12 text-left mt10  margin-bottom3">Back pressure object threshold</li>
+        <li class="col-xs-12 text-left">
+            <tiny-textbox class="col-xs-9" value="formData.backPressureObjectThreshold"></tiny-textbox>
+            <span ng-bind="formData.backPressureObjectThresholdUnit" class="unit"></span>
+        </li>
+        <li class="col-xs-12 text-left mt10  margin-bottom3">Back pressure data size threshold</li>
+        <li class="col-xs-12 text-left">
+            <tiny-textbox class="col-xs-9" value="formData.backPressureDataSizeThreshold"></tiny-textbox>
+            <span ng-bind="formData.backPressureDataSizeThresholdUnit" class="unit"></span>
+        </li>
+    </ul>
+</div>
+<script>
+    require(
+            [ "app/business/dataCraft/controllers/windows/connectionConfig" ],
+            function(connectionConfig) {
+                angular.element(document).injector().invoke(function($compile) {
+                    var scope = $("#connectionConfig").scope();
+                    $compile($("#connectionConfig"))(scope);
+                    scope.$digest();
+                })
+            });
+</script>

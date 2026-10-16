@@ -1,0 +1,281 @@
+#step > div, .stepNum {
+    display: inline-block
+}
+
+#bannerQuickLink, #stepOne, #stepThree, #stepTwo, .msgBtn span, .passwordStrength, .stepNum, .submitBtn span {
+    text-align: center
+}
+
+#template {
+    height: 100%;
+}
+#step {
+    height: 70px;
+    width: 70%;
+    margin: 50px auto 10px;
+    font-size: 14px
+}
+
+#step > div {
+    width: 30%;
+    height: 60px;
+    float: left;
+    color: #CBCBCB;
+    margin-top: 20px
+}
+
+.field, .fieldContainer, .fieldLabel, .fieldLabel span {
+    float: right
+}
+
+#step hr {
+    margin: 5px 0
+}
+
+.baseHr {
+    border-top: 1px solid #CBCBCB;
+    border-bottom: 1px solid #CBCBCB;
+    background-color: #CBCBCB
+}
+
+.selectedHr {
+    border-top: 1px solid #E41E2B;
+    border-bottom: 1px solid #E41E2B;
+    background-color: #E41E2B
+}
+
+#stepOne {
+    margin-left: 5%
+}
+
+#stepNum1 {
+    margin-left: 25%
+}
+
+#stepTitle3 {
+    margin-right: 25%
+}
+
+.stepNum {
+    background-color: #CBCBCB;
+    border-radius: 15px;
+    height: 30px;
+    width: 30px;
+    color: #fff;
+    line-height: 30px;
+    font-size: 1.5em
+}
+
+.submitBtnWidth {
+    width: 298px
+}
+
+.submitBtn {
+    background-color: #BC0000;
+    border: 1px solid #BC0000;
+    border-radius: 3px;
+    color: #fff;
+    cursor: default
+}
+
+.submitBtn:hover {
+    cursor: pointer;
+    background-color: #f74141
+}
+
+.submitBtn span {
+    vertical-align: middle;
+    font-size: large;
+    height: 35px;
+    margin: 0 auto;
+    display: block;
+    line-height: 35px
+}
+
+.msgBtn {
+    height: 34px;
+    line-height: 34px;
+    border: 1px solid #c3c3c3;
+    background: #fff;
+    color: #666;
+    cursor: pointer;
+    width: 163px;
+    border-radius: 5px;
+    margin-left: 5px;
+    display: inline-block;
+    vertical-align: middle
+}
+
+.msgBtn span {
+    display: block
+}
+
+.msgBtn:hover {
+    color: #009ae7
+}
+
+.msgBtnDisabled {
+    cursor: default;
+    background: #ececec;
+    color: #999
+}
+
+.msgBtnDisabled:hover {
+    color: #999
+}
+
+.fieldContainer {
+    margin: 10px auto 0
+}
+
+.fieldContainerWithoutRightContainer {
+    margin: 10px 300px 0 auto;
+    float: right
+}
+
+.fieldContainer:after, .fieldContainer:before {
+    content: "";
+    display: table;
+    clear: both
+}
+
+.fieldLabel {
+    width: 200px;
+    margin-right: 20px;
+    height: 36px;
+    line-height: 36px;
+    color: #666
+}
+
+.field {
+    width: 305px;
+    margin-right: 10px
+}
+
+.passwordStrength {
+    background: #CCC;
+    display: block;
+    float: left;
+    font-size: .8em;
+    height: 15px;
+    line-height: 15px;
+    margin-right: 1px;
+    margin-top: 5px;
+    width: 99px
+}
+
+.notRequired, .required {
+    margin-right: 5px;
+    width: 5px
+}
+
+#bannerQuickLink, #laws {
+    height: 70px;
+    float: right;
+    line-height: 70px
+}
+
+#copyright, #laws, .notRequired, .required {
+    display: inline-block
+}
+
+.required {
+    color: red
+}
+
+.notRequired {
+    color: #F5F5F5
+}
+
+#logo {
+    margin-top: 15px;
+    border-width: 0px;
+}
+
+#bannerQuickLink a, #bannerQuickLink a:hover {
+    color: #E41E2B
+}
+
+#copyright {
+    height: 70px;
+    line-height: 70px
+}
+
+#laws a, #laws a:active, #laws a:hover, #laws a:link, #laws a:visited {
+    color: #898989;
+    cursor: pointer
+}
+
+.widthLimit {
+    max-width: 1440px;
+    min-width: 1280px;
+    margin: 0 auto;
+    padding: 0 20px
+}
+
+.widthLimit:after {
+    content: "";
+    display: table;
+    float: left
+}
+
+#banner {
+    background-color: #FFF;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    width: 100%;
+    min-width: 1280px;
+    height: 70px;
+    border-bottom: 1px solid #E4E4E4
+}
+
+#content, #footer {
+    position: relative
+}
+
+#content {
+    background-color: #F4F4F4
+}
+
+#content {
+    margin: 0 auto -70px auto;
+    height: 100%;
+    min-height: 800px
+}
+
+#content:before {
+    padding-top: 70px
+}
+
+*, body, html {
+    margin: 0;
+    padding: 0
+}
+
+#footer {
+    background-color: #434343;
+    color: #898989;
+    width: 100%;
+    height: 70px;
+    clear: both
+}
+
+body, html {
+    height: 100%;
+    font-size: 14px;
+    color: #333
+}
+
+.errorInfo {
+    height: 36px;
+    width: 300px;
+    float: right;
+    margin: 10px auto 0;
+    line-height: 36px
+}
+
+.errorInfo > span {
+    margin-left: 5px;
+    color: #333
+}

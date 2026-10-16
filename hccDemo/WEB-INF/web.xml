@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	id="WebApp_ID" version="3.1">
+	<display-name>UCC Demo</display-name>
+	<servlet>
+		<description></description>
+		<display-name>FakeCarServlet</display-name>
+		<servlet-name>FakeCarServlet</servlet-name>
+		<servlet-class>com.huawei.datasight.ai.demo.servlet.FakeCarServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<description></description>
+		<display-name>HighTrafficAreasServlet</display-name>
+		<servlet-name>HighTrafficAreasServlet</servlet-name>
+		<servlet-class>com.huawei.datasight.ai.demo.servlet.HighTrafficAreasServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<description></description>
+		<display-name>CarMovementPathServlet</display-name>
+		<servlet-name>CarMovementPathServlet</servlet-name>
+		<servlet-class>com.huawei.datasight.ai.demo.servlet.CarMovementPathServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<description></description>
+		<display-name>CarStatisticsServlet</display-name>
+		<servlet-name>CarStatisticsServlet</servlet-name>
+		<servlet-class>com.huawei.datasight.ai.demo.servlet.CarStatisticsServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<description></description>
+		<display-name>UQueryDataServlet</display-name>
+		<servlet-name>UQueryDataServlet</servlet-name>
+		<servlet-class>com.huawei.datasight.ai.demo.servlet.UQueryDataServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<description></description>
+		<display-name>CommonServlet</display-name>
+		<servlet-name>CommonServlet</servlet-name>
+		<servlet-class>com.huawei.datasight.ai.demo.servlet.CommonServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FakeCarServlet</servlet-name>
+		<url-pattern>/fakeCars</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>HighTrafficAreasServlet</servlet-name>
+		<url-pattern>/highTraffic</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>CarMovementPathServlet</servlet-name>
+		<url-pattern>/carMovement</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>CarStatisticsServlet</servlet-name>
+		<url-pattern>/carStatistics</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>UQueryDataServlet</servlet-name>
+		<url-pattern>/uquery</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>CommonServlet</servlet-name>
+		<url-pattern>/commonService</url-pattern>
+	</servlet-mapping>
+	<welcome-file-list>
+		<welcome-file>home.html</welcome-file>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+
+
+</web-app>

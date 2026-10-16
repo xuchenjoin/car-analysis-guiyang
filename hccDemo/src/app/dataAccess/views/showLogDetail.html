@@ -1,0 +1,26 @@
+<style type="text/css" >
+    .login_wrapper {
+        background-color: black;
+        height: 700px;
+        overflow-y: scroll;
+        margin-left: 10px
+    }
+    .login_header{
+        margin-bottom: 25px;
+        margin-left: 10px;
+    }
+</style>
+<div>
+    <div class="login_header">
+        <a ng-href="{{backLinkMonit}}" ng-bind="i18n.dps_pipeline_monitor_history"></a>
+        <span class="breadcrumbs-separator">&gt;</span>
+        <span ng-bind="currentLogPath"></span>
+    </div>
+    <div class="login_wrapper">
+        <div style="color: white;" >
+            <div id="logsContent" >
+            </div>
+
+        </div>
+    </div>
+</div>

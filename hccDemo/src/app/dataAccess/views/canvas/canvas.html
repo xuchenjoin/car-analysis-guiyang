@@ -1,0 +1,158 @@
+<div class="canvas-container-no-scrollbar">
+<div class="canvas-container">
+	<div class="zoom-panel" ng-style="{right: configureLayout.ifShow ? '540px' : '80px'}">
+		<div ng-click="zoomIn()" class="glyphicon glyphicon-zoom-in"></div>
+		<div ng-click="noZoom()" class="glyphicon glyphicon-repeat"></div>
+		<div ng-click="zoomOut()" class="glyphicon glyphicon-zoom-out"></div>
+	</div>
+<div class="canvas" id="canvas" ng-mousedown="mouseDown($event)" ng-init="canvasInit()">
+    <!-- draw process-->
+    <div ng-repeat="process in processArray track by $index" style="height:100%;width:100%;top:0;left:0;position:absolute">
+        <div id="{{process.id}}" class="processContainer" title={{process.name}} ng-class="{'data-source':process.processorType.toUpperCase()=='DATANODE',
+        'invoke-activity':process.processorType.toUpperCase()=='INVOKE_ACTIVITY',
+        'process-activity':process.processorType.toUpperCase()=='PROCESS_ACTIVITY',
+        'link-activity':process.processorType.toUpperCase()=='LINK_ACTIVITY',
+        'running':process.runStatus.toUpperCase()=='RUNNING',
+        'stopped':process.runStatus.toUpperCase()=='STOPPED',
+        'warning':process.runStatus.toUpperCase()=='INVALID',
+        'error':process.state.toUpperCase()=='DISABLED'}"
+             ng-mousedown="processMousedown(process, $event)"
+             ng-mouseup="processMouseup($event)"
+             ng-mouseenter="processMouseenter(process)"
+             ng-mouseleave="processMouseleave()"
+             ng-dblclick="processDbclick(process)"
+             ng-click="processClick(process, $event)"
+             ng-model="process"
+             ng-style="{left:process.position.x+'px',top:process.position.y+'px',width:process.width+'px',height:process.height+'px'}">
+            <div class="createLineIcon" id="createLineIcon" data-drag="true"
+                 data-jqyoui-options="{revert:true,revertDuration:0}"
+                 jqyoui-draggable="{animate:false,onStart:'lineCreatorDragStart',onDrag:'lineCreatorOnDrag',onStop:'lineCreatorDragStop'}"></div>
+            <div class="title"></div>
+            <div class="info_row">
+                <div class="type-icon"></div>
+                <span class="text" ng-bind="ellipsisByLength(process.name,13)"></span>
+            </div>
+            <div class="content-container" style="display:none">
+                <div class="content">
+                    <ul class="left">
+                        <li class="info_row">
+                            <span class="key in">In</span>
+                            <span class="value" ng-bind="process.input"></span>
+                        </li>
+                        <li class="info_row">
+                            <span class="key">Read</span>
+                            <span class="value" ng-bind="process.read"></span>
+                        </li>
+                        <li class="info_row">
+                            <span class="key">Write</span>
+                            <span class="value" ng-bind="process.written"></span>
+                        </li>
+                    </ul>
+                    <ul class="right">
+                        <li class="info_row">
+                            <span class="key out">Out</span>
+                            <span class="value" ng-bind="process.output"></span>
+                        </li>
+                        <li class="info_row">
+                            <span class="key">Tasks</span>
+                            <span class="value" ng-bind="process.tasks"></span>
+                        </li>
+                        <li class="info_row">
+                            <span class="key">Time</span>
+                            <span class="value" ng-bind="process.tasksDuration"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- tool bar-->
+            <div class="toolbar">
+            	<div class="delete-btn"></div>
+                <div class="background" ng-click="deleteProcess(process)"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- draw lines-->
+    <div ng-repeat="line in lines">
+        <div class="delete-connection" ng-click="deleteConnection(line)"  ng-style="{left:line.start.x+'px',top:line.start.y+'px',
+        'margin-top':line.start.side=='top'?'-10px':'10px',
+        'margin-left':line.start.side=='left'?'-10px':'10px'}"></div>
+        <div class="start_point" ng-style="{left:line.start.x+'px',top:line.start.y+'px'}"></div>
+        <div class="end_point" ng-style="{left:line.end.x+'px',top:line.end.y+'px'}"
+             ng-class="{'top':line.end.side=='bottom',
+        'bottom':line.end.side=='top',
+        'left':line.end.side=='right',
+        'right':line.end.side=='left'}"></div>
+        <div class="lineContainer" ng-style="{width:abs(line.start.x-line.end.x)+'px',
+                                               height:abs(line.start.y-line.end.y)+'px',
+                                               left:line.start.x<line.end.x?(line.start.x+'px'):(line.end.x+'px'),
+                                               top:line.start.y<line.end.y?(line.start.y+'px'):(line.end.y+'px')}">
+            <div ng-if="line.start.x==line.end.x||line.start.y==line.end.y" class="line single"
+                 ng-class="{'left':line.start.x==line.end.x,'top':line.start.y==line.end.y}"></div>
+            <div ng-if="line.start.x!=line.end.x&&line.start.y!=line.end.y" class="line"
+                 ng-class="{'top':((line.start.y<line.end.y)&&(line.start.side=='left'||line.start.side=='right'))||line.start.side=='top',
+                            'bottom':((line.start.y>line.end.y)&&(line.start.side=='left'||line.start.side=='right'))||line.start.side=='bottom',
+                 'right':((line.start.x>line.end.x)&&(line.start.side=='top'||line.start.side=='bottom'))||line.start.side=='right',
+                 'left':((line.start.x<line.end.x)&&(line.start.side=='top'||line.start.side=='bottom'))||line.start.side=='left'}"
+                 ng-style="{width:abs((line.start.x-line.end.x)-(line.start.x-line.end.x)/2)+'px',
+                    height:abs((line.start.y-line.end.y)-(line.start.y-line.end.y)/2)+'px',
+                    left:(((line.start.x>line.end.x)&&(line.start.side=='top'||line.start.side=='bottom'))||line.start.side=='left')?(abs(line.start.x-line.end.x)/2+'px'):0,
+                    top:(((line.start.y>line.end.y)&&(line.start.side=='left'||line.start.side=='right'))||line.start.side=='top')?(abs(line.start.y-line.end.y)/2+'px'):0}"></div>
+
+            <div ng-if="line.start.x!=line.end.x&&line.start.y!=line.end.y" class="line"
+                 ng-class="{'top':((line.start.y>line.end.y)&&(line.start.side=='left'||line.start.side=='right'))||line.start.side=='bottom',
+                            'bottom':((line.start.y<line.end.y)&&(line.start.side=='left'||line.start.side=='right'))||line.start.side=='top',
+                 'right':((line.start.x<line.end.x)&&(line.start.side=='top'||line.start.side=='bottom'))||line.start.side=='left',
+                 'left':((line.start.x>line.end.x)&&(line.start.side=='top'||line.start.side=='bottom'))||line.start.side=='right'}"
+                 ng-style="{width:abs(line.start.x-line.end.x)/2+'px',
+                 height:abs(line.start.y-line.end.y)/2+'px',
+                 left:(((line.start.x>line.end.x)&&(line.start.side=='top'||line.start.side=='bottom'))||line.start.side=='left')?0:abs((line.start.x-line.end.x)-(line.start.x-line.end.x)/2)+'px',
+                 top:(((line.start.y>line.end.y)&&(line.start.side=='left'||line.start.side=='right'))||line.start.side=='top')?0:abs((line.start.y-line.end.y)-(line.start.y-line.end.y)/2)+'px'}">
+            </div>
+            <div ng-if="line.start.x==line.end.x||line.start.y==line.end.y" class="line"
+                 ng-style="{width:line.start.x-line.end.x+'px',height:line.start.y-line.end.y+'px',left:0,top:0}">
+            </div>
+        </div>
+    </div>
+
+    <!-- draw line for lineCreator-->
+    <div class="lineContainer creatingLine" ng-style="{width:abs(lineCreator.line.start.x-lineCreator.line.end.x)+'px',
+                                               height:abs(lineCreator.line.start.y-lineCreator.line.end.y)+'px',
+                                               left:lineCreator.line.start.x<lineCreator.line.end.x?(lineCreator.line.start.x+'px'):(lineCreator.line.end.x+'px'),
+                                               top:lineCreator.line.start.y<lineCreator.line.end.y?(lineCreator.line.start.y+'px'):(lineCreator.line.end.y+'px'),
+                                               display:lineCreator.ifShow?'inline-block':'none'}">
+
+        <!-- TODO:add start and end icon-->
+        <div ng-if="lineCreator.line.start.x==lineCreator.line.end.x||lineCreator.line.start.y==lineCreator.line.end.y"
+             class="line single"
+             ng-class="{'left':lineCreator.line.start.x==lineCreator.line.end.x,'top':lineCreator.line.start.y==lineCreator.line.end.y}"></div>
+        <div ng-if="lineCreator.line.start.x!=lineCreator.line.end.x&&lineCreator.line.start.y!=lineCreator.line.end.y"
+             class="line"
+             ng-class="{'top':((lineCreator.line.start.y<lineCreator.line.end.y)&&(lineCreator.line.start.side=='left'||lineCreator.line.start.side=='right'))||lineCreator.line.start.side=='top',
+                            'bottom':((lineCreator.line.start.y>lineCreator.line.end.y)&&(lineCreator.line.start.side=='left'||lineCreator.line.start.side=='right'))||lineCreator.line.start.side=='bottom',
+                 'right':((lineCreator.line.start.x>lineCreator.line.end.x)&&(lineCreator.line.start.side=='top'||lineCreator.line.start.side=='bottom'))||lineCreator.line.start.side=='right',
+                 'left':((lineCreator.line.start.x<lineCreator.line.end.x)&&(lineCreator.line.start.side=='top'||lineCreator.line.start.side=='bottom'))||lineCreator.line.start.side=='left'}"
+             ng-style="{width:abs((lineCreator.line.start.x-lineCreator.line.end.x)-(lineCreator.line.start.x-lineCreator.line.end.x)/4)+'px',
+                    height:abs((lineCreator.line.start.y-lineCreator.line.end.y)-(lineCreator.line.start.y-lineCreator.line.end.y)/4)+'px',
+                    left:(((lineCreator.line.start.x>lineCreator.line.end.x)&&(lineCreator.line.start.side=='top'||lineCreator.line.start.side=='bottom'))||lineCreator.line.start.side=='left')?(abs(lineCreator.line.start.x-lineCreator.line.end.x)/4+'px'):0,
+                    top:(((lineCreator.line.start.y>lineCreator.line.end.y)&&(lineCreator.line.start.side=='left'||lineCreator.line.start.side=='right'))||lineCreator.line.start.side=='top')?(abs(lineCreator.line.start.y-lineCreator.line.end.y)/4+'px'):0}"></div>
+
+        <div ng-if="lineCreator.line.start.x!=lineCreator.line.end.x&&lineCreator.line.start.y!=lineCreator.line.end.y"
+             class="line"
+             ng-class="{'top':((lineCreator.line.start.y>lineCreator.line.end.y)&&(lineCreator.line.start.side=='left'||lineCreator.line.start.side=='right'))||lineCreator.line.start.side=='bottom',
+                            'bottom':((lineCreator.line.start.y<lineCreator.line.end.y)&&(lineCreator.line.start.side=='left'||lineCreator.line.start.side=='right'))||lineCreator.line.start.side=='top',
+                 'right':((lineCreator.line.start.x<lineCreator.line.end.x)&&(lineCreator.line.start.side=='top'||lineCreator.line.start.side=='bottom'))||lineCreator.line.start.side=='left',
+                 'left':((lineCreator.line.start.x>lineCreator.line.end.x)&&(lineCreator.line.start.side=='top'||lineCreator.line.start.side=='bottom'))||lineCreator.line.start.side=='right'}"
+             ng-style="{width:abs(lineCreator.line.start.x-lineCreator.line.end.x)/4+'px',
+                 height:abs(lineCreator.line.start.y-lineCreator.line.end.y)/4+'px',
+                 left:(((lineCreator.line.start.x>lineCreator.line.end.x)&&(lineCreator.line.start.side=='top'||lineCreator.line.start.side=='bottom'))||lineCreator.line.start.side=='left')?0:abs((lineCreator.line.start.x-lineCreator.line.end.x)-(lineCreator.line.start.x-lineCreator.line.end.x)/4)+'px',
+                 top:(((lineCreator.line.start.y>lineCreator.line.end.y)&&(lineCreator.line.start.side=='left'||lineCreator.line.start.side=='right'))||lineCreator.line.start.side=='top')?0:abs((lineCreator.line.start.y-lineCreator.line.end.y)-(lineCreator.line.start.y-lineCreator.line.end.y)/4)+'px'}">
+        </div>
+        <div ng-if="lineCreator.line.start.x==lineCreator.line.end.x||lineCreator.line.start.y==lineCreator.line.end.y"
+             class="line"
+             ng-style="{width:lineCreator.line.start.x-lineCreator.line.end.x+'px',height:lineCreator.line.start.y-lineCreator.line.end.y+'px',left:0,top:0}">
+        </div>
+    </div>
+</div>
+</div>
+</div>

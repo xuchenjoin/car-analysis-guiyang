@@ -1,0 +1,24 @@
+<div class="canvasHintContainer" style="position: absolute;z-index: 9999;left: 257px;"
+     ng-include="'src/app/dataAccess/views/canvas/hint.html'" ng-controller="hint.ctrl"></div>
+<div class="toolbarContainer" ng-include="'src/app/dataAccess/views/canvas/toolbar.html'"
+     ng-controller="toolbar.ctrl"></div>
+<div class="editorContainer editContainer">
+    <div class="menuContainer" ng-include="'src/app/dataAccess/views/canvas/compsPanel.html'"
+         ng-controller="compsPanel.ctrl" ng-class="{'m-show':layout.ifShow,'m-hide':!layout.ifShow}"></div>
+    <div class="right-container">
+        <div class="canvasContainer" ng-include="'src/app/dataAccess/views/canvas/canvas.html'"
+             ng-controller="canvas.ctrl" ng-style="{'margin-left':compsLayout.ifShow?'0px':'-257px'}"></div>
+        <div class="configureContainer" ng-include="'src/app/dataAccess/views/canvas/configurationPanel.html'"
+             ng-controller="configurationPanel.ctrl" ng-style="{display:layout.ifShow?'':'none'}"></div>
+        <div class="msgPanel" ng-include="'src/app/dataAccess/views/canvas/canvasMsgPanel.html'" ng-controller="canvasMsgPanel.ctrl"></div>
+    </div>
+</div>
+<script>
+    window.onresize=function(){
+        $(".canvasHintContainer").css("width",(document.documentElement.offsetWidth-257)+"px");
+    }
+    $(".canvasHintContainer").css("width",(document.documentElement.offsetWidth-257)+"px");
+</script>
+
+
+

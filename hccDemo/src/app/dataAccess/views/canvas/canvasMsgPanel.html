@@ -1,0 +1,52 @@
+<!-- this is temp style, no need moving to CSS file -->
+<!-- TODO after UCD design -->
+<style>
+.msg-container {
+    position: fixed;
+    z-index: 999;
+    height: 120px;
+    left: 257px;
+    bottom: 34px;
+    width: calc(100% - 257px);
+    background-color: #fff;
+    transition: translate .5s ease-in-out;
+}
+.msg-collapse-bar {
+    height: 10px;
+    background-color: #efefef;
+    text-align: center;
+    font-size: 8px;
+    line-height: 8px;
+    cursor: pointer;
+    border-top: 1px solid #aaa;
+    border-bottom: 1px solid #aaa;
+}
+.msg-content {
+    overflow-y: scroll;
+    height: 110px;
+    font-size: 14px;
+    padding: 0 10px 20px 10px;
+}
+.msg-level {
+	font-weight: 600;
+}
+
+.panel-msg {
+	margin-top: 8px;
+    /* padding-left: 20px; */
+    line-height: 16px;
+}
+.panel-msg > * {
+	cursor: pointer;
+}
+</style>
+<div class="msg-container"  id="msg-panel" ng-cloak>
+    <div class="msg-collapse-bar ti ti-arrow-down" ng-click="toggleShow()"></div>
+    <div class="msg-content">
+        <div ng-repeat="msg in messages track by $index" ng-class="levelClass[msg.level]" class="panel-msg">
+        	[<span class="msg-level" ng-bind="msg.level"></span>]
+            [<span class="msg-time" ng-bind="msg.time"></span>]
+            <span class="msg-text"><a ng-repeat="p in msg.processors" ng-bind="p.name" ng-click="processorClick(p)"></a>: {{msg.text}}</span>
+        </div>
+    </div>
+</div>

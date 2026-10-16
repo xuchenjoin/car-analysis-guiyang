@@ -1,0 +1,93 @@
+@import "variables.less";
+@import "mixins.less";
+
+.tiny-tip{
+	position: absolute;
+	border: 1px solid @tip-border-color;
+	border-radius: 5px;
+	background-color: @tip-background-color;
+	padding: 4px 8px !important;
+	word-wrap: break-word;
+}
+
+
+/*left_show_tyle------------------start*/
+.tiny-tip-content-left:after {
+	border-left: 12px solid @tip-border-color;
+	border-top: 6px solid transparent;
+	border-bottom: 6px solid transparent;
+	margin-top: -6px;
+	z-index: 1000000;
+}
+.tiny-tip-content-left:before {
+	border-left: 10px solid @tip-background-color;
+	border-top: 5px solid transparent;
+	border-bottom: 5px solid transparent;
+	margin-top: -5px;
+	z-index: 1000001;
+}
+/*left_show_style-----------------end*/
+
+
+/*right_show_tyle------------------start*/
+.tiny-tip-content-right:after {
+	border-right: 12px solid @tip-border-color;
+	border-top: 6px solid transparent;
+	border-bottom: 6px solid transparent;
+	margin-top: -6px;
+	z-index: 1000000;
+}
+.tiny-tip-content-right:before {
+	border-right: 10px solid @tip-background-color;
+	border-top: 5px solid transparent;
+	border-bottom: 5px solid transparent;
+	margin-top: -5px;
+	z-index: 1000001;
+}
+/*right_show_tyle------------------end*/
+
+
+/*top_show_tyle------------------start*/
+.tiny-tip-content-top:after {
+	border-top: 12px solid @tip-border-color;
+	border-right: 6px solid transparent;
+	border-left: 6px solid transparent;
+	margin-left: -6px;
+	z-index: 1000000;
+}
+.tiny-tip-content-top:before {
+	border-top: 10px solid @tip-background-color;
+	border-right: 5px solid transparent;
+	border-left: 5px solid transparent;
+	margin-left: -5px;
+	z-index: 1000001;
+}
+/*top_show_tyle------------------end*/
+
+
+/*bottom_show_tyle------------------start*/
+.tiny-tip-content-bottom:after {
+	border-bottom: 12px solid @tip-border-color;
+	border-right: 6px solid transparent;
+	border-left: 6px solid transparent;
+	margin-left: -6px;
+	z-index: 1000000;
+}
+.tiny-tip-content-bottom:before {
+	border-bottom: 10px solid @tip-background-color;
+	border-right: 5px solid transparent;
+	border-left: 5px solid transparent;
+	margin-left: -5px;
+	z-index: 1000001;
+}
+/*bottom_show_tyle------------------end*/
+
+
+.tiny-tip-no-ractangle{
+	position: absolute;
+	border: 1px solid @tip-border-color;
+	border-radius: 4px;
+	background-color: @tip-background-color;
+	padding: 6px 8px !important;
+	word-wrap: break-word;
+}

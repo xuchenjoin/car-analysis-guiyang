@@ -1,0 +1,38 @@
+<div id="HDFSFileListToSelectWindow" ng-controller="HDFSFileListToSelect.ctrl">
+    <div class="nav-container">
+        <div  style="position: absolute;z-index: 1000">URL:
+            <tiny-textbox ng-show="currentpathFlag == true" width="520" readonly="true"  tipPosition="right"  value="currentPath"></tiny-textbox>
+            <!--<tiny-textbox ng-show="currentpathFlag == false" width="480" readonly="true"  tipPosition="right"  value="defaultPath"></tiny-textbox>-->
+        </div>
+    </div>
+    <div class="mt10 ml30 mt40" style="width: 520px;height:400px">
+        <tiny-table id="HDFSFileList.id"
+                    enable-pagination="HDFSFileList.enablePagination"
+                    pagination-style="HDFSFileList.paginationStyle"
+                    length-change="HDFSFileList.lengthChange"
+                    length-menu="HDFSFileList.lengthMenu"
+                    display-length="HDFSFileList.displayLength"
+                    data="HDFSFileList.data"
+                    callback="HDFSFileList.callback"
+                    columns-draggable="HDFSFileList.columnsDraggable"
+                    columns="HDFSFileList.columns"
+                    total-records="HDFSFileList.totalRecords"
+                    checkbox="HDFSFileList.checkbox"
+                    s-scroll-y="HDFSFileList.sScrollY"
+                    render-row="HDFSFileList.renderRow"
+                    change-select="HDFSFileList.changeSelect"
+                    table-language="HDFSFileList.tableLanguage">
+        </tiny-table>
+    </div>
+</div>
+<script>
+	require(
+			[ "app/dataAccess/controllers/canvas/HDFSFileListToSelectCtrl"],
+			function(HDFSFileListToSelectCtrl) {
+				angular.element(document).injector().invoke(function($compile) {
+					var scope = $("#HDFSFileListToSelectWindow").scope();
+					$compile($("#HDFSFileListToSelectWindow"))(scope);
+					scope.$digest();
+				})
+			});
+</script>

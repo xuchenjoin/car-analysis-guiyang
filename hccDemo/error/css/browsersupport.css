@@ -1,0 +1,134 @@
+.browserContent li {
+    float: left;
+    width: 33%;
+    height: 200px;
+    text-align: center
+}
+
+.browserInfo, .browserName p, .browserNameEN p, .browserTitle {
+    font-size: 18px;
+    font-family: "Microsoft YaHei";
+    font-weight: 400;
+    font-style: normal;
+    color: #666;
+    text-align: left;
+    line-height: normal
+}
+
+.browserName img {
+    width: 135px;
+}
+
+#logoUrl {
+    border: none;
+    text-decoration: none;
+}
+
+.browserLink, .links {
+    font-family: Helvetica, Myriad, Arial, "Microsoft Yahei", SimSun, serif;
+    font-weight: 400;
+    font-style: normal;
+    text-decoration: none
+}
+
+#bannerQuickLink a {
+    color: #333;
+}
+
+#sorry_logo {
+    width: 33%;
+}
+
+#sorry_logo img {
+    width: 400px;
+    height: 260px;
+}
+
+#oldBrowserText {
+    height: 260px;
+    margin-top: 5%;
+    width: 100%;
+}
+
+#oldBrowserText span {
+    color: #bb0000;
+}
+
+#recommend {
+    margin-left: 180px;
+}
+
+#recommendText {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+#hotLine {
+    margin-top:0;
+}
+
+.browserTitle {
+    text-align: center;
+    font-size: 16px;
+    margin-top: 20px;
+    padding-top: 10px;
+    margin-bottom: 10px
+}
+
+.browserName p {
+    margin-top: 20px;
+    text-align: center
+}
+
+.browserNameEN p {
+    margin-top: 4%;
+    margin-left: 80px
+}
+
+.browserInfo {
+    text-align: center;
+    margin-top: 75px;
+    font-size: 26px;
+    color: #333
+}
+
+.browserContent {
+    width: 75%;
+    margin: 0 auto 150px ;
+    padding-top: 20px;
+    list-style: none
+}
+
+#oldBrowser {
+    height: 260px;
+}
+
+#face {
+    padding-top: 5px;
+    position: relative;
+    top: 5px;
+    right: 15px;
+}
+
+.browserLink {
+    color: #0af;
+    font-size: 14px;
+    margin-top: 3px;
+}
+
+.links {
+    font-size: 15px
+}
+
+.cloud{
+    position: absolute;
+    bottom: 70px;
+    width: 100%;
+}
+.cloud img{
+    width: 30%;
+}
+.rightCloud{
+    position: absolute;
+    right: 0;
+}

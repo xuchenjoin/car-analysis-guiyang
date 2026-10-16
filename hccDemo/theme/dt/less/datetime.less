@@ -1,0 +1,159 @@
+@import "variables.less";
+@import "mixins.less";
+
+.tiny-datetime-enableclass {
+  display: inline-block;
+  position: relative;
+  background-color: @input-bg;
+  .box-shadow(@input-box-shadow);
+  border: 1px solid @input-border;
+  border-radius: @input-border-radius;
+  height: @input-height-base - 2;
+  line-height: @input-height-base - 2;
+}
+
+.tiny-datetime-input {
+  border: 0;
+  font-size: @datetime-input-font-size;
+  outline: none;
+  height: @input-height-base - 1;
+  line-height: @input-height-base - 1;
+  background-color: transparent;
+  color: @input-color;
+  padding-left: @input-padding-horizontal;
+  font-family: "Microsoft Yahei";
+}
+.tiny-datetime-calendarimage {
+  font-size: 15px;
+  color: @datetime-theme-color;
+  line-height:22px;
+}
+.tiny-datetime-container-disable .tiny-datetime-calendarimage {
+  color: #BCBCBC;
+}
+.tiny-ui-datepicker .ui-datepicker-prev span, .tiny-ui-datepicker .ui-datepicker-next span {
+  display: block;
+  position: absolute;
+  left: 50%;
+  margin-left: -8px;
+  top: 62%;
+  margin-top: -8px;
+  font-size: 12px;
+  color: @datetime-theme-color;
+}
+.tiny-time-upbtn {
+  float: right;
+  cursor: pointer;
+  margin-right: 4px;
+  margin-top: 4px;
+  .triangle-up(8px;5px;@datetime-theme-color);
+}
+
+.tiny-time-downbtn {
+  float: right;
+  cursor: pointer;
+  margin-right: 4px;
+  margin-top: 4px;
+  .triangle-down(8px;5px;@datetime-theme-color);
+}
+
+.tiny-datetime-container-disable .tiny-time-upbtn{
+  .triangle-up(8px;5px;#BCBCBC);
+}
+.tiny-datetime-container-disable .tiny-time-downbtn{
+  .triangle-down(8px;5px;#BCBCBC);
+}
+
+.downbtn {
+  display: inline-block;
+  margin-bottom: 2px;
+  .triangle-down(8px;4px;#AAA);
+}
+.upbtn {
+  display: inline-block;
+  margin-bottom: 2px;
+  .triangle-up(8px;4px;#1C73A9);
+}
+
+.tiny-time-container {
+  border: 1px solid @input-border;
+  margin-top: 7px;
+  float: left;
+  margin-left: 5px;
+  margin-bottom: 8px;
+  width: 100px;
+  height: @input-height-base - 2;
+  border-radius: @input-border-radius;
+}
+.tiny-datetime-container-disable {
+  background-color : @input-bg-disabled !important;
+}
+.tiny-timet-container {
+  .box-shadow(@input-box-shadow);
+  border: 1px solid @input-border;
+  border-radius: @input-border-radius;
+  display: inline-block;
+  height: @input-height-base - 2;
+  background-color: @input-bg;
+}
+.tiny-time-editor {
+  width : 82px;
+  float: left;
+  overflow: hidden;
+  padding-left: 5px;
+  font-size: @datetime-input-font-size;
+}
+.tiny-time-input {
+  width: 20px;
+  height: @input-height-base - 2;
+  border: 0;
+  text-align: center;
+  outline: none;
+  background-color: transparent;
+  color: @input-color;
+  ime-mode:disabled;
+}
+.tiny-ui-datepicker table {
+  width: 100%;
+  font-size: @datetime-input-font-size;
+  border-collapse: collapse;
+}
+#ui-datepicker-div {
+  width: 255px;
+  font-size: @datetime-input-font-size;
+  color: black;
+  border: 1px solid #c6c6c6;
+  border-radius: 5px;
+  background-color: #fff;
+}
+.tiny-ui-state-default, .tiny-ui-widget-content .tiny-ui-state-default, .tiny-ui-widget-header .tiny-ui-state-default {
+  background: #ffffff;
+  color: #666666;
+  text-align: center;
+  line-height: 24px;
+  font-size: @datetime-input-font-size;
+  font-family: @datetime-content-font-family;
+}
+.ui-datepicker-current-day {
+  background-color: @datetime-content-active-color;
+  color: #ffffff;
+  text-align: center;
+  line-height: 24px;
+}
+.tiny-ui-datepicker td a:hover {
+  background-color: @datetime-content-hover-color;
+}
+.tiny-ui-datepicker .ui-datepicker-title div.tiny_Date_Select_Year li.tiny-datepicker-selected-yearmonth,
+.tiny-ui-datepicker .ui-datepicker-title div.tiny_Date_Select_Month li.tiny-datepicker-selected-yearmonth {
+  color:#fff;
+  background-color:@datetime-content-active-color;
+}
+.tiny-ui-datepicker
+.ui-datepicker-title div li:hover {
+  color: #fff;
+  background: @datetime-content-hover-color;
+}
+.tiny-ui-datepicker .ui-datepicker-title div li:active {
+  background-color: @datetime-content-active-color;
+  color: #fff;
+}

@@ -1,0 +1,64 @@
+<ul>
+    <li ng-repeat="processorTypeClass in processorTypes">
+        <ul>
+            <li class="process-type-class" ng-click="classSwitchClick(processorTypeClass)">
+                <div class="title-icon" ng-class="processorTypeClass.icon"/>
+                <span  class="title-text" ng-bind="processorTypeClass.showName"></span>
+                <span class="ti pull-right arrow-icon" ng-class="{'ti-angle-circle-o-down':processorTypeClass.isShow,'ti-angle-circle-o-right':!processorTypeClass.isShow}"></span>
+            </li>
+            <li>
+                <ul class="process-container" ng-repeat="processTypeGroup in processorTypeClass.groupArray" ng-style="{display:!processorTypeClass.isShow?'none':''}">
+                    <li ng-if="processorTypeClass.groupArray.length>1">
+                        <div class="group-title" ng-click="groupSwitchClick(processTypeGroup)">
+                            <span ng-bind="processTypeGroup.groupName"></span>
+                            <div class="group-switch" ng-class="{'group-close':!processTypeGroup.isShow,'group-open':processTypeGroup.isShow}"></div>
+                        </div>
+                        <ul ng-style="{display:!processTypeGroup.isShow?'none':''}">
+                            <li class="process-type {{processTypeGroup.processCss}}"  ng-class="{'disable-node':!processType.status}" ng-repeat="processType in processTypeGroup.groupMembers"
+                                ng-mousedown="processTypeMousedown(processType)"
+                                data-drag="processType.status"
+                                data-jqyoui-options="{revert:false,scroll:false,snap:'.canvasContainer',helper:'clone',appendTo:'body'}"
+                                ng-model="processType"
+                                jqyoui-draggable="{animate:true,onStart:'',onDrag:'',onStop:'processTypeDragStop'}"
+                                title="{{processType.status?processType.label:'developing'}}">
+                                <span ng-bind="processType.description"></span>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="process-type {{processTypeGroup.processCss}}" ng-class="{'disable-node':!processType.status}" ng-if="processorTypeClass.groupArray.length==1 && processType.description != 'Shell Script'" ng-repeat="processType in processTypeGroup.groupMembers"
+                        ng-mousedown="processTypeMousedown(processType)"
+                        data-drag="processType.status"
+                        data-jqyoui-options="{revert:false,scroll:false,snap:'.canvasContainer',helper:'clone',appendTo:'body'}"
+                        ng-model="processType"
+                        jqyoui-draggable="{animate:true,onStart:'',onDrag:'',onStop:'processTypeDragStop'}"
+                        title="{{processType.status?processType.label:'developing'}}">
+                        <span ng-bind="processType.description"></span>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+    
+    <li ng-repeat="processTemplateClass in templateTypes">
+        <ul>
+           <li class="process-type-class" ng-click="classSwitchClick(processTemplateClass)">
+                <div class="title-icon" ng-class="processTemplateClass.icon"/>
+                <span  class="title-text" ng-bind="processTemplateClass.showName"></span>
+                <span class="ti pull-right arrow-icon" ng-class="{'ti-angle-circle-o-down':processTemplateClass.isShow,'ti-angle-circle-o-right':!processTemplateClass.isShow}"></span>
+           </li>
+           <li>
+               <ul class="process-container" ng-style="{display:!processTemplateClass.isShow?'none':''}">
+                    <li class="process-type process-templates" ng-repeat="processTypeGroup in processTemplateClass.templateDTOList"
+                                ng-mousedown="processTypeMousedown(processTypeGroup)"
+                                data-drag="true"
+                                data-jqyoui-options="{revert:false,scroll:false,snap:'.canvasContainer',helper:'clone',appendTo:'body'}"
+                                ng-model="processTypeGroup"
+                                jqyoui-draggable="{animate:true,onStart:'',onDrag:'',onStop:'processTemplateDragStop'}"
+                                title="{{processTypeGroup.name}}">
+                                <span ng-bind="processTypeGroup.name"></span>
+                            </li>
+               </ul>
+           </li>
+        </ul>
+    </li>
+</ul>

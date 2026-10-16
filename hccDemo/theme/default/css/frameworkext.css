@@ -1,0 +1,21 @@
+.user-dropdown-menu .frame-order-list, .user-dropdown-menu .frame-user-application,
+.user-dropdown-menu .frame-seller-center, .user-dropdown-menu .frame-submit-workorder,
+.user-dropdown-menu .frame-icp-licence, .user-dropdown-menu .frame-user-center {
+    display: none;
+}
+
+.default-style .default-style {
+    display: none;
+}
+
+.default-style .custom-style {
+    display: block;
+}
+
+.default-style .help-menu-dropdown {
+    display: none;
+}
+
+.default-style .common-help {
+    display: block;
+}

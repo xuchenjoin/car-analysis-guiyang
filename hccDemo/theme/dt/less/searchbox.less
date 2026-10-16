@@ -1,0 +1,89 @@
+@import "variables.less";
+@import "mixins.less";
+
+
+.tiny-searchBox {
+  width       : 220px;
+  height      : @input-height-base - 2;
+  border      : 1px;
+  border-style  : solid;
+  border-color  : @input-border;
+  border-radius : @input-border-radius;
+  padding-left  : @input-padding-horizontal;
+  background    : @input-bg;
+}
+.tiny-searchBox-searchIcon {
+  float: right;
+  width: 24px;
+  height: inherit; 
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 24px;
+  color: @theme-color;
+  text-align: center;
+}
+.tiny-searchBox-suggestContents
+{
+  z-index      : 10002;
+  display      : none;
+  position     : absolute;
+  background-color : @input-bg;
+  top        : 26px;
+  border       : 1px solid @input-border;
+  width      : 205px;
+  border-bottom-left-radius  : 4px;
+    border-bottom-right-radius : 4px;
+}
+.tiny-searchBox-suggestShown
+{
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.tiny-searchBox-suggestItems
+{
+  height     : auto;
+  padding-left : 8px;
+  list-style   : none;
+  line-height  : 26px;
+}
+
+.tiny-searchbox-suggest-selected
+{
+  background-color: #f4f4f4;
+  color: #08c;
+}
+
+.tiny-searchBox-disabled
+{
+  background-color: @input-bg-disabled;
+  color: @input-color-disabled;
+}
+.tiny-searchBox-searchIcon-disabled
+{
+  color: #bcbcbc;
+  cursor : default !important;
+}
+
+.tiny-searchBox-focus{
+  border-color: @input-focus-border;
+}
+.tiny-searchBox-clearBtn{
+    position: absolute;
+  line-height: 16px;
+  font-size: 14px;
+  margin: 4px 0px 2px 5px;
+  color: #ABABAB;
+}
+
+.tiny-searchBox-clearBtn:hover {
+  color: #FC5548;
+}
+.tiny-searchBox-disabled .tiny-searchBox-clear{
+    background-color: @input-bg-disabled;
+    cursor: default;
+}
+.tiny-searchBox-disabled .tiny-searchBox-clearBtn{
+  &,&:hover{
+    color: #bcbcbc;
+  }
+}

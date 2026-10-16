@@ -1,0 +1,63 @@
+<!--此处不要通过查找id的方式来获取数据，以下写法被禁止<div id="pipelineDetails" class="detail_row_context" ng-controller="pipelineDetails.ctrl">-->
+<div class="detail_row_context" ng-controller="pipelineDetails.ctrl">
+    <ul class="list-detail">
+        <li class="list-col1">
+            <dl>
+                <dt class="common-color-content" ng-bind="i18n.pipelineIdTabletitle"></dt>
+                <dd class="common-color-title" ng-bind="pipelineInfo.pipelineId"></dd>
+            </dl>
+            <dl ng-show="orderInfo.ifShowOrderInfo">
+                <dt class="common-color-content" ng-bind="i18n.dps_pipeline_billingType"></dt>
+                <dd class="common-color-title" ng-bind="pipelineInfo.billingType"></dd>
+            </dl>
+        </li>
+        <li class="list-col1">
+            <dl ng-show="orderInfo.ifShowOrderInfo">
+                <dt class="common-color-content" ng-bind="i18n.dps_pipeline_orderId"></dt>
+                <dd common-color-title>
+                    <a class="common-link" title="{{pipelineInfo.orderId}}" ng-bind="pipelineInfo.orderId"
+                       target="_blank" ng-href="{{myOrderUrl}}"></a>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="common-color-content" >{{i18n.dps_pipeline_table_schedule_start_title}}：</dt>
+                <dd class="common-color-title" ng-bind="pipelineInfo.startTime"></dd>
+            </dl>
+        </li>
+        <li class="list-col1">
+            <dl>
+                <dt class="common-color-content" >{{i18n.dps_pipeline_table_schedule_end_title}}：</dt>
+                <dd class="common-color-title" ng-bind="pipelineInfo.endTime"></dd>
+            </dl>
+
+        </li>
+        <li class="list-col1">
+            <dl>
+                <dt class="common-color-content">{{i18n.dps_pipeline_table_schedule_interval_title}}：</dt>
+                <dd class="common-color-title" ng-bind="pipelineInfo.interval"></dd>
+            </dl>
+        </li>
+        <li class="list-col1">
+            <dl>
+                <dt class="common-color-content">{{i18n.dps_pipelinelist_table_description}}</dt>
+                <dd class="common-color-title" ng-bind="pipelineInfo.description"></dd>
+            </dl>
+        </li>
+    </ul>
+</div>
+<script>
+    require(['jquery', "app/dataAccess/controllers/windows/pipelineDetailsCtrl"], function ($, pipelineDetailsCtrl) {
+        angular.element(document).injector().invoke(function ($compile) {
+            /*此处不能写成var scope = $(".detail_row_context").scope();$compile($(".detail_row_context"))(scope);scope.$digest();
+             因为class可以找到很多个，通过class查找scope然后注入数据，会相互影响*/
+            /*此处也不能写成var scope = $("#instanceListTable").scope();$compile($("#pipelineDetails"))(scope);scope.$digest();
+             因为id是唯一的，当展开一个工作流列表的订单详情时，另一个就不能被展开*/
+            var parentScope = $("#instanceListTable").scope();
+            var contextTr = $(parentScope.instanceListTable.curRow).parent().next();
+            var detail_row = $(".detail_row_context", contextTr);
+            var scope = detail_row.scope();
+            $compile(detail_row)(scope);
+            scope.$digest();
+        })
+    });
+</script>

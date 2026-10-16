@@ -1,0 +1,634 @@
+<div class="container-fluid toolbar">
+    <span class="title pull-left" ng-bind="i18n.dps_canvas_configuration_Configure"></span><!--&nbsp;(<span title="{{process.name}}" ng-bind="ellipsisByLength(process.name,43)"></span>)-->
+    <a href="javascript:void(0)" class="pull-right close-btn" ng-click="close()"></a>
+</div>
+
+<ul id="processConfigurationForm" class="content">
+    <li>
+        <span class="key"><span class="require">*</span>&nbsp;{{i18n.dps_canvas_configuration_Name}}</span>
+        <span title="{{process.name}}">
+            <tiny-textbox height="32" value="process.name" placeholder="nameInput.placeholder" tipPosition="right" validate="validationMapping.name"></tiny-textbox>
+        </span>
+    </li>
+    <li class="type_li">
+        <span class="key">&nbsp;&nbsp;&nbsp;&nbsp;{{i18n.dps_canvas_configuration_Type}}</span>
+        <!--<span ng-bind="process.displayType"></span>-->
+        <span ng-bind="getProcessTypeShortName(process.type)"></span>
+    </li>
+    <li>
+        <span class="key">&nbsp;&nbsp;&nbsp;&nbsp;{{i18n.dps_canvas_configuration_Properties}}</span>
+    </li>
+
+    <!-- if process.type is 'Hbase',to show -->
+    <li ng-if="process.type == 'Hbase' || process.type == 'com.huawei.datacraft.Hbase'">
+        <div class="container-fluid properties-table">
+            <ul class="title">
+                <li><span ng-bind="i18n.dps_canvas_configuration_Property"></span></li>
+                <li><span ng-bind="i18n.dps_canvas_configuration_Value"></span></li>
+            </ul>
+            <ul ng-repeat="(key,value) in process.config.properties" ng-if="process.config.descriptors[key].show">
+                <li>
+                    <span ng-if="process.config.descriptors[key].required" class="require">*</span><span ng-if="!process.config.descriptors[key].required">&nbsp;&nbsp;&nbsp;</span><span ng-bind="process.config.descriptors[key].displayName" title="{{getFixedDescription(process.config.descriptors[key].displayName, process.config.descriptors[key].description)}}"></span>
+                </li>
+                <li title="{{process.config.descriptors[key].sensitive ? '' : process.config.properties[key]}}">
+                    <tiny-textbox width="310" height="32" tipPosition="right" validate="validationMapping.Hbase[key]" value="process.config.properties[key]"></tiny-textbox>
+                    <a  ng-if="useHDFSWindow(key)" href="javascript:void(0)" ng-click="selectHDFSPath(key)">HDFS</a>
+                    <a  ng-if="useOBSWindow(key)" href="javascript:void(0)" ng-click="selectOBSPath(key)">OBS</a>
+                </li>
+            </ul>
+            <ul ng-if="currentProperty.ifShow">
+                <li>
+                    <tiny-textbox value="currentProperty.key" width="103" height="32" tipPosition="right" validate="checkValue.processNameCheck"></tiny-textbox>
+                </li>
+                <li>
+                    <tiny-textbox  height="32" value="currentProperty.value" tipPosition="right" validate="checkValue.processNameCheck"></tiny-textbox>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" ng-click="saveEditProperty()">save</a>
+                    <a href="javascript:void(0)" ng-click="cancelEditProperty()">cancel</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <!-- if process.type is 'HDFS',to show -->
+    <li ng-if="process.type == 'HDFS' || process.type == 'com.huawei.datacraft.HDFS'">
+        <div class="container-fluid properties-table">
+            <ul class="title">
+                <li><span ng-bind="i18n.dps_canvas_configuration_Property"></span></li>
+                <li><span ng-bind="i18n.dps_canvas_configuration_Value"></span></li>
+            </ul>
+            <ul ng-repeat="(key,value) in process.config.properties" ng-if="process.config.descriptors[key].show">
+                <li>
+                    <span ng-if="process.config.descriptors[key].required" class="require">*</span><span ng-if="!process.config.descriptors[key].required">&nbsp;&nbsp;&nbsp;</span><span ng-bind="process.config.descriptors[key].displayName" title="{{getFixedDescription(process.config.descriptors[key].displayName, process.config.descriptors[key].description)}}"></span>
+                </li>
+                <li title="{{process.config.descriptors[key].sensitive ? '' : process.config.properties[key]}}">
+                    <tiny-select
+                            id="clusterSelector.id"
+                            width="clusterSelector.width"
+                            ng-if="key.toUpperCase()=='MR CLUSTERNAME'"
+                            validate="validationMapping.HDFS[key]"
+                            values="clusterSelector.options"
+                            select="clusterSelector.select(selectId, label)"
+                            placeholder="selectPlaceholder"></tiny-select>
+                    <!-- HDFS -->
+                    <tiny-textbox focused="window[key].focused" keyup="testSpecialKeyCode(event)"  ng-if=" (key.toUpperCase()!='MR CLUSTERNAME') && useHDFSWindow(key) && !useOBSWindow(key)" show-clear="useHDFSWindow(key) || useOBSWindow(key)" readOnly="ifReadOnly['HDFS'].ifReadOnly" width="240" height="32"  tipPosition="right" validate="validationMapping.HDFS[key]" value="process.config.properties[key]"></tiny-textbox>
+
+                    <a  ng-if="useHDFSWindow(key)" href="javascript:void(0)" ng-click="selectHDFSPath(key)">HDFS</a>
+                    <a  ng-if="useOBSWindow(key)" href="javascript:void(0)" ng-click="selectOBSPath(key)">OBS</a>
+                </li>
+            </ul>
+            <ul ng-if="currentProperty.ifShow">
+                <li>
+                    <tiny-textbox value="currentProperty.key" width="103" height="32" tipPosition="right" validate="checkValue.processNameCheck"></tiny-textbox>
+                </li>
+                <li>
+                    <tiny-textbox  height="32" value="currentProperty.value" tipPosition="right" validate="checkValue.processNameCheck"></tiny-textbox>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" ng-click="saveEditProperty()">save</a>
+                    <a href="javascript:void(0)" ng-click="cancelEditProperty()">cancel</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <!-- if process.type is 'OBS',to show  -->
+    <li ng-if="process.type == 'OBS' || process.type == 'com.huawei.datacraft.OBS'">
+        <div class="container-fluid properties-table">
+            <ul class="title">
+                <li><span ng-bind="i18n.dps_canvas_configuration_Property"></span></li>
+                <li><span ng-bind="i18n.dps_canvas_configuration_Value"></span></li>
+            </ul>
+            <ul ng-repeat="(key,value) in process.config.properties" ng-if="process.config.descriptors[key].show">
+                <li>
+                    <span ng-if="process.config.descriptors[key].required" class="require">*</span><span ng-if="!process.config.descriptors[key].required">&nbsp;&nbsp;&nbsp;</span><span ng-bind="process.config.descriptors[key].displayName" title="{{getFixedDescription(process.config.descriptors[key].displayName, process.config.descriptors[key].description)}}"></span>
+                </li>
+                <li title="{{process.config.descriptors[key].sensitive ? '' : process.config.properties[key]}}">
+                    <!-- OBS -->
+                    <tiny-textbox focused="window[key].focused" ng-if=" (key.toUpperCase()!='MR CLUSTERNAME') && useOBSWindow(key) && !useHDFSWindow(key)" show-clear="useHDFSWindow(key) || useOBSWindow(key)" readOnly="ifReadOnly['OBS'].ifReadOnly" width="240" height="32" tipPosition="right"  validate="validationMapping.OBS[key]" value="process.config.properties[key]"></tiny-textbox>
+
+                    <a  ng-if="useHDFSWindow(key)" href="javascript:void(0)" ng-click="selectHDFSPath(key)">HDFS</a>
+                    <a  ng-if="useOBSWindow(key)" href="javascript:void(0)" ng-click="selectOBSPath(key)">OBS</a>
+                </li>
+            </ul>
+            <ul ng-if="currentProperty.ifShow">
+                <li>
+                    <tiny-textbox value="currentProperty.key" width="103" height="32" tipPosition="right" validate="checkValue.processNameCheck"></tiny-textbox>
+                </li>
+                <li>
+                    <tiny-textbox  height="32" value="currentProperty.value" tipPosition="right" validate="checkValue.processNameCheck"></tiny-textbox>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" ng-click="saveEditProperty()">save</a>
+                    <a href="javascript:void(0)" ng-click="cancelEditProperty()">cancel</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <!-- if process.type is 'RDS',to show -->
+    <li ng-if="process.type == 'RDS' || process.type == 'com.huawei.datacraft.RDS'">
+        <div class="container-fluid properties-table">
+            <ul class="title">
+                <li><span ng-bind="i18n.dps_canvas_configuration_Property"></span></li>
+                <li><span ng-bind="i18n.dps_canvas_configuration_Value"></span></li>
+            </ul>
+            <ul ng-repeat="(key,value) in process.config.properties" ng-if="process.config.descriptors[key].show">
+                <li>
+                    <span ng-if="process.config.descriptors[key].required" class="require">*</span><span ng-if="!process.config.descriptors[key].required">&nbsp;&nbsp;&nbsp;</span><span ng-bind="process.config.descriptors[key].displayName" title="{{getFixedDescription(process.config.descriptors[key].displayName, process.config.descriptors[key].description)}}"></span>
+                </li>
+                <li title="{{process.config.descriptors[key].sensitive  ||  key.toUpperCase() == 'SECRET KEY'? '' : process.config.properties[key]}}">
+                    <!--DB Driver Name-->
+                    <tiny-select
+                            id="dbDriverName.id"
+                            ng-if="key.toUpperCase()=='DB DRIVER NAME'"
+                            width="310"
+                            validate="validationMapping.RDS[key]"
+                            values="dbDriverName.options"
+                            change="dbDriverName.change()"></tiny-select>
+                    <!-- other -->
+                    <tiny-textbox  ng-if=" key.toUpperCase() != 'SECRET KEY'&& key.toUpperCase() != 'DB PASSWORD'&& key.toUpperCase()!= 'DB DRIVER NAME' && !useOBSWindow(key) && !useHDFSWindow(key)" width="310" height="32"   validate="validationMapping.RDS[key]" value="process.config.properties[key]"></tiny-textbox>
+                    <a  ng-if="useHDFSWindow(key)" href="javascript:void(0)" ng-click="selectHDFSPath(key)">HDFS</a>
+                    <a  ng-if="useOBSWindow(key)" href="javascript:void(0)" ng-click="selectOBSPath(key)">OBS</a>
+                </li>
+            </ul>
+            <ul ng-if="currentProperty.ifShow">
+                <li>
+                    <tiny-textbox value="currentProperty.key" width="103" height="32" tipPosition="right" validate="checkValue.processNameCheck"></tiny-textbox>
+                </li>
+                <li>
+                    <tiny-textbox  height="32" value="currentProperty.value" tipPosition="right" validate="checkValue.processNameCheck"></tiny-textbox>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" ng-click="saveEditProperty()">save</a>
+                    <a href="javascript:void(0)" ng-click="cancelEditProperty()">cancel</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+
+    <!-- if process.type is 'Distcp',to show -->
+    <li ng-if="process.type == 'Distcp' || process.type == 'com.huawei.datacraft.activity.Distcp'">
+        <div class="container-fluid properties-table">
+            <ul class="title">
+                <li><span ng-bind="i18n.dps_canvas_configuration_Property"></span></li>
+                <li><span ng-bind="i18n.dps_canvas_configuration_Value"></span></li>
+                <!--<li><span>Action</span></li>-->
+            </ul>
+            <ul ng-repeat="(key,value) in process.config.properties" ng-if="process.config.descriptors[key].show">
+                <li  ng-style="{'background':(key.toUpperCase() == 'TARGET'||key.toUpperCase() == 'SOURCE')?'#f3f3f3':''}" >
+                    <span ng-if="process.config.descriptors[key].required" class="require">*</span><span ng-if="!process.config.descriptors[key].required">&nbsp;&nbsp;&nbsp;</span><span ng-bind="process.config.descriptors[key].displayName" title="{{getFixedDescription(process.config.descriptors[key].displayName, process.config.descriptors[key].description)}}"></span>
+                </li>
+                <li title="{{process.config.descriptors[key].sensitive ? '' : process.config.properties[key]}}"  ng-style="{'background':(key.toUpperCase() == 'TARGET'||key.toUpperCase() == 'SOURCE')?'#f3f3f3':''}" >
+                    <tiny-select
+                            id="clusterSelector.id"
+                            ng-if="key.toUpperCase()=='MR CLUSTERNAME'"
+                            validate="validationMapping.Distcp[key]"
+                            values="clusterSelector.options"
+                            select="clusterSelector.select(selectId, label)"
+                            placeholder="selectPlaceholder"></tiny-select>
+                    <tiny-select
+                            id="actionSelector.id"
+                            ng-if="key.toUpperCase()=='ACTION'"
+                            values="actionSelector.options"
+                            change="actionSelector.change()"></tiny-select>
+                    <!-- HDFS or OBS -->
+                    <tiny-textbox  ng-if=" (key.toUpperCase()!='ACTION' && key.toUpperCase()!='MR CLUSTERNAME') && useOBSWindow(key) && useHDFSWindow(key)" width="240" height="32" tipPosition="right" validate="validationMapping.Distcp[key]" value="process.config.properties[key]"></tiny-textbox>
+                    <!-- other -->
+                    <tiny-textbox  ng-if=" (key.toUpperCase() != 'TARGET' && key.toUpperCase() != 'SOURCE'  && key.toUpperCase()!='MR CLUSTERNAME' && key.toUpperCase() != 'ACTION' && key.toUpperCase() != 'INPUT DIRECTORY' && key.toUpperCase() != 'OUTPUT DIRECTORY')" width="310" height="32" tipPosition="right" validate="validationMapping.Distcp[key]" value="process.config.properties[key]"></tiny-textbox>
+                    <a  ng-if="useHDFSWindow(key) && actionSelectorVal === 'import' && key.toUpperCase() === 'OUTPUT DIRECTORY'" href="javascript:void(0)" ng-click="selectHDFSPath(key)">HDFS</a>
+                    <a  ng-if="useHDFSWindow(key) && actionSelectorVal === 'import' && key.toUpperCase() === 'INPUT DIRECTORY'" href="javascript:void(0)" ng-click="selectOBSPath(key)">OBS</a>
+                    <a  ng-if="useHDFSWindow(key) && actionSelectorVal === 'export' && key.toUpperCase() === 'INPUT DIRECTORY'" href="javascript:void(0)" ng-click="selectHDFSPath(key)">HDFS</a>
+                    <a  ng-if="useHDFSWindow(key) && actionSelectorVal === 'export' && key.toUpperCase() === 'OUTPUT DIRECTORY'" href="javascript:void(0)" ng-click="selectOBSPath(key)">OBS</a>
+                </li>
+            </ul>
+            <ul ng-if="currentProperty.ifShow">
+                <li>
+                    <tiny-textbox value="currentProperty.key" width="103" height="32" tipPosition="right" validate="validationMapping.Distcp[currentProperty.key]"></tiny-textbox>
+                </li>
+                <li>
+                    <tiny-textbox  height="32" value="currentProperty.value" tipPosition="right" validate="validationMapping.Distcp[currentProperty.key]"></tiny-textbox>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" ng-click="saveEditProperty()">save</a>
+                    <a href="javascript:void(0)" ng-click="cancelEditProperty()">cancel</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+
+    <!-- if process.type is 'ExecuteMR',to show -->
+    <li ng-if="process.type == 'ExecuteMR' || process.type == 'com.huawei.datacraft.activity.ExecuteMR'">
+        <div class="container-fluid properties-table">
+            <ul class="title">
+                <li><span ng-bind="i18n.dps_canvas_configuration_Property"></span></li>
+                <li><span ng-bind="i18n.dps_canvas_configuration_Value"></span></li>
+            </ul>
+            <ul ng-repeat="(key,value) in process.config.properties" ng-if="key.toUpperCase() !='PIPELINE NAME'">
+                <li>
+                    <span ng-if="process.config.descriptors[key].required" class="require">*</span><span ng-if="!process.config.descriptors[key].required">&nbsp;&nbsp;&nbsp;</span><span ng-if="key.toUpperCase() !='PIPELINE NAME'" ng-bind="process.config.descriptors[key].displayName" title="{{getFixedDescription(process.config.descriptors[key].displayName, process.config.descriptors[key].description)}}"></span>
+                </li>
+                <li title="{{process.config.descriptors[key].sensitive ? '' : process.config.properties[key]}}">
+                    <tiny-select
+                            id="clusterSelector.id"
+                            ng-if="key.toUpperCase()=='MR CLUSTERNAME'"
+                            width="240"
+                            validate="validationMapping.ExecuteMR[key]"
+                            values="clusterSelector.options"
+                            select="clusterSelector.select(selectId, label)"
+                            placeholder="selectPlaceholder"></tiny-select>
+                    <!-- HDFS and OBS -->
+
+                    <tiny-textbox focused="window[key].focused"  ng-if=" (key.toUpperCase()!='MR CLUSTERNAME') && useOBSWindow(key) && useHDFSWindow(key)" show-clear="useHDFSWindow(key) || useOBSWindow(key)" readOnly="useHDFSWindow(key) || useOBSWindow(key)" width="240" height="32" tipPosition="right" validate="validationMapping.ExecuteMR[key]" value="process.config.properties[key]"></tiny-textbox>
+
+                    <!-- other -->
+                    <tiny-textbox  ng-if=" (key.toUpperCase() != 'LOG PATH' && key.toUpperCase() !='PIPELINE NAME' && key.toUpperCase() != 'JAR PATH' && key.toUpperCase() != 'INPUT DATA PATH' && key.toUpperCase() != 'OUTPUT DATA PATH' && key.toUpperCase()!='MR CLUSTERNAME' ) && !useOBSWindow(key) && !useHDFSWindow(key)" width="240" height="32" tipPosition="right" validate="validationMapping.ExecuteMR[key]" value="process.config.properties[key]"></tiny-textbox>
+                    <a  ng-if="useHDFSWindow(key) && key.toUpperCase() != 'LOG PATH'" href="javascript:void(0)" ng-click="selectHDFSPath(key, key.toUpperCase() != 'JAR PATH' && key.toUpperCase() != 'INPUT DATA PATH' && key.toUpperCase() != 'OUTPUT DATA PATH' ? 'ONLY_DIRECTORY' : 0)">HDFS</a>
+                    <a  ng-if="useOBSWindow(key)" href="javascript:void(0)" ng-click="selectOBSPath(key, key.toUpperCase() != 'JAR PATH' && key.toUpperCase() != 'INPUT DATA PATH' && key.toUpperCase() != 'OUTPUT DATA PATH' ? 'ONLY_DIRECTORY' : 0)">OBS</a>
+                </li>
+            </ul>
+            <ul ng-if="currentProperty.ifShow">
+                <li>
+                    <tiny-textbox value="currentProperty.key" width="103" height="32" tipPosition="right" validate="validationMapping.ExecuteMR[currentProperty.key]"></tiny-textbox>
+                </li>
+                <li>
+                    <tiny-textbox  height="32" value="currentProperty.value" tipPosition="right" validate="validationMapping.ExecuteMR[currentProperty.key]"></tiny-textbox>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" ng-click="saveEditProperty()">save</a>
+                    <a href="javascript:void(0)" ng-click="cancelEditProperty()">cancel</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+
+    <!-- if process.type is 'ExecuteScript',to show -->
+    <li ng-if="process.type == 'ExecuteScript' || process.type == 'com.huawei.datacraft.processactivity.ExecuteScript'">
+        <div class="container-fluid properties-table">
+            <ul class="title">
+                <li><span ng-bind="i18n.dps_canvas_configuration_Property"></span></li>
+                <li><span ng-bind="i18n.dps_canvas_configuration_Value"></span></li>
+            </ul>
+            <ul ng-repeat="(key,value) in process.config.properties" ng-if="process.config.descriptors[key].show">
+                <li>
+                    <span ng-if="process.config.descriptors[key].required" class="require">*</span><span ng-if="!process.config.descriptors[key].required">&nbsp;&nbsp;&nbsp;</span><span ng-bind="process.config.descriptors[key].displayName" title="{{getFixedDescription(process.config.descriptors[key].displayName, process.config.descriptors[key].description)}}"></span>
+                </li>
+                <li title="{{process.config.descriptors[key].sensitive ? '' : process.config.properties[key]}}">
+                    <tiny-select
+                            id="clusterSelector.id"
+                            ng-if="key.toUpperCase()=='MR CLUSTERNAME'"
+                            validate="validationMapping.ExecuteScript[key]"
+                            values="clusterSelector.options"
+                            select="clusterSelector.select(selectId, label)"
+                            placeholder="selectPlaceholder"></tiny-select>
+
+                    <tiny-select
+                            id="logBackup.id"
+                            ng-if="key.toUpperCase()=='LOG BACKUP'"
+                            values="logBackup.options"
+                            width="logBackup.width"
+                            change="logBackup.change()"
+                            placeholder="selectPlaceholder"
+                            validate="validationMapping.ExecuteScript[key]"></tiny-select>
+
+                    <tiny-select
+                            id="computeResource.id"
+                            ng-if="key.toUpperCase()=='COMPUTERESOURCE'"
+                            values="computeResource.options"
+                            width="computeResource.width"
+                            select="computeResource.select(selectId, label)"
+                            placeholder="selectPlaceholder"
+                            validate="validationMapping.ExecuteScript[key]"></tiny-select>
+                    <!-- OBS -->
+                    <tiny-textbox focused="window[key].focused"  ng-if=" (key.toUpperCase()!='MR CLUSTERNAME') && useOBSWindow(key) && !useHDFSWindow(key)" show-clear="useHDFSWindow(key) || useOBSWindow(key)" readOnly="useHDFSWindow(key) || useOBSWindow(key)" width="240" height="32" tipPosition="right" validate="validationMapping.ExecuteScript[key]" value="process.config.properties[key]"></tiny-textbox>
+                    <!-- HDFS and OBS -->
+                    <tiny-textbox focused="window[key].focused" ng-if=" (key.toUpperCase()!='MR CLUSTERNAME') && useOBSWindow(key) && useHDFSWindow(key)" show-clear="useHDFSWindow(key) || useOBSWindow(key)" readOnly="useHDFSWindow(key) || useOBSWindow(key)" width="240" height="32" tipPosition="right"  validate="validationMapping.ExecuteScript[key]" value="process.config.properties[key]"></tiny-textbox>
+
+                    <!-- other -->
+                    <tiny-textbox  ng-if=" (key.toUpperCase() != 'LOG PATH' && key.toUpperCase() != 'JAR PATH' && key.toUpperCase() != 'INPUT DATA PATH' && key.toUpperCase() != 'OUTPUT DATA PATH' && key.toUpperCase()!='MR CLUSTERNAME' && key.toUpperCase()!='COMPUTERESOURCE' &&  key.toUpperCase()!='DESTINATION LOG PATH' && key.toUpperCase()!='LOG BACKUP') && !useOBSWindow(key) && !useHDFSWindow(key)" width="240" height="32" tipPosition="right"  validate="validationMapping.ExecuteScript[key]" value="process.config.properties[key]"></tiny-textbox>
+                    <a  ng-if="useHDFSWindow(key)" href="javascript:void(0)" ng-click="selectHDFSPath(key)">HDFS</a>
+                    <a  ng-if="useOBSWindow(key)" href="javascript:void(0)" ng-click="selectOBSPath(key)">OBS</a>
+                </li>
+            </ul>
+            <ul ng-if="currentProperty.ifShow">
+                <li>
+                    <tiny-textbox value="currentProperty.key" width="103" height="32" tipPosition="right"  validate="validationMapping.ExecuteScript[currentProperty.key]"></tiny-textbox>
+                </li>
+                <li>
+                    <tiny-textbox  height="32" value="currentProperty.value" tipPosition="right"  validate="validationMapping.ExecuteScript[currentProperty.key]"></tiny-textbox>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" ng-click="saveEditProperty()">save</a>
+                    <a href="javascript:void(0)" ng-click="cancelEditProperty()">cancel</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+
+    <!-- if process.type is 'ExecuteSpark',to show -->
+    <li ng-if="process.type == 'ExecuteSpark' || process.type == 'com.huawei.datacraft.activity.ExecuteSpark'">
+        <div class="container-fluid properties-table">
+            <ul class="title">
+                <li><span ng-bind="i18n.dps_canvas_configuration_Property"></span></li>
+                <li><span ng-bind="i18n.dps_canvas_configuration_Value"></span></li>
+            </ul>
+            <ul ng-repeat="(key,value) in process.config.properties" ng-if="process.config.descriptors[key].show">
+                <li>
+                    <span ng-if="process.config.descriptors[key].required" class="require">*</span><span ng-if="!process.config.descriptors[key].required">&nbsp;&nbsp;&nbsp;</span><span ng-bind="process.config.descriptors[key].displayName" title="{{getFixedDescription(process.config.descriptors[key].displayName, process.config.descriptors[key].description)}}"></span>
+                </li>
+                <li title="{{process.config.descriptors[key].sensitive ? '' : process.config.properties[key]}}">
+                    <tiny-select
+                            id="clusterSelector.id"
+                            width="240"
+                            ng-if="key.toUpperCase()=='MR CLUSTERNAME'"
+                            validate="validationMapping.ExecuteSpark[key]"
+                            values="clusterSelector.options"
+                            select="clusterSelector.select(selectId, label)"
+                            placeholder="selectPlaceholder"></tiny-select>
+                    <!-- HDFS and OBS -->
+
+                    <tiny-textbox focused="window[key].focused"  ng-if=" (key.toUpperCase()!='MR CLUSTERNAME') && useOBSWindow(key) && useHDFSWindow(key)" show-clear="useHDFSWindow(key) || useOBSWindow(key)" readOnly="useHDFSWindow(key) || useOBSWindow(key)" width="240" height="32" tipPosition="right" validate="validationMapping.ExecuteSpark[key]" value="process.config.properties[key]"></tiny-textbox>
+
+                    <!-- other -->
+                    <tiny-textbox  ng-if="(key.toUpperCase() != 'LOG PATH' && key.toUpperCase() != 'PATH OF JAR FILE' && key.toUpperCase() != 'INPUT DATA PATH' && key.toUpperCase() != 'OUTPUT DATA PATH' && key.toUpperCase()!='MR CLUSTERNAME' ) && !useOBSWindow(key) && !useHDFSWindow(key)" width="240" height="32" tipPosition="right" validate="validationMapping.ExecuteSpark[key]" value="process.config.properties[key]"></tiny-textbox>
+                    <a  ng-if="useHDFSWindow(key) && key.toUpperCase() != 'LOG PATH'" href="javascript:void(0)" ng-click="selectHDFSPath(key, key.toUpperCase() != 'PATH OF JAR FILE' && key.toUpperCase() != 'INPUT DATA PATH' && key.toUpperCase() != 'OUTPUT DATA PATH' ? 'ONLY_DIRECTORY' : 0)">HDFS</a>
+                    <a  ng-if="useOBSWindow(key)" href="javascript:void(0)" ng-click="selectOBSPath(key, key.toUpperCase() != 'PATH OF JAR FILE' && key.toUpperCase() != 'INPUT DATA PATH' && key.toUpperCase() != 'OUTPUT DATA PATH' ? 'ONLY_DIRECTORY' : 0)">OBS</a>
+                </li>
+            </ul>
+            <ul ng-if="currentProperty.ifShow">
+                <li>
+                    <tiny-textbox value="currentProperty.key" width="103" height="32" tipPosition="right" validate="validationMapping.ExecuteSpark[currentProperty.key]"></tiny-textbox>
+                </li>
+                <li>
+                    <tiny-textbox  height="32" value="currentProperty.value" tipPosition="right" validate="validationMapping.ExecuteSpark[currentProperty.key]"></tiny-textbox>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" ng-click="saveEditProperty()">save</a>
+                    <a href="javascript:void(0)" ng-click="cancelEditProperty()">cancel</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <!-- if process.type is 'ExecuteSparkSQL',to show -->
+    <li ng-if="process.type == 'ExecuteSparkSQL' || process.type == 'com.huawei.datacraft.activity.ExecuteSparkSQL'">
+        <div class="container-fluid properties-table">
+            <ul class="title">
+                <li><span ng-bind="i18n.dps_canvas_configuration_Property"></span></li>
+                <li><span ng-bind="i18n.dps_canvas_configuration_Value"></span></li>
+            </ul>
+            <ul ng-repeat="(key,value) in process.config.properties" ng-if="process.config.descriptors[key].show">
+                <li ng-style="{'height':key.toUpperCase() == 'QUERY'?'135px':'36px', 'lineHeight': key.toUpperCase() == 'QUERY'?'130px':'28px'}">
+                    <span ng-if="process.config.descriptors[key].required" class="require">*</span><span ng-if="!process.config.descriptors[key].required">&nbsp;&nbsp;&nbsp;</span><span ng-bind="process.config.descriptors[key].displayName" title="{{getFixedDescription(process.config.descriptors[key].displayName, process.config.descriptors[key].description)}}"></span>
+                </li>
+                <li title="{{process.config.descriptors[key].sensitive ? '' : process.config.properties[key]}}" ng-style="{'height':key.toUpperCase() == 'QUERY'?'135px':'36px'}" style="line-height: 28px;">
+                    <tiny-select
+                            id="clusterSelector.id"
+                            width="310"
+                            ng-if="key.toUpperCase()=='MR CLUSTERNAME'"
+                            validate="validationMapping.ExecuteSparkSQL[key]"
+                            values="clusterSelector.options"
+                            select="clusterSelector.select(selectId, label)"
+                            placeholder="selectPlaceholder"></tiny-select>
+                    <!-- other -->
+                    <tiny-textbox  ng-if="key.toUpperCase() == 'JOB NAME'" width="310" height="32" tipPosition="right" validate="validationMapping.ExecuteSparkSQL[key]" value="process.config.properties[key]"></tiny-textbox>
+                    <div  ng-if=" (key.toUpperCase()=='QUERY') && !useOBSWindow(key) && !useHDFSWindow(key)" ng-click="showBigQueryInputDialog(process, 'Query')"><tiny-textbox  keyup="showBigQueryInputDialog(process, 'Query')" width="310" height="130" tipPosition="right" validate="validationMapping.ExecuteSparkSQL[key]" type="commentsInput.type" value="process.config.properties[key]" readonly="true"></tiny-textbox></div>
+                    <a  ng-if="useHDFSWindow(key)" href="javascript:void(0)" ng-click="selectHDFSPath(key)">HDFS</a>
+                    <a  ng-if="useOBSWindow(key)" href="javascript:void(0)" ng-click="selectOBSPath(key)">OBS</a>
+                </li>
+            </ul>
+            <ul ng-if="currentProperty.ifShow">
+                <li>
+                    <tiny-textbox value="currentProperty.key" width="103" height="32" tipPosition="right" validate="validationMapping.ExecuteSparkSQL[currentProperty.key]"></tiny-textbox>
+                </li>
+                <li>
+                    <tiny-textbox  height="32" value="currentProperty.value" tipPosition="right" validate="validationMapping.ExecuteSparkSQL[currentProperty.key]"></tiny-textbox>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <!-- if process.type is 'ExecuteHive',to show -->
+    <li ng-if="process.type == 'ExecuteHive' || process.type == 'com.huawei.datacraft.activity.ExecuteHive'">
+        <div class="container-fluid properties-table">
+            <ul class="title">
+                <li><span ng-bind="i18n.dps_canvas_configuration_Property"></span></li>
+                <li><span ng-bind="i18n.dps_canvas_configuration_Value"></span></li>
+            </ul>
+            <ul ng-repeat="(key,value) in process.config.properties" ng-if="process.config.descriptors[key].show">
+                <li ng-style="{'height':key.toUpperCase() == 'QUERY'?'135px':'36px', 'lineHeight': key.toUpperCase() == 'QUERY'?'130px':'28px'}">
+                    <span ng-if="process.config.descriptors[key].required" class="require">*</span><span ng-if="!process.config.descriptors[key].required">&nbsp;&nbsp;&nbsp;</span><span ng-bind="process.config.descriptors[key].displayName" title="{{getFixedDescription(process.config.descriptors[key].displayName, process.config.descriptors[key].description)}}"></span>
+                </li>
+                <li title="{{process.config.descriptors[key].sensitive ? '' : (process.config.properties[key].length>40?process.config.properties[key].substr(0,40)+'...':process.config.properties[key])}}" style="line-height: 28px;">
+                    <tiny-select
+                            id="clusterSelector.id"
+                            width="240"
+                            ng-if="key.toUpperCase()=='MR CLUSTERNAME'"
+                            validate="validationMapping.ExecuteHive[key]"
+                            values="clusterSelector.options"
+                            select="clusterSelector.select(selectId, label)"
+                            placeholder="selectPlaceholder"></tiny-select>
+
+
+
+                    <!-- HDFS and OBS -->
+                    <tiny-textbox focused="window[key].focused" ng-if="(key.toUpperCase()!='ARGUMENTS' && key.toUpperCase()!='MR CLUSTERNAME' && key.toUpperCase()!= 'QUERY') && useOBSWindow(key) && useHDFSWindow(key)" show-clear="useHDFSWindow(key) || useOBSWindow(key)" readOnly="useHDFSWindow(key) || useOBSWindow(key)" width="240" height="32" tipPosition="right" validate="validationMapping.ExecuteHive[key]" value="process.config.properties[key]"></tiny-textbox>
+                    <!-- Other -->
+                    <tiny-textbox  ng-if="(key.toUpperCase() =='ARGUMENTS' || key.toUpperCase() =='JOB NAME') && !useOBSWindow(key) && !useHDFSWindow(key)"   width="240" height="32" tipPosition="right" validate="validationMapping.ExecuteHive[key]" value="process.config.properties[key]"></tiny-textbox>
+                    <div ng-if=" (key.toUpperCase() == 'QUERY' ) && !useOBSWindow(key) && !useHDFSWindow(key)" ng-click="showBigQueryInputDialog(process, 'Query')"><tiny-textbox  keyup="showBigQueryInputDialog(process, 'Query')" width="310" height="130" tipPosition="right" validate="validationMapping.ExecuteHive[key]" type="commentsInput.type" value="process.config.properties[key]" readonly="true"></tiny-textbox></div>
+                    <a  ng-if="useHDFSWindow(key) && key.toUpperCase() != 'LOG PATH'" href="javascript:void(0)" ng-click="selectHDFSPath(key, key.toUpperCase() == 'LOG PATH' ? 'ONLY_DIRECTORY' : 0)">HDFS</a>
+                    <a  ng-if="useOBSWindow(key)" href="javascript:void(0)" ng-click="selectOBSPath(key, key.toUpperCase() == 'LOG PATH' ? 'ONLY_DIRECTORY' : 0)">OBS</a>
+
+                </li>
+            </ul>
+            <ul ng-if="currentProperty.ifShow">
+                <li>
+                    <tiny-textbox value="currentProperty.key" width="103" height="32" tipPosition="right" validate="validationMapping.ExecuteHive[currentProperty.key]"></tiny-textbox>
+                </li>
+                <li>
+                    <tiny-textbox  height="32" value="currentProperty.value" tipPosition="right" validate="validationMapping.ExecuteHive[currentProperty.key]"></tiny-textbox>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" ng-click="saveEditProperty()">save</a>
+                    <a href="javascript:void(0)" ng-click="cancelEditProperty()">cancel</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+
+    <!-- if process.type is 'InvokeSqoop',to show -->
+    <li ng-if="process.type == 'InvokeSqoop' || process.type == 'com.huawei.datacraft.activity.InvokeSqoop'">
+        <div class="container-fluid properties-table">
+            <ul class="title">
+                <li><span ng-bind="i18n.dps_canvas_configuration_Property"></span></li>
+                <li><span ng-bind="i18n.dps_canvas_configuration_Value"></span></li>
+            </ul>
+            <ul ng-repeat="(key,value) in process.config.properties" ng-if="process.config.descriptors[key].show">
+                <li ng-style="{'background':(key.toUpperCase() == 'TARGET PARAMETERS'||key.toUpperCase() == 'SOURCE PARAMETERS')?'#f3f3f3':'','height':key.toUpperCase() == 'PARAMETERS'?'70px':'36px'}" ng-if="process.config.descriptors[key].show">
+                    <span ng-if="process.config.descriptors[key].required" class="require">*</span><span ng-if="!process.config.descriptors[key].required">&nbsp;&nbsp;&nbsp;</span><span ng-bind="process.config.descriptors[key].displayName" title="{{getFixedDescription(process.config.descriptors[key].displayName, process.config.descriptors[key].description)}}"></span>
+                </li>
+                <li title="{{process.config.descriptors[key].sensitive ? '' : process.config.properties[key]}}"  ng-style="{'background':(key.toUpperCase() == 'TARGET PARAMETERS'||key.toUpperCase() == 'SOURCE PARAMETERS')?'#f3f3f3':'','height':key.toUpperCase() == 'PARAMETERS'?'70px':'36px'}" ng-if="process.config.descriptors[key].show">
+                    <tiny-select
+                            id="clusterSelector.id"
+                            width="240"
+                            ng-if="key.toUpperCase()=='MR CLUSTERNAME'"
+                            validate="validationMapping.InvokeSqoop[key]"
+                            values="clusterSelector.options"
+                            select="clusterSelector.select(selectId, label)"
+                            placeholder="selectPlaceholder"></tiny-select>
+                    <tiny-select
+                            id="sourceSelector.id"
+                            ng-if="key.toUpperCase()=='SOURCE'"
+                            values="sourceSelector.options"
+                            change="sourceSelector.change()"></tiny-select>
+                    <tiny-select
+                            id="targetSelector.id"
+                            ng-if="key.toUpperCase()=='TARGET'"
+                            values="targetSelector.options"
+                            change="targetSelector.change()"></tiny-select>
+                    <!--OBS-->
+                    <tiny-textbox focused="window[key].focused" ng-if="key.toUpperCase() == 'JAR PATH' " show-clear="useHDFSWindow(key) || useOBSWindow(key)" readOnly="useHDFSWindow(key) || useOBSWindow(key)" width="240" height="32" tipPosition="right" validate="validationMapping.InvokeSqoop[key]" value="process.config.properties[key]"></tiny-textbox>
+                    <!-- HDFS and OBS -->
+                    <tiny-textbox focused="window[key].focused"  ng-if="useOBSWindow(key) && useHDFSWindow(key) && key.toUpperCase() != 'JAR PATH' " show-clear="useHDFSWindow(key) || useOBSWindow(key)" readOnly="useHDFSWindow(key) || useOBSWindow(key)" width="240" height="32" tipPosition="right" validate="validationMapping.InvokeSqoop[key]" value="process.config.properties[key]"></tiny-textbox>
+                    <!-- DB password -->
+                    <tiny-textbox  ng-if="key.toUpperCase() == 'DB PASSWORD'" width="240" height="32" tipPosition="right" validate="validationMapping.InvokeSqoop[key]" type="dbPasswordInput.type" value="process.config.properties[key]"></tiny-textbox>
+                    <!-- parameters -->
+                    <tiny-textbox  ng-if="key.toUpperCase() == 'PARAMETERS'" width="240" height="65" tipPosition="right" validate="validationMapping.InvokeSqoop[key]" type="commentsInput.type" value="process.config.properties[key]"></tiny-textbox>
+                    <!-- other -->
+                    <tiny-textbox  ng-if=" (key.toUpperCase() != 'TARGET PARAMETERS' && key.toUpperCase() != 'SOURCE PARAMETERS' && key.toUpperCase() != 'PARAMETERS' && key.toUpperCase() != 'DB PASSWORD' && key.toUpperCase() != 'TARGET' && key.toUpperCase() != 'SOURCE'  && key.toUpperCase()!='MR CLUSTERNAME' &&key.toUpperCase() != 'LOG PATH') && !useOBSWindow(key) && !useHDFSWindow(key)" width="240" height="32" tipPosition="right" validate="validationMapping.InvokeSqoop[key]" value="process.config.properties[key]"></tiny-textbox>
+                    <a  ng-if="useHDFSWindow(key) && key.toUpperCase() != 'LOG PATH' && key.toUpperCase() != 'JAR PATH' " href="javascript:void(0)" ng-click="selectHDFSPath(key, key.toUpperCase() == 'LOG PATH' ? 'ONLY_DIRECTORY' : 0)">HDFS</a>
+                    <a  ng-if="useOBSWindow(key)" href="javascript:void(0)" ng-click="selectOBSPath(key, key.toUpperCase() == 'LOG PATH' ? 'ONLY_DIRECTORY' : 0)">OBS</a>
+                </li>
+            </ul>
+            <ul ng-if="currentProperty.ifShow">
+                <li>
+                    <tiny-textbox value="currentProperty.key" width="103" height="32" tipPosition="right" validate="validationMapping.InvokeSqoop[currentProperty.key]"></tiny-textbox>
+                </li>
+                <li>
+                    <tiny-textbox  height="32" value="currentProperty.value" tipPosition="right" validate="validationMapping.InvokeSqoop[currentProperty.key]"></tiny-textbox>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" ng-click="saveEditProperty()">save</a>
+                    <a href="javascript:void(0)" ng-click="cancelEditProperty()">cancel</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+
+    <!-- if process.type is 'LoadHbase',to show -->
+    <li ng-if="process.type == 'LoadHbase' || process.type == 'com.huawei.datacraft.activity.LoadHbase'">
+        <div class="container-fluid properties-table">
+            <ul class="title">
+                <li><span ng-bind="i18n.dps_canvas_configuration_Property"></span></li>
+                <li><span ng-bind="i18n.dps_canvas_configuration_Value"></span></li>
+            </ul>
+            <ul ng-repeat="(key,value) in process.config.properties" ng-if="process.config.descriptors[key].show">
+                <li>
+                    <span ng-if="process.config.descriptors[key].required" class="require">*</span><span ng-if="!process.config.descriptors[key].required">&nbsp;&nbsp;&nbsp;</span><span ng-bind="process.config.descriptors[key].displayName" title="{{getFixedDescription(process.config.descriptors[key].displayName, process.config.descriptors[key].description)}}"></span>
+                </li>
+                <li title="{{process.config.descriptors[key].sensitive ? '' : process.config.properties[key]}}">
+                    <tiny-select
+                            id="clusterSelector.id"
+                            width="240"
+                            ng-if="key.toUpperCase()=='MR CLUSTERNAME'"
+                            validate="validationMapping.LoadHbase[key]"
+                            values="clusterSelector.options"
+                            select="clusterSelector.select(selectId, label)"
+                            placeholder="selectPlaceholder">
+                    </tiny-select>
+                    <tiny-select
+                            id="loadTypeSelector.id"
+                            width="240"
+                            ng-if="key.toUpperCase()=='LOAD TYPE'"
+                            validate="validationMapping.LoadHbase[key]"
+                            values="loadTypeSelector.options"
+                            change="loadTypeSelector.change()"
+                            placeholder="selectPlaceholder">
+                    </tiny-select>
+                    <tiny-select
+                            id="csvArchiveNeededSelector.id"
+                            width="240"
+                            ng-if="key.toUpperCase()=='CSV ARCHIVE REQUIRED'"
+                            validate="validationMapping.LoadHbase[key]"
+                            values="csvArchiveNeededSelector.options"
+                            change="csvArchiveNeededSelector.change()">
+                    </tiny-select>
+                    <!-- HDFS -->
+                    <tiny-textbox focused="window[key].focused"  ng-if=" key.toUpperCase() !='CUSTOM JAR PATH' && key.toUpperCase()!='MR CLUSTERNAME' && key.toUpperCase() != 'LOAD TYPE' && !useOBSWindow(key) && useHDFSWindow(key)" show-clear="useHDFSWindow(key) || useOBSWindow(key)" readOnly="useHDFSWindow(key) || useOBSWindow(key)" width="240" height="32" tipPosition="right" validate="validationMapping.LoadHbase[key]" value="process.config.properties[key]"></tiny-textbox>
+                    <tiny-textbox focused="window[key].focused"  id="validationMapping.LoadHbase.id" ng-if=" key.toUpperCase() =='CUSTOM JAR PATH' && key.toUpperCase()!='MR CLUSTERNAME' && key.toUpperCase() != 'LOAD TYPE' && !useOBSWindow(key) && useHDFSWindow(key)" show-clear="useHDFSWindow(key) || useOBSWindow(key)" readOnly="useHDFSWindow(key) || useOBSWindow(key)" width="240" height="32" tipPosition="right" validate="validationMapping.LoadHbase[key]" value="process.config.properties[key]"></tiny-textbox>
+                    <!-- HDFS and OBS -->
+                    <tiny-textbox focused="window[key].focused" ng-if=" key.toUpperCase()!='MR CLUSTERNAME' && key.toUpperCase() != 'LOAD TYPE' && useOBSWindow(key) && useHDFSWindow(key)" show-clear="useHDFSWindow(key) || useOBSWindow(key)" readOnly="useHDFSWindow(key) || useOBSWindow(key)" width="240" height="32" tipPosition="right" validate="validationMapping.LoadHbase[key]" value="process.config.properties[key]"></tiny-textbox>
+
+                    <!-- other -->
+                    <tiny-textbox  ng-if="key.toUpperCase() != 'EXECUTION CLASS NAME' && key.toUpperCase() != 'LOAD TYPE' && key.toUpperCase()!='MR CLUSTERNAME' && key.toUpperCase()!='CSV ARCHIVE REQUIRED' && !useOBSWindow(key) && !useHDFSWindow(key)" width="240" height="32" tipPosition="right" validate="validationMapping.LoadHbase[key]" value="process.config.properties[key]"></tiny-textbox>
+                    <tiny-textbox  id="validationMapping.LoadHbase.exid" ng-if=" (key.toUpperCase() == 'EXECUTION CLASS NAME' && key.toUpperCase() != 'LOAD TYPE' && key.toUpperCase()!='MR CLUSTERNAME' && key.toUpperCase()!='CSV ARCHIVE REQUIRED') && !useOBSWindow(key) && !useHDFSWindow(key)" width="240" height="32" tipPosition="right" validate="validationMapping.LoadHbase[key]" value="process.config.properties[key]"></tiny-textbox>
+                    <a  ng-if="useHDFSWindow(key) && key.toUpperCase() != 'LOG PATH'" href="javascript:void(0)" ng-click="selectHDFSPath(key, key.toUpperCase() == 'LOG PATH' ? 'ONLY_DIRECTORY' : 0)">HDFS</a>
+                    <a  ng-if="useOBSWindow(key)" href="javascript:void(0)" ng-click="selectOBSPath(key, key.toUpperCase() == 'LOG PATH' ? 'ONLY_DIRECTORY' : 0)">OBS</a>
+                </li>
+            </ul>
+            <ul ng-if="currentProperty.ifShow">
+                <li>
+                    <tiny-textbox value="currentProperty.key" width="103" height="32" tipPosition="right" validate="validationMapping.LoadHbase[currentProperty.key]"></tiny-textbox>
+                </li>
+                <li>
+                    <tiny-textbox  height="32" value="currentProperty.value" tipPosition="right" validate="validationMapping.LoadHbase[currentProperty.key]"></tiny-textbox>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" ng-click="saveEditProperty()">save</a>
+                    <a href="javascript:void(0)" ng-click="cancelEditProperty()">cancel</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <!-- if process.type is 'ExecuteQuery',to show -->
+    <li ng-if="process.type == 'ExecuteQuery' || process.type == 'com.huawei.datacraft.activity.ExecuteQuery'">
+        <div class="container-fluid properties-table">
+            <ul class="title">
+                <li><span ng-bind="i18n.dps_canvas_configuration_Property"></span></li>
+                <li><span ng-bind="i18n.dps_canvas_configuration_Value"></span></li>
+            </ul>
+            <ul ng-repeat="(key,value) in process.config.properties" ng-if="process.config.descriptors[key].show">
+                <li ng-style="{'height':key.toUpperCase() == 'QUERY STATEMENT'?'70px':'36px','line-height':key.toUpperCase() == 'QUERY STATEMENT'?'65px':'31px'}">
+                    <span ng-if="process.config.descriptors[key].required" class="require">*</span><span ng-if="!process.config.descriptors[key].required">&nbsp;&nbsp;&nbsp;</span><span ng-bind="process.config.descriptors[key].displayName" title="{{getFixedDescription(process.config.descriptors[key].displayName, process.config.descriptors[key].description)}}"></span>
+                </li>
+                <li title="{{process.config.descriptors[key].sensitive ? '' : process.config.properties[key]}}" ng-style="{'height':key.toUpperCase() == 'QUERY STATEMENT'?'70px':'36px'}">
+                    <tiny-select
+                            id="clusterSelector.id"
+                            width="240"
+                            ng-if="key.toUpperCase()=='MR CLUSTERNAME'"
+                            validate="validationMapping.ExecuteQuery[key]"
+                            values="clusterSelector.options"
+                            select="clusterSelector.select(selectId, label)"
+                            placeholder="selectPlaceholder"></tiny-select>
+                    <!--LOG PATH-->
+                    <tiny-textbox  focused="window[key].focused"  ng-if="key.toUpperCase() == 'LOG PATH' " show-clear="useHDFSWindow(key) || useOBSWindow(key)" readOnly="useHDFSWindow(key) || useOBSWindow(key)" width="240" height="32" tipPosition="right" validate="validationMapping.ExecuteQuery[key]" value="process.config.properties[key]"></tiny-textbox>
+                    <!--Jar Path-->
+                    <tiny-textbox  focused="window[key].focused"  ng-if="key.toUpperCase() == 'JAR PATH' " show-clear="useHDFSWindow(key) || useOBSWindow(key)" readOnly="useHDFSWindow(key) || useOBSWindow(key)" width="240" height="32" tipPosition="right" validate="validationMapping.ExecuteQuery[key]" value="process.config.properties[key]"></tiny-textbox>
+                    <!-- DB password -->
+                    <tiny-textbox  ng-if="key.toUpperCase() == 'DB PASSWORD'" width="310" height="32" tipPosition="right" validate="validationMapping.ExecuteQuery[key]" type="dbPasswordInput.type" value="process.config.properties[key]"></tiny-textbox>
+                    <!-- HDFS and OBS -->
+                    <tiny-textbox focused="window[key].focused"  ng-if="key.toUpperCase()!='MR CLUSTERNAME'&& key.toUpperCase() != 'JAR PATH' && key.toUpperCase() != 'LOG PATH' && useOBSWindow(key) && useHDFSWindow(key)" show-clear="useHDFSWindow(key) || useOBSWindow(key)" readOnly="useHDFSWindow(key) || useOBSWindow(key)" width="240" height="32" tipPosition="right" validate="validationMapping.ExecuteQuery[key]" value="process.config.properties[key]"></tiny-textbox>
+
+                    <!-- Query Statement -->
+                    <div ng-if="key.toUpperCase() == 'QUERY STATEMENT'" ng-click="showBigQueryInputDialog(process, 'Query Statement')"><tiny-textbox  keyup="showBigQueryInputDialog(process, 'Query Statement')" width="240" height="65" tipPosition="right" validate="validationMapping.ExecuteQuery[key]" type="commentsInput.type" value="process.config.properties[key]" readonly="true"></tiny-textbox></div>
+                    <!-- other -->
+                    <tiny-textbox  ng-if="key.toUpperCase()!='MR CLUSTERNAME' && key.toUpperCase() != 'DB PASSWORD' && key.toUpperCase() != 'QUERY STATEMENT' && !useOBSWindow(key) && !useHDFSWindow(key)" width="310" height="32" tipPosition="right" validate="validationMapping.ExecuteQuery[key]" value="process.config.properties[key]"></tiny-textbox>
+                    <a  ng-if="useHDFSWindow(key) && key.toUpperCase() != 'LOG PATH'" href="javascript:void(0)" ng-click="selectHDFSPath(key, key.toUpperCase() == 'LOG PATH' ? 'ONLY_DIRECTORY' : 0)">HDFS</a>
+                    <a  ng-if="useOBSWindow(key)" href="javascript:void(0)" ng-click="selectOBSPath(key, key.toUpperCase() == 'LOG PATH' ? 'ONLY_DIRECTORY' : 0)">OBS</a>
+                </li>
+            </ul>
+            <ul ng-if="currentProperty.ifShow">
+                <li>
+                    <tiny-textbox value="currentProperty.key" width="103" height="32" tipPosition="right" validate="validationMapping.ExecuteQuery[currentProperty.key]"></tiny-textbox>
+                </li>
+                <li>
+                    <tiny-textbox  height="32" value="currentProperty.value" tipPosition="right" validate="validationMapping.ExecuteQuery[currentProperty.key]"></tiny-textbox>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" ng-click="saveEditProperty()">save</a>
+                    <a href="javascript:void(0)" ng-click="cancelEditProperty()">cancel</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+
+</ul>
+<!--
+<tiny-button class="tiny-red-btn ml20 canvas-configurationpanel-btn"  text="applyButton.text" click="applyButton.click()"></tiny-button>
+<tiny-button class="tiny-red-btn canvas-configurationpanel-btn" text="cancelButton.text" click="cancelButton.click()"></tiny-button>-->

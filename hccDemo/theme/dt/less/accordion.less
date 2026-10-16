@@ -1,0 +1,53 @@
+@import "variables.less";
+@import "mixins.less";
+
+.tinyplus-panel {
+  background-color: @panel-bg;
+  border: 1px solid transparent;
+  border-radius: @panel-border-radius;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+          box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+}
+.tinyplus-panel-body {
+  padding: @panel-body-padding;
+}
+.tinyplus-panel-heading {
+  padding: @panel-heading-padding;
+  border-bottom: 1px solid transparent;
+  border-top-left-radius: (@panel-border-radius)-1;
+  border-top-right-radius: (@panel-border-radius)-1;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  cursor: pointer;
+}
+.tinyplus-panel-title {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 12px;
+  color: #333;
+  font-family: "微软雅黑,Helvetica,Myriad,Arial";
+}
+.tinyplus-panel-default {
+  border-color: @panel-border-color;
+}
+.tinyplus-panel-group .tinyplus-panel {
+  margin-bottom: 0;
+  border-radius: @panel-border-radius;
+}
+.tinyplus-panel-group .tinyplus-panel + .tinyplus-panel {
+  margin-top: @panel-space-between;
+}
+.tinyplus-panel-group .tinyplus-panel-heading {
+  border-bottom: 0;
+}
+/*??*/
+.tinyplus-panel-group .tinyplus-panel-heading + .tinyplus-panel-collapse > .tinyplus-panel-body {
+  border-top: 1px solid @panel-border-color;
+}
+.tinyplus-panel-default > .tinyplus-panel-heading {
+  background-color: @panel-heading-color;
+  border-color: @panel-border-color;
+}
+.tinyplus-panel-default > .tinyplus-panel-heading + .tinyplus-panel-collapse > .tinyplus-panel-body {
+  border-top-color: @panel-border-color;
+}

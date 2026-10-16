@@ -1,0 +1,195 @@
+@font-face {
+  font-family: 'dps-icomoon';
+  src:  url('../fonts/dps-icomoon.eot?s0ffm');
+  src:  url('../fonts/dps-icomoon.eot?s0ffm#iefix') format('embedded-opentype'),
+    url('../dps-icomoon.ttf?s0ffm') format('truetype'),
+    url('../fonts/dps-icomoon.woff?s0ffm') format('woff'),
+    url('../fonts/dps-icomoon.svg?s0ffm#dps-icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-dps-"], [class*=" icon-dps-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'dps-icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-dps-dps-circle-arrow-right:before {
+  content: "\e900";
+}
+.icon-dps-dps-cirque-arrow-down:before {
+  content: "\e901";
+}
+.icon-dps-dps-left-arrow:before {
+  content: "\e902";
+}
+.icon-dps-dps-left-menu-logs:before {
+  content: "\e903";
+}
+.icon-dps-dps-left-menu-pipelines:before {
+  content: "\e904";
+}
+.icon-dps-dps-left-menu-warnings:before {
+  content: "\e905";
+}
+.icon-dps-dps-redirect-to:before {
+  content: "\e906";
+}
+.icon-dps-dps-right-arrow:before {
+  content: "\e907";
+}
+.icon-dps-dps-service-logo:before {
+  content: "\e908";
+}
+.icon-dps-dps-setting:before {
+  content: "\e909";
+}
+.icon-dps-dps-side-bar-setting:before {
+  content: "\e90a";
+}
+.icon-dps-editor-connect---arrows:before {
+  content: "\e90b";
+}
+.icon-dps-editor-connect-refresh:before {
+  content: "\e90c";
+}
+.icon-dps-editor-copy:before {
+  content: "\e90d";
+}
+.icon-dps-editor-create-template:before {
+  content: "\e90e";
+}
+.icon-dps-editor-delete:before {
+  content: "\e90f";
+}
+.icon-dps-editor-edit:before {
+  content: "\e910";
+}
+.icon-dps-editor-expand:before {
+  content: "\e911";
+}
+.icon-dps-editor-export:before {
+  content: "\e912";
+}
+.icon-dps-editor-fold:before {
+  content: "\e913";
+}
+.icon-dps-editor-folder:before {
+  content: "\e914";
+}
+.icon-dps-editor-import:before {
+  content: "\e915";
+}
+.icon-dps-editor-increase:before {
+  content: "\e916";
+}
+.icon-dps-editor-link:before {
+  content: "\e917";
+}
+.icon-dps-editor-processor:before {
+  content: "\e918";
+}
+.icon-dps-editor-redirect:before {
+  content: "\e919";
+}
+.icon-dps-editor-redo:before {
+  content: "\e91a";
+}
+.icon-dps-editor-reduction:before {
+  content: "\e91b";
+}
+.icon-dps-editor-refresh:before {
+  content: "\e91c";
+}
+.icon-dps-editor-round-expand:before {
+  content: "\e91d";
+}
+.icon-dps-editor-round-fold:before {
+  content: "\e91e";
+}
+.icon-dps-editor-save:before {
+  content: "\e91f";
+}
+.icon-dps-editor-search:before {
+  content: "\e920";
+}
+.icon-dps-editor-stop:before {
+  content: "\e921";
+}
+.icon-dps-editor-submit:before {
+  content: "\e922";
+}
+.icon-dps-editor-timers:before {
+  content: "\e923";
+}
+.icon-dps-editor-win-max:before {
+  content: "\e924";
+}
+.icon-dps-editor-win-min:before {
+  content: "\e925";
+}
+.icon-dps-edtior-view:before {
+  content: "\e926";
+}
+.icon-dps-status-alarm:before {
+  content: "\e927";
+}
+.icon-dps-status-avilable:before {
+  content: "\e928";
+}
+.icon-dps-status-change:before {
+  content: "\e929";
+}
+.icon-dps-status-delete:before {
+  content: "\e92a";
+}
+.icon-dps-status-error:before {
+  content: "\e92b";
+}
+.icon-dps-status-mount:before {
+  content: "\e92c";
+}
+.icon-dps-status-noMount:before {
+  content: "\e92d";
+}
+.icon-dps-status-normal:before {
+  content: "\e92e";
+}
+.icon-dps-status-off:before {
+  content: "\e92f";
+}
+.icon-dps-status-pause:before {
+  content: "\e930";
+}
+.icon-dps-status-problem:before {
+  content: "\e931";
+}
+.icon-dps-status-rebulid:before {
+  content: "\e932";
+}
+.icon-dps-status-restore:before {
+  content: "\e933";
+}
+.icon-dps-status-running:before {
+  content: "\e934";
+}
+.icon-dps-status-sleep:before {
+  content: "\e935";
+}
+.icon-dps-status-start:before {
+  content: "\e936";
+}
+.icon-dps-status-stop:before {
+  content: "\e937";
+}
+

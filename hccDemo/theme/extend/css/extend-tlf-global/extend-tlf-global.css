@@ -1,0 +1,63 @@
+/*工作流列表刷新按钮默认背景色*/
+.common-icon-refresh-button{
+    background: #fafafa;
+}
+/*canvas页面放大，缩小，刷新按钮西电风格样式,因datacraft.css文件已经定义了字体图标和背景颜色，因此优先选择该颜色,下同*/
+.zoom-panel > div:hover{
+    color: #007486!important;
+    background:#fff!important;
+    border: 1px solid #ddd!important;
+}
+
+.zoom-panel > div:active{
+    color: #fff!important;
+    background: #007486!important;
+    border: 1px solid #009ee0!important;
+}
+/*算子列表默认和展开图标的初始颜色*/
+.process-type-class .arrow-icon:before{
+    color: #007486!important;
+}
+/*算子列表鼠标滑过默认和展开图标时的颜色*/
+.process-type-class .arrow-icon:hover:before{
+    color: #00bfd6!important;
+}
+/*监控列表默认和展开图标的初始颜色*/
+#monitorTablesPanel .block-title{
+    color:#007486!important;
+}
+/*监控列表鼠标滑过默认和展开图标时的颜色*/
+.ti-angle-circle-o-right:hover:before{
+    color: #00bfd6
+}
+.ti-angle-circle-o-down:hover:before{
+    color: #00bfd6
+}
+/*提示信息报错时西电提示条颜色*/
+.frame-cloud-alert-error {
+    background-color: #def0f5!important;
+}
+/*西电关闭提示条按钮颜色*/
+.close{
+
+}
+/*西电日历图标颜色*/
+.tiny-datetime-calendarimage{
+
+}
+/*超链接*/
+a:hover {
+    color: #00bfd6!important;
+    text-decoration: underline!important;
+}
+/*字体*/
+p {
+    font-family: 'TelefonicaHeadlineLight', Arial, Helvetica, sans-serif !important;
+}
+/*保存和调度border*/
+#submitButton, #scheduleButton{
+    border: 1px solid #00c6d7!important;
+}
+#submitButton:hover, #scheduleButton:hover{
+    border: 1px solid #00aec0!important;
+}

@@ -1,0 +1,23 @@
+<div class="console-content-padding">
+     <div class="nonsupport">
+         <div class="nonsupport-region-other">
+              <div class="nonsupport-region">
+                  <div class="nonsupport-image pull-left">
+                      <img src="theme/default/images/nonsupport-small.png">
+                  </div>
+                 <p class="common-font-size-big7 common-color-title" ng-bind="i18n.console_term_nonsupportRegion_label"></p>
+                 <p class="nonsupport-region-p common-color-content common-font-size-big8" ng-bind-html="console_term_nonsupportRegion_tips"></p>
+              </div>
+              <div class="nonsupport-region-support-list">
+                   <span class="common-color-prompt common-font-size-big8" ng-bind="i18n.console_term_supportRegion_label"></span>
+                     <ul>
+                         <li ng-repeat="region in regions" ng-if="!region.disable" >
+                            <a hws-href href="" ng-click="changeRegion(region.id)">
+                               <span class="common-font-size-big9" ng-bind="region.name"></span>
+                            </a>
+                         </li>
+                     </ul>
+              </div>
+         </div>
+     </div>
+</div>

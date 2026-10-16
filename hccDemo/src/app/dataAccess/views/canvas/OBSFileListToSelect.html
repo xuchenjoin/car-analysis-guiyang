@@ -1,0 +1,42 @@
+<div id="OBSFileListToSelectWindow" ng-controller="OBSFileListToSelect.ctrl">
+	<div class="nav-container">
+        <div  style="position: absolute;z-index: 1000">URL:
+            <tiny-textbox width="540" readonly="true"  tipPosition="right"  value="currentPath"></tiny-textbox>
+        </div>
+	</div>
+
+        <div class="mt10 ml30 mt40" style="height: 400px;width:540px">
+            <tiny-table id="OBSFileList.id"
+                        enable-pagination="OBSFileList.enablePagination"
+                        pagination-style="OBSFileList.paginationStyle"
+                        length-change="OBSFileList.lengthChange"
+                        length-menu="OBSFileList.lengthMenu"
+                        display-length="OBSFileList.displayLength"
+                        data="OBSFileList.data"
+                        columns-draggable="OBSFileList.columnsDraggable"
+                        callback="OBSFileList.callback"
+                        columns="OBSFileList.columns"
+                        total-records="OBSFileList.totalRecords"
+                        checkbox="OBSFileList.checkbox"
+                        s-scroll-y="OBSFileList.sScrollY"
+                        render-row="OBSFileList.renderRow"
+                        table-language="OBSFileList.tableLanguage">
+            </tiny-table>
+        </div>
+    <div style="text-align: center;" class="mt30" >
+        <tiny-button  id="obsPrePage.id" ng-show="showPageBtn.prePage" class=" canvas-toolbar-btn"   text="obsPrePage.text" disable="obsPrePage.disable"  ng-click="obsPrePage.click()"></tiny-button>
+        <tiny-button  id="obsNextPage.id" ng-show="showPageBtn.nextPage" class=" canvas-toolbar-btn"   text="obsNextPage.text" disable="obsNextPage.disable" ng-click="obsNextPage.click()"></tiny-button>
+    </div>
+
+</div>
+<script>
+	require(
+			[ "app/dataAccess/controllers/canvas/OBSFileListToSelectCtrl"],
+			function(OBSFileListToSelectCtrl) {
+				angular.element(document).injector().invoke(function($compile) {
+					var scope = $("#OBSFileListToSelectWindow").scope();
+					$compile($("#OBSFileListToSelectWindow"))(scope);
+					scope.$digest();
+				})
+			});
+</script>

@@ -1,0 +1,23 @@
+<div class="console-content-padding">
+    <div class="maintenance">
+        <div class="maintained-image">
+            <img src="theme/default/images/maintenance-small.png">
+        </div>
+        <div class="maintenance-region">
+            <div class="maintenance-region-plus">
+                <p class="common-font-size-big7 common-color-title" ng-bind-html="console_term_beingMaintained_label"></p>
+            </div>
+            <div class="maintenance-region-support-list">
+                <span class="common-color-prompt common-font-size-big8" ng-bind="i18n.console_term_supportRegion_label"></span>
+                <ul>
+                    <li ng-repeat="region in regions" ng-if="!region.disable && region.id !== selectRegionId" >
+                        <div class="region-maintenance-circle"></div>
+                        <a hws-href href="" ng-click="changeRegion(region.id)">
+                            <span class="common-font-size-big9" ng-bind="region.name"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

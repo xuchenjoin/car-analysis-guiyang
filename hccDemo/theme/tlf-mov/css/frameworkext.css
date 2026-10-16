@@ -1,0 +1,224 @@
+.console-menu-logo {
+    display: block;
+    width: 160px;
+    height: 60px;
+    background: url("../images/logo.png") no-repeat left center;
+    background-size: 160px;
+}
+
+.console-footer-logo {
+    display: inline-block;
+    vertical-align: middle;
+    width: 80px;
+    height: 32px;
+    background: url("../images/logo_footer.png") no-repeat left center;
+    background-size: 80px;
+}
+
+a.console-topbar-btn:visited {
+    color: #fafafa;
+}
+
+.console-topbar-btn {
+    color: #fafafa;
+}
+
+a.console-topbar-btn:hover {
+    background-color: #0086c3;
+}
+
+.footer-copyright-content a {
+    color: #ffffff;
+}
+
+.footer-copyright-content {
+    color: #ffffff;
+    background-color: #005c85;
+}
+
+.console-topbar-btn-oldConsole {
+    display: none;
+}
+
+.console-topbar-btn-click {
+    background-color: #0086c3;
+}
+
+.dropdown-menu {
+    background-color: #0086c3 ;
+}
+
+.console-topbar-nav-item-title {
+    border-bottom-color: #0178ae;
+}
+
+.service-list-item-tr .div-tr {
+    border-bottom-color: #0178ae;
+}
+
+.console-menu-nav-list .console-menu-nav-item ul li:hover {
+    background-color: #005c85;
+}
+
+.dropdown-menu > li > a:hover{
+    background-color: #005c85;
+}
+
+.dropdown-menu > li > ul > li:hover {
+    background-color: #005c85;
+}
+
+.console-topbar-region {
+    background-color: #00334e;
+}
+
+.console-topbar-btn-notice {
+    background-color: #00334e;
+}
+
+.console-topbar-btn-help {
+    background-color: #00334e;
+}
+
+.menu-hwsicon-frame-service-favorite {
+    color: #6fa800;
+}
+
+.console-menu-nav-list .console-menu-nav-item ul li:hover .menu-hwsicon-frame-service-favorite {
+    color: #7ab800;
+}
+
+.region-menu-dropdown .dropdown-menu:before {
+    border-bottom-color: #0086c3 ;
+}
+
+.message-menu-dropdown .dropdown-menu:before {
+    border-bottom-color: #0086c3 ;
+}
+
+.console-notice-list .line-border-parent .line-border {
+    border-bottom-color: #0178ae;
+}
+
+.dropdown-menu-li-line {
+    border-bottom-color: #00334e;
+}
+
+.user-dropdown-menu .frame-order-list, .user-dropdown-menu .frame-user-application,
+.user-dropdown-menu .frame-seller-center, .user-dropdown-menu .frame-submit-workorder,
+.user-dropdown-menu .frame-icp-licence{
+    display: none;
+}
+
+.default-style .default-style {
+    display: none;
+}
+
+.default-style .custom-style {
+    display: block;
+}
+
+.default-style .ocb-custom-style {
+    display: none;
+}
+
+.message-alert-inner {
+    background-color: #ffffff;
+    display: table;
+    width: 100%;
+    -webkit-box-shadow: 1px 1px 5px 0px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow: 1px 1px 5px 0px rgba(50, 50, 50, 0.75);
+    box-shadow: 1px 1px 5px 0px rgba(50, 50, 50, 0.75);
+    line-height: 18px;
+    margin-bottom: 20px;
+}
+
+.message-alert-inner div.alert-icon {
+    text-align: right;
+    vertical-align: middle;
+    padding: 10px;
+    width: 100px;
+}
+
+.frame-cloud-alert-success div.alert-icon {
+    background-color: #7ab800;
+}
+
+.frame-cloud-alert-error div.alert-icon {
+    background-color: #cc0000;
+}
+
+.frame-cloud-alert-error {
+    border: none;
+}
+
+.frame-cloud-alert-success {
+    border: none;
+}
+
+.message-alert-inner div {
+    display: table-cell;
+}
+
+.message-alert-inner div.content {
+    padding: 5px 10px;
+    vertical-align: middle;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: #515559;
+    position: relative;
+}
+
+.message-alert-inner div strong {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.frame-cloud-alert-success div strong {
+    color: #7ab800;
+}
+
+.frame-cloud-alert-error div strong {
+    color: #cc0000;
+}
+
+.message-alert-inner div.content p {
+    padding-bottom: 0;
+    margin-bottom: inherit;
+}
+
+.message-alert-inner .cerrar {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    color: #333333;
+}
+
+.message-alert-inner .cerrar.close {
+    opacity: 0.8;
+}
+
+.message-alert-inner .cerrar.close:hover {
+    opacity: 1;
+}
+
+.console-footer-btn:hover {
+    background-color: #0086c3;
+    color: #ffffff;
+}
+
+.console-footer-vertical-line {
+    border-left: 1px solid #337D9D;
+}
+
+.console-top-menu .menu {
+    background-color: #005c85;
+}
+
+.frame-menu-tips-message-list-content:hover {
+    background-color: #005c85;
+}
+
+.fw-steps > ul:before, .fw-step-count:before {
+    background-color: #005c85;
+}

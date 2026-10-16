@@ -1,0 +1,18 @@
+<div id="console-top-footer" class="console-top-footer common-page-footer frame-small-font-size">
+    <div id="footer" class="footer-copyright-content common-link-inherit-color console-content-padding common-content-screen">
+        <div class="dropup pull-left">
+            <a class="console-footer-btn dropdown-toggle console-footer-btn-dropdown" data-toggle="dropdown">
+                <span class="hwsicon-frame-image-footer-earth"></span>
+                <span class="padding-left-25" ng-bind="languageName"></span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-language common-dropdown-menu common-font-size-common">
+                <li ng-repeat="languageArr in supportLanguage" ng-if="languageArr[0] !== language">
+                    <a target="_self" ng-click="changeLanguage(languageArr[0])">
+                        <span ng-bind="languageArr[1]"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <span class="margin-left-3 pull-right" ng-bind-html="console_term_copyright_label"></span>
+    </div>
+</div>

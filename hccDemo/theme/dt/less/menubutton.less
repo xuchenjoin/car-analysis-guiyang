@@ -1,0 +1,99 @@
+@import "variables.less";
+@import "mixins.less";
+
+.tiny-menubutton-main-a {
+  display:inline-block;
+  cursor: pointer;
+  color : #333;
+}
+.tiny-menubutton-caret {
+  display: inline-block;
+  margin-left: 5px;
+  .triangle-down(8px;4px;#666);
+  vertical-align: middle;
+  content: "";
+}
+.tiny-menubutton-main-a a.tiny-btn-basic .right-icon-cls:after{
+  .triangle-down(8px;5px;#898989);
+  position: absolute;
+  left: 2px;
+  top: 6px;
+  content: "";
+}
+.tiny-menubutton-main-a .tiny-btn-right-icon .tiny-btn-vertical-line{
+  width: 1px;
+  background: #c5c5c5;
+  height: 14px;
+  position: absolute;
+  left: -8px;
+  top: 1px;
+  z-index:1;
+}
+.tiny-menubutton-normaldropdown {
+  z-index: 10002;
+  font-size: 12px;
+  list-style: none;
+  background-color: #606060;
+  border: 1px solid rgba(0,0,0,0.15);
+  position: absolute;
+}
+.tiny-menubutton-normaldropdown > li > a {
+  text-decoration: none;
+  display: block;
+  padding: 0 20px;
+  clear: both;
+  font-weight: normal;
+  line-height: 29px;
+  color: #fff;
+  white-space: nowrap;
+}
+.tiny-menubutton-normaldropdown > li > a:hover, .tiny-menubutton-normaldropdown > li > a:focus {
+  background: #4b4b4b;
+  text-decoration: none;
+}
+
+.tiny-menubutton-buttondropdown {
+  z-index: 10002;
+  position: absolute;
+  list-style: none;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  -moz-box-shadow: -1px 1px 2px #ccc, 1px 1px 2px #ccc;
+    box-shadow: -1px 1px 2px #ccc, 1px 1px 2px #ccc;
+  background: #FbFbFb;
+}
+
+.tiny-menubutton-buttondropdown > li > a {
+  text-decoration: none;
+  display: block;
+  padding: 0 20px;
+  clear: both;
+  font-weight: normal;
+  color: #000;
+  line-height: 29px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.tiny-menubutton-buttondropdown > li > a:hover, .tiny-menubutton-buttondropdown> li > a:focus {
+  background: #1BA4E8;
+  text-decoration: none;
+}
+
+.tiny-menubutton-buttondropdown li.tiny-menubutton-dropdown-li:not(:last-child){
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.tiny-menubutton-buttondropdown li.tiny-menubutton-dropdown-li:first-child a:hover{
+  background-color: #e3f2ff;
+  color:#009ae7;
+  border-radius: 6px 6px 0 0;
+}
+.tiny-menubutton-buttondropdown li.tiny-menubutton-dropdown-li a:hover{
+  background-color: #e3f2ff;
+  color:#009ae7;
+}
+.tiny-menubutton-buttondropdown li.tiny-menubutton-dropdown-li:last-child a:hover{
+  background-color: #e3f2ff;
+  color:#009ae7;
+  border-radius: 0 0 6px 6px;
+}

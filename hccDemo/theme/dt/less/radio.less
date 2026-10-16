@@ -1,0 +1,51 @@
+@import "variables.less";
+@import "mixins.less";
+
+
+.tiny-radio-dot{
+  width: 50%;
+  height: 50%;
+  margin: 25%;
+  border-radius: 50%;
+  background-color: @radio-checked-color;
+}
+
+div.tiny-radioIcon.tiny-radio-unchecked:hover
+{
+  .radio-circle-hover;
+}
+
+div.tiny-radioIcon.tiny-radio-checked:hover
+{
+  .radio-circle-hover;
+}
+
+.tiny-radio-checked-disabled{
+  background-color: @radio-disable-background-color;
+}
+
+.tiny-radio-unchecked-disabled{
+  background-color: @radio-disable-background-color;
+}
+
+.tiny-radioIcon{
+  float: left;
+  .box-sizing(content-box);
+  width: 12px;
+  height: 12px;
+  position: relative;
+  margin: 1px 6px 1px 3px;
+  border-radius: 20px;
+  border: 1px solid #aaa; // 按钮外圆周的边框
+}
+
+// disable状态下，文本的颜色
+.tiny-radio-content-disabled{
+  color: #B1B0B0;
+}
+
+// disable状态下，实心圆的背景颜色
+.tiny-radio-checked-disabled .tiny-radio-dot{
+  display: block !important;
+  background-color: #BDBABA;
+}

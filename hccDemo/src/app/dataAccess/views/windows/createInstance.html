@@ -1,0 +1,41 @@
+<div id="createInstanceContainer" ng-controller="createInstance.ctrl">
+    <div id="createPipelineForm" class="timeLine">
+        <dl class="row mr0">
+            <dt class="col-xs-3" style="line-height: 32px; text-align: left;white-space:nowrap ">
+                <span style="font-weight:lighter;display:inline-block;width:42px!important;" ng-bind="i18n.dps_pipeline_name_tab"></span>
+            </dt>
+            <dd class="col-xs-9">
+                <tiny-textbox id="newStepNameTextBox2.id" value="newStepNameTextBox2.value"
+                              width="newStepNameTextBox2.width" validate="checkPipelineNameRules.pipelineNameCheck"
+                              max-length="newStepNameTextBox2.maxLength"
+                              placeholder="newStepNameTextBox2.placeholder" tipPosition="right"
+                              keydown="newStepNameTextBox2.keydown()"
+                        ></tiny-textbox>
+            </dd>
+        </dl>
+        <dl class="row mr0">
+            <dt class="col-xs-3" style="line-height: 32px; text-align: left;white-space:nowrap ">
+                <span style="font-weight:lighter;display:inline-block;width:42px!important;" ng-bind="i18n.dps_alarm_list_table_descript_title"></span>
+            </dt>
+            <dd class="col-xs-9">
+                <tiny-textbox id="newStepDescriptionTextBox2.id" value="newStepDescriptionTextBox2.value" max-length="newStepDescriptionTextBox2.maxLength"
+                              type="newStepDescriptionTextBox2.type" width="newStepDescriptionTextBox2.width" height="newStepDescriptionTextBox2.height" placeholder="newStepDescriptionTextBox2.placeholder" tipPosition="right" validate="checkPipelineDescriptionRules.pipelineDescriptionCheck" resize="newStepDescriptionTextBox2.resize">
+                </tiny-textbox>
+
+            </dd>
+        </dl>
+    </div>
+</div>
+<script>
+    require(
+            [ "app/dataAccess/controllers/windows/createInstanceCtrl"],
+            function() {
+                angular.element(document).injector().invoke(function($compile) {
+                    var scope = $("#createInstanceContainer").scope();
+                    $compile($("#createInstanceContainer"))(scope);
+                    scope.$digest();
+                })
+            });
+</script>
+    
+    

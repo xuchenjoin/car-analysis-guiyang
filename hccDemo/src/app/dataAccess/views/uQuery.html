@@ -1,0 +1,91 @@
+<div id="leftBar" class="bigData_content">
+    <div class="tiny-layout-container">
+        <div class="tiny-layout-west uQueryLeft overlay  ">
+
+            <div class="row no-margin">
+                <div class="col-md-6 col-sm-6 col-xs-6 location"><span class="glyphicon glyphicon-map-marker" style="color:#2D5E73"></span><span>{{i18n.city}}</span></div>
+            </div>
+
+            <div class="tiny-layout-title no-margin">
+                <div class="uQueryLeftHeader">
+                    <div class="row no-margin">
+                        <div class="col-md-3 col-sm-3 col-xs-3 " style="padding:35px 0px 20px 0px;width:20%;"> {{i18n.uquery_period}} : </div>
+                        <div class="col-md-4 col-sm- col-xs-4" style="padding:30px 0px 20px 0px">
+                            <div id="Date" style="display:inline-block;"></div>
+                        </div>
+                        <div class="col-md-1 col-sm-1 col-xs-1" style="padding-top:35px;">{{i18n.uquery_to}}</div>
+                        <div class="col-md-4 col-sm-4 col-xs-4" style="padding:30px 0px 20px 0px">
+                            <div id="Date2" style="display:inline-block;"></div>
+                        </div>
+                    </div>
+                    <div class="row no-margin">
+                        <div class="col-md-3 col-sm-3 col-xs-3" style="padding:0px 0px 20px 0px;width:20%;"> {{i18n.uquery_carnumber}} : </div>
+                        <div class="col-md-6 col-sm-6 col-xs-6" style="padding:0px 0px 20px 0px;width:56%;"><input type="text" ng-model="carNumber" class="form-control search" id="search"></div>
+                        <div class="col-md-3 col-sm-3 col-xs-3" style="padding-right:0px;width:20%;"><button type="button" class="btn" ng-click="getData(carNumber)">{{i18n.uquery_query}}</button></div>
+                    </div>
+                </div>
+
+                <div class="uQueryLeftContent scrollbar" style="padding: 20px 60px; display:none;" id="routeDetails">
+                    <p style="color:#fff">{{i18n.uquery_trip_start}}</p>
+
+                    <ul style="padding: 10px 0px 30px 0px;">
+                        <li ng-repeat="list in warningListTable.data" style="color:#ffffff;padding:20px 0px"><span></span>
+
+                            <div class="col-md-5 col-sm-5 col-xs-5 no-padding"> {{ list.monitId}} </div>
+                            <div class="col-md-5 col-sm-5 col-xs-5 no-padding text-right">{{list.time}}</div>
+                        </li>
+                    </ul>
+                    <p style="color:#fff">{{i18n.uquery_trip_end}}</p>
+                </div>
+
+                <div class="text-center">
+                    <p class="title-text" ng-bind="plugins.text"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-container tiny-layout-right pull-right" style="min-height: 0px">
+            <div ui-view></div>
+            <div style="width: 30px;border: 1px solid #71e8ff; height: 60px;margin-left:10px;position: fixed;z-index: 10000;right: 30px;top: 450px;">
+                <div id="zoom-in" style="color:#71e8ff;font-size: 20px;height: 30px;width: 100%;padding: 5px;border-bottom: 1px solid #bbc4dd; cursor:pointer" class="glyphicon glyphicon-zoom-in"></div>
+                <div id="zoom-out" style="color:#71e8ff;font-size: 20px;height: 30px;width: 100%;padding: 5px; cursor:pointer" class="glyphicon glyphicon-zoom-out"></div>
+            </div>
+        </div>
+        <div id="myModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content" style="width:450px;height:550px;">
+                <div class="modal-header" style="border-bottom:0px;padding: 10px 15px; background: rgba(29,82,110,0.60);height: 40px;">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" id="tableHeading" style="font-size: 16px;color: #bbc4dd;"></h4>
+                </div>
+                <div class="modal-body" style="font-size:14px;color:#bbc4dd;">
+                    <!-- div id="details" style="width:80%;height:80%;padding-top:30px;padding-left:10px;font-size: 30" ></div -->
+                    <div id="details"></div><br>
+                    <ul style="padding: 10px 0px 30px 0px;">
+                        <li>
+
+                            <div class="col-md-12 no-padding">
+                                <div class="col-md-3 no-padding" id="junction" style="color:#ffffff;"></div>
+                                <div class="col-md-9 no-padding" id="carPasstime"></div>
+                            </div>
+                        </li>
+                    </ul>
+                    <!-- p>2016/09/01 10:00至2016/09/01 11:00 共有5辆车经过</p>
+           <ul style="padding: 10px 0px 30px 0px;">
+           <li style="color:#ffffff;padding:20px 0px" >
+            <div class="col-md-4 col-sm-4 col-xs-4 no-padding">1.  朝阳区 卡口001 </div>
+            <div class="col-md-4 col-sm-4 col-xs-4 no-padding">  2017-06-08 11:00 </div>
+           </li>
+           <li style="color:#ffffff;padding:20px 0px" >
+            <div class="col-md-4 col-sm-4 col-xs-4 no-padding">2.  朝阳区 卡口001 </div>
+            <div class="col-md-4 col-sm-4 col-xs-4 no-padding">  2017-06-08 11:00 </div>
+           </li>
+            <li style="color:#ffffff;padding:20px 0px" >
+            <div class="col-md-4 col-sm-4 col-xs-4 no-padding">3.  朝阳区 卡口001 </div>
+            <div class="col-md-4 col-sm-4 col-xs-4 no-padding">  2017-06-08 11:00 </div>
+           </li>
+           </ul> -->
+                </div>
+            </div>
+        </div>
+    </div>

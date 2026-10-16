@@ -1,0 +1,244 @@
+.console-menu-logo {
+    display: block;
+    width: 125px;
+    background: url("../images/logo.png") no-repeat left center;
+    background-size: 111px;
+}
+
+.console-footer-logo {
+    display: inline-block;
+    vertical-align: middle;
+    width: 80px;
+    height: 32px;
+    background: url("../images/logo_footer.png") no-repeat left center;
+    background-size: 80px;
+}
+
+a.console-topbar-btn:visited {
+    color: #fafafa;
+}
+
+.console-topbar-btn {
+    color: #fafafa;
+}
+
+a.console-topbar-btn:hover {
+    background-color: #333333;
+    color: #ffffff;
+}
+
+.footer-copyright-content a {
+    color: #ffffff;
+}
+
+.footer-copyright-content {
+    color: #ffffff;
+    background-color: #000000;
+}
+
+.console-topbar-btn-oldConsole {
+    display: none;
+}
+
+.console-topbar-btn-click {
+    background-color: #333333;
+}
+
+.dropdown-menu {
+    background-color: #333333;
+    color: #ffffff;
+}
+
+.console-topbar-nav-item-title {
+    border-bottom-color: #656565;
+}
+
+.service-list-item-tr .div-tr {
+    border-bottom-color: #000000;
+}
+
+.console-menu-nav-list .console-menu-nav-item ul li:hover {
+    background-color: #000000;
+}
+
+.dropdown-menu > li > a:hover{
+    background-color: #000000;
+}
+
+.dropdown-menu > li > ul > li:hover {
+    background-color: #000000;
+}
+
+.console-topbar-region {
+    background-color: #1e1e1e;
+}
+
+.console-topbar-btn-notice {
+    background-color: #1e1e1e;
+}
+
+.console-topbar-btn-help {
+    background-color: #1e1e1e;
+}
+
+.menu-hwsicon-frame-service-favorite {
+    color: #f16e00;
+}
+
+.console-menu-nav-list .console-menu-nav-item ul li:hover .menu-hwsicon-frame-service-favorite {
+    color: #ff7900;
+}
+
+.region-menu-dropdown .dropdown-menu:before {
+    border-bottom-color: #333333;
+}
+
+.message-menu-dropdown .dropdown-menu:before {
+    border-bottom-color: #333333;
+}
+
+.console-notice-list .line-border-parent .line-border {
+    border-bottom-color: #000000;
+}
+
+.dropdown-menu-li-line {
+    border-bottom-color: #656565;
+}
+
+.user-dropdown-menu .frame-order-list, .user-dropdown-menu .frame-user-application,
+.user-dropdown-menu .frame-seller-center, .user-dropdown-menu .frame-submit-workorder,
+.user-dropdown-menu .frame-icp-licence, .user-dropdown-menu .frame-user-center {
+    display: none;
+}
+
+
+.default-style .default-style {
+    display: none;
+}
+
+.default-style .custom-style {
+    display: none;
+}
+
+.default-style .ocb-custom-style {
+    display: block;
+}
+
+.ocb-hide-style {
+    display: none !important;
+}
+
+.message-alert-inner {
+    background-color: #ffffff;
+    display: table;
+    width: 100%;
+    -webkit-box-shadow: 1px 1px 5px 0px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow: 1px 1px 5px 0px rgba(50, 50, 50, 0.75);
+    box-shadow: 1px 1px 5px 0px rgba(50, 50, 50, 0.75);
+    line-height: 18px;
+    margin-bottom: 20px;
+}
+
+.message-alert-inner div.alert-icon {
+    text-align: right;
+    vertical-align: middle;
+    padding: 10px;
+    width: 100px;
+}
+
+.frame-cloud-alert-success div.alert-icon {
+    background-color: #7ab800;
+}
+
+.frame-cloud-alert-error div.alert-icon {
+    background-color: #cc0000;
+}
+
+.frame-cloud-alert-error {
+    border: none;
+}
+
+.frame-cloud-alert-success {
+    border: none;
+}
+
+.message-alert-inner div {
+    display: table-cell;
+}
+
+.message-alert-inner div.content {
+    padding: 5px 10px;
+    vertical-align: middle;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: #515559;
+    position: relative;
+}
+
+.message-alert-inner div strong {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.frame-cloud-alert-success div strong {
+    color: #7ab800;
+}
+
+.frame-cloud-alert-error div strong {
+    color: #cc0000;
+}
+
+.message-alert-inner div.content p {
+    padding-bottom: 0;
+    margin-bottom: inherit;
+}
+
+.message-alert-inner .cerrar {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    color: #333333;
+}
+
+.message-alert-inner .cerrar.close {
+    opacity: 0.8;
+}
+
+.message-alert-inner .cerrar.close:hover {
+    opacity: 1;
+}
+
+.console-footer-btn:hover {
+    background-color: #333333;
+    color: #ffffff;
+}
+
+.console-footer-vertical-line {
+    border-left: 1px solid #333333;
+}
+
+.console-top-menu .menu {
+    background-color: #000000;
+}
+
+.frame-menu-tips-message-list-content:hover {
+    background-color: #000000;
+}
+
+.hwsicon-frame-image-quota:before {
+    content: "\e677";
+}
+
+.fw-steps > ul:before, .fw-step-count:before {
+    background-color: #f16e00;
+}
+
+
+/*.hws-hide {
+    display: block !important;
+}
+
+.hws-show {
+    display: none !important;
+}
+*/

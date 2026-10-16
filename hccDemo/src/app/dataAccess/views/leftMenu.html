@@ -1,0 +1,33 @@
+<div id="leftBar" class="bigData_content">
+    <div class="tiny-layout-container" style="margin:0 0 0;background-color:#fff;padding-bottom:40px;">
+        <div id= "leftMenu" class="tiny-layout-west sideList sideMenu framework-scrolling">
+            <ul>
+				<li>
+                    <div class="tiny-layout-title">
+                        <div class="">
+                            <div class="mb10" style="text-align:center;">
+                            	<div class="title-pic">
+                            		<div id="dpsLogo" class="dps-logo icon-dps-dps-service-logo common-service-icon-out-border" ></div>
+                            	</div>
+                            </div>
+                            <div class="" style="text-align:center;">
+                               <p class="title-text" ng-bind="plugins.text"></p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+				
+                <li ng-repeat="m1 in serviceList"  ng-click="go(m1.state, m1.params)" ng-if="!m1.hide" style="height:44px;">
+                	<span ui-sref="{{m1.state}}" class="spanleft" style="height:44px;"
+                		ng-class="{sideMenuLayoutCurrent:$state.current.name.indexOf(m1.state) !== -1 || $stateParams.origin === m1.state || $state.includes('manage.pipelineMonitor') && m1.state==='manage.pipelineList'}">
+                    <span class="{{m1.iconClass}} dps-icon pull-left"></span>
+                    <span ng-bind="m1.title" class="common-content-title-service-catalog"></span></span>
+                </li>
+            </ul>
+		</div>
+        <div class="right-container tiny-layout-right pull-right" style="min-height: 0px">
+            <div ui-view>
+            </div>
+        </div>
+    </div>
+</div>

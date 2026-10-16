@@ -1,0 +1,44 @@
+<div class="dps-container">
+	<div class="row-fluid">
+		<div class="apply-info common-bgcolor-common common-color-prompt common-font-size-common mb20">
+			<span ng-bind="i18n.dps_alarm_list_description"></span> <a
+				class="a-cursor" target="_blank" ng-bind="i18n.datacraft_click_here"
+				ng-href="{{commonInfo.dpsAlarmListPageUrl}}"></a>
+		</div>
+		<div class="content-right-box">
+			<div class="margin-erect-beautifier-warning margin-topfix20 clearfix">
+				<div class="pull-right">
+					<div id="refreshBtn"
+						class="fr common-icon-refresh common-icon-refresh-button ml5"
+						ng-click="refreshBtn.click()"></div>
+					<div class="pull-left fr">
+						<tiny-select id="levelSelect.id" values="levelSelect.values"
+							display="levelSelect.display" change="levelSelect.change()">
+						</tiny-select>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="alarmTable" class="margin-top-beautifier">
+			<tiny-table id="warningListTable.id"
+				columns="warningListTable.columns"
+				enable-pagination="warningListTable.enablePagination"
+				data="warningListTable.data" cur-page="warningListTable.currentPage"
+				checkbox="warningListTable.checkbox"
+				callback="warningListTable.callback"
+				length-change="warningListTable.lengthChange"
+				length-menu="warningListTable.lengthMenu"
+				display-length="warningListTable.displayLength"
+				total-records="warningListTable.totalRecords"
+				render-row="warningListTable.renderRow"
+				columns-draggable="warningListTable.draggable"
+				cell-click-active="warningListTable.cellClickActive"
+				t-head-checkbox-fn="warningListTable.tHeadCheckboxFn"
+				pagination-style="warningListTable.paginationStyle"
+				change-select="warningListTable.changeSelect"
+				table-language="warningListTable.tableLanguage"> </tiny-table>
+		</div>
+	</div>
+</div>
+

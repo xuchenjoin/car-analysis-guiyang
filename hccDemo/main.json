@@ -1,0 +1,25 @@
+{
+  "baseUrl": "./",
+  "waitSeconds": 0,
+  "paths": {
+    "can": "lib/can",
+    "app": "src/app",
+    "business-app-remote": "src/app",
+    "app-remote": "src/app",
+    "angular": "lib/angular",
+    "ui-router": "lib/angular-ui/ui-router",
+    "bootstrap": "lib/bootstrap3.3.6/js",
+    "moment": "lib/moment/moment.min",
+    "language": "i18n/default/en-us",
+    "language-remote": "i18n/default/en-us",
+    "lazy-load": "lib/lazy-load",
+    "fixtures": "fixtures",
+    "remote-lib": "lib",
+    "angularEchart":"lib/echart",
+    "echarts":"lib/echart/echarts.min",
+    "china":"lib/echart/china"
+  },
+  "priority": [
+    "angular"
+  ]
+}

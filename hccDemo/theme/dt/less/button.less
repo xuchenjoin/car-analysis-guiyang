@@ -1,0 +1,169 @@
+@import "variables.less";
+@import "mixins.less";
+
+/*
+ * 基础样式
+ */
+
+/**按钮基础样式**/
+.tiny-btn-basic {
+    display: inline-block;
+    cursor: pointer;
+    vertical-align:middle;
+    margin-right: 5px;
+    height: @btn-height;
+    line-height: 22px;
+    border-radius: @btn-border-radius;
+    text-align:center;
+    outline : none;
+    padding: 0;
+    box-sizing: content-box;
+}
+
+/**灰化图标样式**/
+.tiny-btn-icon-disable {
+    filter: alpha(opacity=50);
+    -moz-opacity: 0.5;
+    opacity: 0.5;
+}
+
+.tiny-btn-text {
+  display: inline-block;
+}
+
+/*
+ * 默认按钮
+ */
+
+/**包含图标的默认按钮样式**/
+.tiny-btn-with-icon {
+    border: 1px solid @btn-border-default;
+    color:@btn-color-default;
+    .btn-bg-default;
+    padding-left:15px;
+    padding-right:15px; 
+}
+
+/**不包含图标的默认按钮样式**/
+.tiny-btn-without-icon {
+    border: 1px solid @btn-border-default;
+    color:@btn-color-default;
+    .btn-bg-default;
+    padding-left:20px;
+    padding-right:20px;
+}
+
+
+.tiny-btn-without-icon,.tiny-btn-with-icon{
+  /**鼠标划过状态**/
+  &:hover{
+    color:@btn-color-hover;
+    .btn-bg-hover;
+    border: 1px solid @btn-border-hover;
+  }
+  /**点击状态**/
+  &:active{
+    background:@btn-bg-active;
+    color: @btn-color-active;
+    border: 1px solid @btn-border-active!important;
+  }
+  /**焦点状态**/
+  &:focus{
+    border:1px solid @btn-border-focus;
+    color: @btn-color-focus;
+  }
+  /**不可用状态**/
+  &.tiny-btn-disable{
+    cursor: default;
+    border: 1px solid @btn-border-disable;
+    background:@btn-bg-disable;
+    color:@btn-color-disable;
+  }
+}
+
+
+/**默认按钮左侧图片样式**/
+.tiny-btn-with-icon .tiny-btn-left-icon {
+    display: inline-block;
+    margin-top:4px;
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+    float:left;
+}
+
+/**默认按钮右侧图片样式**/
+.tiny-btn-with-icon .tiny-btn-right-icon {
+    display: inline-block;
+    margin-top:4px;
+    width: 16px;
+    height: 16px;
+    margin-left:5px;
+    float: right;
+}
+
+/*
+ * 重点突出按钮
+ */
+
+/**重点突出按钮样式**/
+/**.major-btn 为了兼容之前的重点突出按钮设置*/
+.tiny-btn-major, .major-btn .tiny-btn-with-icon,.major-btn .tiny-btn-without-icon {
+    background:@btn-blue-bg-default;
+    padding-left:20px;
+    padding-right:20px;
+    border: 1px solid @btn-blue-border-default;
+    color:@btn-blue-color-default;
+    /**重点突出按钮获取焦点无样式改变**/
+
+    /**重点突出按钮鼠标划过状态**/
+    &:hover{
+      background:@btn-blue-bg-hover;
+      border: 1px solid @btn-blue-border-hover;
+    }
+    /**重点突出按钮点击状态**/
+    &:active{
+      background:@btn-blue-bg-active;
+      border:1px solid @btn-blue-border-active;
+    }
+    /**重点突出按钮不可用状态**/
+    &.tiny-btn-disable{
+       background:@btn-blue-bg-disable;
+       border:1px solid @btn-blue-border-disable;
+       cursor: default;
+     }
+}
+
+/**红色按钮样式 按钮定制样式模板**/
+.tiny-red-btn .tiny-btn-with-icon,.tiny-red-btn .tiny-btn-without-icon {
+    background:@btn-red-bg-default;
+    border: 1px solid @btn-red-border-default;
+    padding-left:20px;
+    padding-right:20px;
+    color:@btn-red-color-default;
+    &:hover{
+      background:@btn-red-bg-hover;
+      border: 1px solid @btn-red-border-hover;
+    }
+    &:active{
+      background:@btn-red-bg-active;
+      border: 1px solid @btn-red-border-active;
+    }
+    &.tiny-btn-disable{
+      cursor: default;
+      border: 1px solid @btn-red-border-disable !important;
+      background:@btn-red-bg-disable;
+    }
+}
+
+/**默认按钮左侧图片样式**/
+.tiny-red-btn .tiny-btn-with-icon .tiny-btn-left-icon,
+.tiny-btn-major .tiny-btn-left-icon, .major-btn .tiny-btn-with-icon .tiny-btn-left-icon {
+    margin-right: 8px;
+}
+
+/**默认按钮右侧图片样式**/
+.tiny-red-btn .tiny-btn-with-icon .tiny-btn-right-icon,
+.tiny-btn-major .tiny-btn-right-icon,.major-btn .tiny-btn-with-icon .tiny-btn-right-icon {
+    margin-left: 8px;
+}

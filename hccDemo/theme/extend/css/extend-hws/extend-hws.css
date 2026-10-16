@@ -1,0 +1,20 @@
+/**
+ * hws-global stylesheet
+ */
+.canvas-toolbar-btn>button{
+    background: rgb(238,238,238)!important;
+    color: #666 !important;
+}
+.canvas-toolbar-btn>button:hover{
+    background: rgb(245,245,245)!important;
+    color: #3AAEFB !important;
+}
+.canvas-configurationpanel-btn>button{
+    border: 1px solid #ddd !important;
+    background: #fafafa !important;
+    color: #666 !important;
+}
+.canvas-configurationpanel-btn>button:hover{
+    background: rgb(245,245,245)!important;
+    color: #3AAEFB !important;
+}

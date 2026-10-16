@@ -1,0 +1,156 @@
+@import "variables.less";
+@import "mixins.less";
+
+div.ColVis_MasterButton{
+width:16px;
+height:16px;
+background-color: transparent;
+border: none;
+display: block;
+z-index:1;
+margin-top: 4px;
+outline:none;
+font-size: 16px;
+color: @table-colvis-config-icon-color;
+}
+
+table.dataTable thead th {
+  cursor: pointer;
+  background-color:#ebebeb;
+  *cursor: hand;
+  outline: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  height: @table-tHead-height;
+  line-height: @table-tHead-height;
+  color: @table-tHead-text-color;
+  font-family: "Microsoft Yahei", "Arial", "Tahoma", "Verdana", "SimSun";
+  font-size: @table-tHead-font-size;
+  border-bottom:1px solid #DDD;
+  border-top:1px solid #DDD;
+  border-left:none;
+  border-right:1px solid #ebebeb;
+  text-align:left;
+  padding-left:10px;
+  vertical-align: middle;
+  /*下边三个样式为了解决表格出现列拖动后，列数据宽度减小1px导致的移动问题*/
+  border-right-width: 1px;
+  border-right-style: dotted;
+  border-right-color: transparent;
+  /*去掉表头可选功能，解决拖动表头时出现的蓝色区域*/
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+span.sorting:after {
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 0.4em solid transparent;
+  border-right: 0.4em solid transparent;
+  border-top: 0.4em solid @table-sorting-basic-color;
+  vertical-align: middle;
+  margin-left: 5px;
+  margin-top: 3px;
+  display: block;
+}
+
+span.sorting_asc:after {
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 0.4em solid transparent;
+  border-right: 0.4em solid transparent;
+  border-bottom: 0.4em solid @table-sorting-active-color;
+  vertical-align: middle;
+  margin-left: 5px;
+  padding-top: 3px;
+  display: block;
+}
+
+span.sorting_desc:after {
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 0.4em solid transparent;
+  border-right: 0.4em solid transparent;
+  border-top: 0.4em solid @table-sorting-active-color;
+  vertical-align: middle;
+  margin-left: 5px;
+  margin-top: 3px;
+  display: block;
+}
+
+
+table.dataTable tr.odd {
+  border-spacing: 0;
+  height: 29px;
+  background-color: @table-row-odd-background-color;
+}
+table.dataTable tr.odd:hover {
+  background-color: @table-row-hover-background-color;
+  border-bottom-width: 1px;
+}
+table.dataTable tr.odd td {
+  border-color: white #D7D7D7 #D7D7D7;
+  height: 19px;
+  border-bottom:1px solid #DDD;
+  line-height:19px;
+  border-right-width: 1px;
+  border-right-style: dotted;
+  border-right-color: transparent;
+}
+table.dataTable tr.even {
+  background-color: @table-row-even-background-color;
+  border-spacing: 0;
+  height: 29px;
+}
+table.dataTable tr.even:hover {
+  background-color: @table-row-hover-background-color;
+  border-bottom-width: 1px;
+}
+table.dataTable tr.even td {
+  border-color: white #D7D7D7 #D7D7D7;
+  height: 19px;
+  border-bottom:1px solid #DDD;
+  line-height:19px;
+  border-right-width: 1px;
+  border-right-style: dotted;
+  border-right-color: transparent;
+}
+
+.clickTrColor{
+  background-color: @table-row-click-background-color !important;
+}
+
+.info_row {
+  padding: 0px 0px 0px 0px !important;
+  background: @table-detail-background-color;
+}
+
+div.default_show_style {
+  width: 16px;
+  height: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  float: left;
+  vertical-align:middle;
+  font-weight: 800;
+  color: @table-detail-arrow-color;
+  .unselectable;
+}
+
+div.default_hide_style {
+  width: 16px;
+  height: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  float: left;
+  vertical-align:middle;
+  font-weight: 800;
+  color: @table-detail-arrow-color;
+  .unselectable;
+}

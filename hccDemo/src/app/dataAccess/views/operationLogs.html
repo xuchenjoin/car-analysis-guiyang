@@ -1,0 +1,69 @@
+<div class="dps-container">
+	<div class="row-fluid">
+		<div class="apply-info common-bgcolor-common common-color-prompt common-font-size-common mb20">
+			<span ng-bind="i18n.dps_operation_logs_description"></span> <a
+				class="a-cursor" target="_blank" ng-bind="i18n.datacraft_click_here"
+				ng-href="{{commonInfo.dpsOperationLogsListPageUrl}}"></a>
+		</div>
+		<div class="content-right-box">
+			<div class="margin-erect-beautifier margin-topfix20 clearfix">
+				<div class="fr">
+					<div class="fl ml15">
+						<tiny-datetime id="timeRange.startTime.id"
+							type="timeRange.startTime.type" width="timeRange.startTime.width"
+							time-format="timeRange.startTime.timeFormat"
+							date-format="timeRange.startTime.dateFormat"
+							min-date="timeRange.startTime.minDate"
+							max-date="timeRange.startTime.maxDate"
+							ampm="timeRange.startTime.ampm"
+							first-day="timeRange.startTime.firstDay"
+							on-close="timeRange.startTime.close"
+							default-date="timeRange.startTime.defaultDate"
+							default-time="timeRange.startTime.defaultTime"> </tiny-datetime>
+					</div>
+
+					<span class="fl" style="margin: 8px 0">-</span>
+
+					<div class="fl reght10">
+						<tiny-datetime id="timeRange.endTime.id"
+							type="timeRange.endTime.type" width="timeRange.endTime.width"
+							time-format="timeRange.endTime.timeFormat"
+							date-format="timeRange.endTime.dateFormat"
+							min-date="timeRange.endTime.minDate"
+							max-date="timeRange.endTime.maxDate"
+							ampm="timeRange.endTime.ampm"
+							first-day="timeRange.endTime.firstDay"
+							on-close="timeRange.endTime.close"
+							default-date="timeRange.startTime.defaultDate"
+							default-time="timeRange.endTime.defaultTime"> </tiny-datetime>
+					</div>
+					<div id="refreshBtn"
+						class="fl common-icon-refresh common-icon-refresh-button ml5"
+						ng-click="refreshBtn.click()"></div>
+				</div>
+
+			</div>
+
+			<div class="margin-top-beautifier">
+				<tiny-table id="operationLogsTable.id"
+					columns="operationLogsTable.columns"
+					enable-pagination="operationLogsTable.enablePagination"
+					data="operationLogsTable.data"
+					cur-page="operationLogsTable.currentPage"
+					checkbox="operationLogsTable.checkbox"
+					callback="operationLogsTable.callback"
+					length-change="operationLogsTable.lengthChange"
+					length-menu="operationLogsTable.lengthMenu"
+					display-length="operationLogsTable.displayLength"
+					total-records="operationLogsTable.totalRecords"
+					render-row="operationLogsTable.renderRow"
+					columns-draggable="operationLogsTable.draggable"
+					cell-click-active="operationLogsTable.cellClickActive"
+					t-head-checkbox-fn="operationLogsTable.tHeadCheckboxFn"
+					pagination-style="operationLogsTable.paginationStyle"
+					change-select="operationLogsTable.changeSelect"
+					table-language="operationLogsTable.tableLanguage"> </tiny-table>
+			</div>
+		</div>
+	</div>
+</div>

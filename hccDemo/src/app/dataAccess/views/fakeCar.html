@@ -1,0 +1,75 @@
+<div id="leftBar" class="bigData_content">
+    <div class="tiny-layout-container">
+        <div id="leftMenu" class="tiny-layout-west sideList sideMenu framework-scrolling fakeCar overlay">
+            <ul id="leftMenuUL">
+                <li>
+                    <div class="row no-margin">
+                        <div class="col-md-6 col-sm-6 col-xs-6 location"><span class="glyphicon glyphicon-map-marker" style="color:#2D5E73"></span><span>{{i18n.city}}</span></div>
+                        <div class="col-md-6 col-sm-6 col-xs-6 time" id="time"> </div>
+                    </div>
+                    <div class="tiny-layout-title no-margin">
+                        <div class="title">
+                            <div class="row no-margin fakeCarHeader">
+                                <div class="col-md-6 col-sm-6 col-xs-6 leftHeader">{{i18n.fakecars_title}}</div>
+                                <div class="col-md-6 col-sm-6 col-xs-6 rightHeader"><span style="font-size:45px;margin-right:0px">{{totalNumberOfCars}}</span><span>{{i18n.cars}}</span></div>
+                            </div>
+                            <p class="traffic-heading" align="left">{{i18n.fakecars_table_title}}</p>
+                            <div class="row junction-name">
+                                <div class="col-md-4 col-sm-4 col-xs-4 left">{{i18n.fakecars_carnumber}}</div>
+                                <div class="col-md-8 col-sm-8 col-xs-8 right">{{i18n.fakecars_location}}</div>
+                            </div>
+                            <div class="table-car" style="margin-top:0px">
+                                <div ng-repeat="list in warningListTable.data">
+                                    <div class="row no-margin fakeCarList" ng-class-even="'fakeCarListEven'" style="cursor:pointer" ng-mouseover='go(list)' ng-mouseleave='removeMarker(list)' ng-click='clickMarker(list)'>
+                                        <div class="text-left col-md-4 col-sm-4 col-xs-4">{{list.licenceNumber}}</div>
+                                        <div class="text-left col-md-8 col-sm-8 col-xs-8">{{list.locations}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        </div>
+        <!--  div class="text-center">
+               <p class="title-text" ng-bind="plugins.text"></p>
+            </div-->
+        <div class="right-container tiny-layout-right pull-right" style="min-height: 0px">
+            <div ui-view></div>
+            <div id="right-btn-bar">
+                <div id="zoom-in" class="glyphicon glyphicon-zoom-in"></div>
+                <div id="zoom-out" class="glyphicon glyphicon-zoom-out"></div>
+                <div id="hide-show" class="glyphicon glyphicon-th-list hidetable" ng-click="tableAction($event)"></div>
+                <div id="search" ng-mouseover="showSearchBox()" ng-mouseleave="hideSearchBox()">
+                    <div id="search-btn" style="border-bottom: 0px" class="glyphicon glyphicon-search" ng-click="clickSearch()"></div>
+                    <input id="search-box" ng-keypress="keypress($event)" placeholder="{{i18n.search_content}}" ></input>
+                </div>
+                <div id="info-box">{{i18n.notFound}}</div>
+            </div>
+        </div>
+    </div>
+</div>
+</li>
+
+</ul>
+</div>
+
+
+<div id="myModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content" style="width:300px;height:250px;">
+        <div class="modal-header" style="border-bottom:0px;padding: 10px 15px; background: rgba(29,82,110,0.60);height: 40px;">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title" id="popUpTitle" style="font-size: 16px;color: #bbc4dd;"></h4>
+        </div>
+        <div class="modal-body" style="font-size:14px;color:#bbc4dd;">
+            <div id="details" style="height:80%;padding-top:30px;padding-left:30px;font-family:PingFangSC-Regular;
+					font-size:14px;
+					color:#ffffff;
+					line-height:20px;
+					text-align:left;"></div>
+
+        </div>
+    </div>
+</div>
+
+</div>

@@ -1,0 +1,114 @@
+@import "variables.less";
+@import "mixins.less";
+
+.tiny-combobox-popbutton{
+  position: relative;
+  float: right;
+  width:25px;
+  height:25px;
+}
+.tiny-combobox-popbutton:before {
+  position: absolute;
+  top: 9px;
+  right: 8px;
+  .triangle-down(8px;5px;#999);
+  content:" ";
+}
+
+.tiny-combobox-container {
+    height: 22px;
+    padding: 1px 0;
+    border: 1px solid @input-border;
+    border-radius: @input-border-radius;
+    background: @input-bg;
+    box-shadow: 1px 1px 1px #fff,inset 1px 1px 1px rgba(0,0,0,0.1);
+}
+
+.tiny-combobox-editor {
+  margin: 0;
+  border: 0;
+  float: left;
+  overflow: hidden;
+  padding-left: @input-padding-horizontal;
+  font-size: 12px;
+  resize: none;
+}
+
+.tiny-combobox-input {
+    outline: none;
+    box-shadow: none;
+    border: 0;
+    background-color: transparent;
+    color: @input-color;
+    width: 120px;
+    height: @input-height-base - 2;
+    line-height: @input-height-base - 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tiny-combobox-disable {
+    background-color: @input-bg-disabled;
+    color: @input-color-disabled;
+}
+
+.tiny-combobox-container-focus {
+    border: 1px solid @input-focus-border;
+}
+
+.tiny-combobox-popup-container {
+    z-index: 10002;
+    position: absolute;
+    background: white;
+    display: none;
+    overflow-x: hidden;
+    overflow-y: auto;
+    border: 1px solid @input-focus-border;
+    border-bottom-left-radius: @input-border-radius;
+    border-bottom-right-radius: @input-border-radius;
+}
+
+/**
+ * 针对下拉选项样式规则的修改，必须要测试在火狐31版本（或较早）中下拉框的滚轮操作是否正常
+ */
+.tiny-combobox-option {
+    color: @input-color;
+    background-color: inherit;
+    list-style: none;
+    padding-left: @input-padding-horizontal;
+    cursor: default;
+    height: 26px;
+    line-height: 26px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.tiny-combobox-popup-container-up {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-top-left-radius: @input-border-radius;
+    border-top-right-radius: @input-border-radius;
+}
+
+.tiny-combobox-container-pop-down {
+    border-color: @input-focus-border @input-focus-border transparent @input-focus-border !important;
+    border-bottom-left-radius: 0!important;
+    border-bottom-right-radius: 0!important;
+}
+
+.tiny-combobox-container-pop-up {
+    border-color: transparent @input-focus-border @input-focus-border @input-focus-border !important;
+    border-top-left-radius: 0!important;
+    border-top-right-radius: 0!important;
+}
+
+.tiny-combobox-option-selected {
+    color: #08c;
+    background: #F1F1F1;
+}
+
+.tiny-combobox-option-default-selected {
+    color: #08c;
+    background: #F1F1F1;
+}

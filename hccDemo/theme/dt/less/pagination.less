@@ -1,0 +1,173 @@
+@import "variables.less";
+@import "mixins.less";
+
+.tiny-Pagination-Goto-Button-Image{
+    width: 0;
+    height: 0;
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+    border-left: 7px solid @tiny-Pagination-Goto-Button-Icon-Color;
+    margin: 5px 38%;
+}
+
+a.tiny-Pagination-tiny-button{
+  background-color: #fff;
+}
+
+a.tiny-Pagination-tiny-button:hover {
+  border: 1px solid @tiny-Pagination-Link-Button-Border-Hover;
+  color: @tiny-Pagination-Link-Button-Text-Hover;
+}
+
+.tiny-Pagination-Link-Button {
+  text-decoration: none !important;
+  color: #666;
+  float: left;
+  height: 24px;
+  display: inline;
+  margin-right: 5px;
+  padding-left: 6px;
+  padding-right: 6px;
+  border: 1px solid @tiny-Pagination-Link-Button-Border-Color;
+  border-radius: 3px;
+}
+
+.tiny-Pagination-GoTo-Button {
+  float: left;
+  height: 24px;
+  width: 24px;
+  display: inline;
+  margin-right: 5px;
+  border: 1px solid @tiny-Pagination-Link-Button-Border-Color;
+  border-radius: 3px;
+}
+
+.tiny-Pagination-Prev-Span {
+  line-height: 24px;
+  min-width: 20px;
+  border: 1px solid @tiny-Pagination-Link-Button-Border-Color;
+  border-radius:2px;
+  -moz-border-radius:2px;
+  -webkit-border-radius:2px;
+  color: #333;
+  font-size: 16px;
+  margin-left: 5px;
+}
+
+a.tiny-Pagination-tiny-button.tiny-Pagination-Prev-Span:hover {
+  display: inline-block;
+  line-height: 24px;
+  min-width: 20px;
+  border: 1px solid @tiny-Pagination-Link-Button-Border-Hover;
+}
+
+.tiny-Pagination-Next-Span-Simple {
+  border: 1px solid @tiny-Pagination-Link-Button-Border-Color;
+  height: 24px;
+  margin-right: 8px;
+  padding: 0 !important;
+  text-decoration: none;
+  vertical-align: middle;
+  background-position: center;
+}
+
+a.tiny-Pagination-tiny-button.tiny-Pagination-Next-Span{
+  width:30px;
+  text-align: center;
+  color: @tiny-Pagination-Link-Selected-Background-Color;
+}
+
+a.tiny-Pagination-tiny-button.tiny-Pagination-Next-Span:hover {
+  width:30px;
+  color: @tiny-Pagination-Link-Selected-Background-Color;
+  border: 1px solid @tiny-Pagination-Link-Button-Border-Hover;
+}
+
+a.tiny-Pagination-tiny-button.tiny-Pagination-Next-Span-Disabled,
+a.tiny-Pagination-tiny-button.tiny-Pagination-Next-Span-Disabled:hover {
+  float: none;
+  display: inline-block;
+  text-decoration: none;
+  margin-right: 8px;
+  height: 24px;
+  line-height: 24px;
+  border: 1px solid @tiny-Pagination-Link-Button-Border-Color;
+  border-radius:2px;
+  -moz-border-radius:2px;
+  -webkit-border-radius:2px;
+  min-width: 20px;
+}
+
+a.tiny-Pagination-tiny-button.tiny-Pagination-Next-Span-Simple.tiny-Pagination-Next-Span-Disabled {
+  color: #bbb;
+  width: 30px;
+  background-color: #f3f3f3;
+  cursor: default;
+  -moz-border-radius:2px;
+}
+
+a.tiny-Pagination-tiny-button.tiny-Pagination-Prev-Span-Disabled:hover {
+  line-height: 24px;
+  border: 1px solid @tiny-Pagination-Link-Button-Border-Color;
+  -moz-border-radius:2px;
+}
+
+.tiny-Pagination-Link-Selected {
+  border: 1px solid @tiny-Pagination-Link-Selected-Border-Color;
+  background-color: @tiny-Pagination-Link-Selected-Background-Color;
+  color: @tiny-Pagination-Link-Selected-Text-Color;
+}
+
+.tiny-Pagination-Goto-Input-Text {
+  margin-right: -1px;
+  height: 24px;
+  line-height: 24px;
+  padding: 0 3px;
+  width: 29px;
+  float: left;
+  border:1px solid @tiny-Pagination-Link-Button-Border-Color;
+  background: #fff;
+  border-radius:2px;
+  -moz-border-radius:2px;
+  -webkit-border-radius:2px;
+}
+
+.tiny-Pagination-Prev-Span-Disabled{
+  line-height: 24px;
+  border: 1px solid @tiny-Pagination-Link-Button-Border-Color;
+  background-color: #f3f3f3 !important;
+  color: #bbb !important;
+  -moz-border-radius:2px;
+}
+
+.tiny-Pagination-Link-Panel .tiny-Pagination-Prev-Span-Simple {
+    float : left;
+    padding: 0 !important;
+    text-decoration: none;
+    vertical-align: middle;
+    width:30px;
+    height: 24px;
+    display: inline-block;
+    margin-right:5px;
+    text-align: center;
+    color: @tiny-Pagination-Link-Selected-Background-Color;
+}
+
+a.tiny-Pagination-tiny-button.tiny-Pagination-Prev-Span-Simple:hover {
+    cursor: pointer;
+    text-decoration: none;
+    height: 24px;
+    width:30px;
+    clear:both;
+    margin-right:5px;
+    color: @tiny-Pagination-Link-Selected-Background-Color;
+}
+
+.tiny-Pagination-Next-Span {
+  border-radius:2px;
+  -moz-border-radius:2px;
+  -webkit-border-radius:2px;
+  display: inline-block;
+  line-height: 24px;
+  font-size: 16px;
+}

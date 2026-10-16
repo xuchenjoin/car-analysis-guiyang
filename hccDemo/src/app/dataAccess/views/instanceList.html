@@ -1,0 +1,77 @@
+<div class="dps-container" xmlns="http://www.w3.org/1999/html">
+	<div class="row-fluid">
+		<div class="apply-info common-bgcolor-common common-color-prompt common-font-size-common mb20">
+			<span ng-bind="i18n.dps_pipeline_description"></span> <a
+				class="a-cursor" target="_blank" ng-bind="i18n.datacraft_click_here"
+				ng-href="{{LearnMoreLink}}"></a></br>
+            <span style="display: inline-block;">
+                <tiny-button id="createNewButton.id"
+                             disable="createNewButton.disable"
+                             icons-class="createNewButton.iconsClass"
+                             class="tiny-red-btn height-30 btn-block mt10"
+                             text='createNewButton.text' click="createNewButton.click()"></tiny-button>
+            </span>
+            <span ng-show="isRestricted" style="display: inline-block;">
+                <span ng-bind="i18n.dps_pipeline_op_restricted"></span> <a
+                    class="a-cursor" target="_blank" ng-bind="i18n.datacraft_click_here"
+                    ng-href="{{LearnMoreLink}}"></a>
+            </span>
+
+		</div>
+
+		<div class="content-right-box">
+			<div class="clearfix mt20 mb10">
+				<div class="clearfix">
+					<div ng-show="deferShow" class="fl common-color-content">
+						<span ng-show="getQuotaSuccess" ng-bind="(i18n.dps_pipeline_total_stream.replace('{0}',quotas)).replace('{1}',residueQuotas)"></span><span ng-show="!getQuotaSuccess" ng-bind="i18n.dps_pipeline_quotas_used_up"></span><a
+                            class="a-cursor" target="_blank" ng-bind="i18n.dps_pipeline_quotas_apply"
+                            ng-href="{{applyMoreQuotaPage}}"></a>
+					</div>
+				</div>
+				<div class="fr" style="height: 32px">
+                    <tiny-select class="fl mr15"
+                                 id="pipelineStateSelect.id"
+                                 values="pipelineStateSelect.values"
+                                 display="pipelineStateSelect.display"
+                                 width="pipelineStateSelect.width"
+                                 open-fn="pipelineStateSelect.openFn"
+                                 change="pipelineStateSelect.change()">
+                    </tiny-select>
+					<div id="refreshBtn"
+						class="fr common-icon-refresh common-icon-refresh-button ml5"
+						ng-click="refreshBtn.click()"></div>
+					<tiny-searchbox id="instanceListSearchBox.id"
+						placeholder="instanceListSearchBox.placeholder"
+						width="instanceListSearchBox.width"
+						suggest-size="instanceListSearchBox.suggestSize"
+						maxlength="instanceListSearchBox.maxLength"
+						suggest="instanceListSearchBox.suggest"
+						search="instanceListSearchBox.search"
+						clear-callback="instanceListSearchBox.clearCallback"></tiny-searchbox>
+				</div>
+			</div>
+		</div>
+		<div class="margin-top-beautifier" id="pipelineTable">
+			<tiny-table id="instanceListTable.id"
+				columns="instanceListTable.columns"
+				enable-pagination="instanceListTable.enablePagination"
+				data="instanceListTable.data"
+				cur-page="instanceListTable.currentPage"
+				checkbox="instanceListTable.checkbox"
+				callback="instanceListTable.callback"
+				length-change="instanceListTable.lengthChange"
+				length-menu="instanceListTable.lengthMenu"
+				display-length="instanceListTable.displayLength"
+				total-records="instanceListTable.totalRecords"
+				render-row="instanceListTable.renderRow"
+				columns-draggable="instanceListTable.draggable"
+				column-sorting="instanceListTable.sorting"
+				cell-click-active="instanceListTable.cellClickActive"
+				t-head-checkbox-fn="instanceListTable.tHeadCheckboxFn"
+				pagination-style="instanceListTable.paginationStyle"
+				change-select="instanceListTable.changeSelect"
+				table-language="instanceListTable.tableLanguage"
+                show-details="instanceListTable.showDetails"> </tiny-table>
+		</div>
+	</div>
+</div>
