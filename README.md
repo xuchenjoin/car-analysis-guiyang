@@ -223,6 +223,14 @@ mvn package
 
 ---
 
+## 联系作者
+
+有问题或交流学习，扫码加微信：
+
+![联系作者](docs/screenshots/contact-qr.png)
+
+---
+
 ## 致谢
 
 - 实时计算架构参考了华为云 MRS（MapReduce Service）的 Storm 实时交通分析方案
